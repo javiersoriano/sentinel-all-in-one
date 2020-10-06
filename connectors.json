@@ -1,0 +1,84 @@
+{
+    "connectors": [
+        {
+            "kind": "AzureActivityLog",
+            "properties": {
+                "linkedResourceId": "/subscriptions/1186543f-81e7-4a2c-ad55-fae1cc1c9eac/providers/microsoft.insights/eventtypes/management"
+            }
+        },
+        {
+            "kind": "AzureSecurityCenter",
+            "properties": {
+                "dataTypes": {
+                    "alerts": {
+                        "state": "enabled"
+                    }
+                }
+            }
+        },
+        {
+            "kind": "AzureActiveDirectory",
+            "properties": {
+                "logs": [
+                    {
+                        "category": "SignInLogs",
+                        "enabled": true
+                    },
+                    {
+                        "category": "AuditLogs",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "Office365",
+            "properties": {
+                "dataTypes": {
+                    "sharePoint": {
+                        "state": "enabled"
+                    },
+                    "exchange": {
+                        "state": "enabled"
+                    },
+                    "teams": {
+                        "state": "enabled"
+                    }
+                }
+            }
+        },
+        {
+            "kind": "MicrosoftCloudAppSecurity",
+            "properties": {
+                "dataTypes": {
+                    "alerts": {
+                        "state": "enabled"
+                    },
+                    "discoveryLogs": {
+                        "state": "enabled"
+                    }
+                }
+            }
+        },
+        {
+            "kind": "AzureAdvancedThreatProtection",
+            "properties": {
+                "dataTypes": {
+                    "alerts": {
+                        "state": "enabled"
+                    }
+                }
+            }
+        },
+        {
+            "kind": "MicrosoftDefenderAdvancedThreatProtection",
+            "properties": {
+                "dataTypes": {
+                    "alerts": {
+                        "state": "enabled"
+                    }
+                }
+            }
+        }
+    ]
+}
