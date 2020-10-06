@@ -1,0 +1,1 @@
+# Automatically onboard Azure Sentinel connectors
