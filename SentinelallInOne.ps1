@@ -5,7 +5,7 @@ param(
     [Parameter(Mandatory=$true)]$Location
 )
 
-Install-Module AzSentinel -Scope CurrentUser -Force
+Install-Module AzSentinel -Scope CurrentUser -AllowClobber
 
 Connect-AzAccount
 
