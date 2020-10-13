@@ -5,7 +5,9 @@ param(
     [Parameter(Mandatory=$true)]$Location
 )
 
-Install-Module AzSentinel -Scope CurrentUser -AllowClobber
+Install-Module -Name Az.OperationalInsights -Scope CurrentUser -Force
+
+Install-Module AzSentinel -Scope CurrentUser -Force
 
 Connect-AzAccount
 
@@ -91,14 +93,17 @@ foreach ($connector in $connectors.connectors) {
         #Enable or Update AzureActivityLog Connector with http puth method
         try {
             $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
-            if ($activityEnabled) {
-                Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
-                Write-Host 
+            if ($result.StatusCode -eq 200) {
+                if ($activityEnabled){
+                    Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
+                }
+                else {
+                    Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green 
+                } 
             }
             else {
-                Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
-            }
-             
+                Write-Host "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
+            }   
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
         catch {
@@ -181,7 +186,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -264,7 +269,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"  -ForegroundColor Red
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -347,7 +352,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -430,7 +435,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -513,7 +518,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
