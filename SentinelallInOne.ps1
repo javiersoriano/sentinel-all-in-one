@@ -572,7 +572,6 @@ foreach ($connector in $connectors.connectors) {
                 Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
-            Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
         }
         catch {
             $errorReturn = $_
