@@ -1,10 +1,7 @@
 {
     "connectors": [
         {
-            "kind": "AzureActivityLog",
-            "properties": {
-                "linkedResourceId": "/subscriptions/1186543f-81e7-4a2c-ad55-fae1cc1c9eac/providers/microsoft.insights/eventtypes/management"
-            }
+            "kind": "AzureActivityLog"
         },
         {
             "kind": "AzureSecurityCenter",

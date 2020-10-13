@@ -23,6 +23,7 @@ $SubscriptionId = $context.Subscription.Id
 Get-AzResourceGroup -Name $ResourceGroup -ErrorVariable notPresent -ErrorAction SilentlyContinue
 
 if ($notPresent){
+    Write-Host "Creating resource group $ResourceGroup in region $Location..."
     New-AzResourceGroup -Name $ResourceGroup -Location $Location
 }
 else{
@@ -52,6 +53,8 @@ if (($solutions | Where-Object Name -eq 'SecurityInsights').Enabled) {
 else {
     Set-AzSentinel -WorkspaceName $Workspace -Confirm:$false
 }
+
+Start-Sleep -s 15
 
 #Resource URL to authentincate against
 $Resource = "https://management.azure.com/"
@@ -103,7 +106,7 @@ foreach ($connector in $connectors.connectors) {
         $connectorBody = @{}
 
         $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-        $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connector.properties
+        $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
 
         #Enable or Update AzureActivityLog Connector with http puth method
         try {
@@ -117,7 +120,7 @@ foreach ($connector in $connectors.connectors) {
                 } 
             }
             else {
-                Write-Host "Unable to enable data connector $($connector.kind) with error: $result.Content" 
+                Write-Host "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
             }   
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -201,7 +204,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" 
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -284,7 +287,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"  
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)"  
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -367,7 +370,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" 
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -450,7 +453,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)"
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -533,7 +536,7 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" 
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
@@ -560,6 +563,13 @@ foreach ($connector in $connectors.connectors) {
 
         try {
             $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
+            if ($result.StatusCode -eq 200) {
+                Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
+            }
+            else {
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
+            }
+            Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
             Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
         }
         catch {
