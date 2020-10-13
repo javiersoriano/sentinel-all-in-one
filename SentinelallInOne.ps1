@@ -9,18 +9,32 @@ Install-Module -Name Az.OperationalInsights -Scope CurrentUser -Force
 
 Install-Module AzSentinel -Scope CurrentUser -Force
 
+Write-Host "`r`nYou will now be asked to log in to your Azure environment. `nFor this script to work correctly, you need to provide credentials of a Global Admin or Security Admin for your organization. `nThis will allow the script to enable all required connectors.`r`n" -BackgroundColor Magenta
+
+Read-Host -Prompt "Press any key to continue or CTRL+C to quit the script" 
+
 Connect-AzAccount
 
 $context = Get-AzContext
 
 $SubscriptionId = $context.Subscription.Id
 
+#Create Resource Group
+Get-AzResourceGroup -Name $ResourceGroup -ErrorVariable notPresent -ErrorAction SilentlyContinue
+
+if ($notPresent){
+    New-AzResourceGroup -Name $ResourceGroup -Location $Location
+}
+else{
+    Write-Host "Resource Group $ResourceGroup already exists. Skipping..."
+}
+
 #Create Log Analytics workspace
 try {
 
     $WorkspaceObject = Get-AzOperationalInsightsWorkspace -Name $Workspace -ResourceGroupName $ResourceGroup  -ErrorAction Stop
     $ExistingtLocation = $WorkspaceObject.Location
-    Write-Output "Workspace named $Workspace in region $ExistingLocation already exists."
+    Write-Output "Workspace named $Workspace in region $ExistingLocation already exists. Skipping..."
 
 } catch {
 
@@ -79,6 +93,7 @@ foreach ($connector in $connectors.connectors) {
         }
         catch { 
             $errorReturn = $_
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
 
         $connectorProperties = @{
@@ -102,15 +117,14 @@ foreach ($connector in $connectors.connectors) {
                 } 
             }
             else {
-                Write-Host "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
+                Write-Host "Unable to enable data connector $($connector.kind) with error: $result.Content" 
             }   
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
         catch {
             $errorReturn = $_
-            $errorResult = ($errorReturn | ConvertFrom-Json ).error
             Write-Verbose $_.Exception.Message
-            Write-Error "Unable to invoke webrequest with error message: $($errorResult.message)" -ErrorAction Stop
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }  
     }
 
@@ -139,6 +153,7 @@ foreach ($connector in $connectors.connectors) {
         }
         catch {
             $errorReturn = $_
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
 
         if ($ascEnabled) {
@@ -186,15 +201,14 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" 
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
         catch {
             $errorReturn = $_
-            $errorResult = ($errorReturn | ConvertFrom-Json ).error
             Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $($errorResult.message)" -ErrorAction Stop
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
     }
     #Office365 connector
@@ -222,6 +236,7 @@ foreach ($connector in $connectors.connectors) {
         }
         catch {
             $errorReturn = $_
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
 
         if ($o365Enabled) {
@@ -269,15 +284,14 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"  -ForegroundColor Red
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"  
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
         catch {
             $errorReturn = $_
-            $errorResult = ($errorReturn | ConvertFrom-Json ).error
             Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $($errorResult.message)" -ErrorAction Stop
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
     }
     #MicrosoftCloudAppSecurity connector
@@ -305,6 +319,7 @@ foreach ($connector in $connectors.connectors) {
         }
         catch {
             $errorReturn = $_
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
 
         if ($mcasEnabled) {
@@ -352,15 +367,14 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" 
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
         catch {
             $errorReturn = $_
-            $errorResult = ($errorReturn | ConvertFrom-Json ).error
             Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $($errorResult.message)" -ErrorAction Stop
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
     }
     #AzureAdvancedThreatProtection connector
@@ -388,6 +402,7 @@ foreach ($connector in $connectors.connectors) {
         }
         catch {
             $errorReturn = $_
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
 
         if ($aatpEnabled) {
@@ -435,15 +450,14 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content"
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
         catch {
             $errorReturn = $_
-            $errorResult = ($errorReturn | ConvertFrom-Json ).error
             Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $($errorResult.message)" -ErrorAction Stop
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
     }
     #MicrosoftDefenderAdvancedThreatProtection connector
@@ -471,6 +485,7 @@ foreach ($connector in $connectors.connectors) {
         }
         catch {
             $errorReturn = $_
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
 
         if ($mdatpEnabled) {
@@ -518,15 +533,14 @@ foreach ($connector in $connectors.connectors) {
                 }
             }
             else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" -ForegroundColor Red
+                Write-Error "Unable to enable data connector $($connector.kind) with error: $result.Content" 
             }
             Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
         }
         catch {
             $errorReturn = $_
-            $errorResult = ($errorReturn | ConvertFrom-Json ).error
             Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $($errorResult.message)" -ErrorAction Stop
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
     }
     #AzureActiveDirectory
@@ -550,9 +564,8 @@ foreach ($connector in $connectors.connectors) {
         }
         catch {
             $errorReturn = $_
-            $errorResult = ($errorReturn | ConvertFrom-Json ).error
             Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $($errorResult.message)" -ErrorAction Stop
+            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
         }
     }
         
