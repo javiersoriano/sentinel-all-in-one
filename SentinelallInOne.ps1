@@ -5,6 +5,8 @@ param(
     [Parameter(Mandatory=$true)]$Location
 )
 
+Install-Module -Name Az.Resources -Scope CurrentUser -Force
+
 Install-Module -Name Az.OperationalInsights -Scope CurrentUser -Force
 
 Install-Module AzSentinel -Scope CurrentUser -Force
