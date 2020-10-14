@@ -5,11 +5,16 @@ param(
     [Parameter(Mandatory=$true)]$Location
 )
 
-Install-Module -Name Az.Resources -Scope CurrentUser -Force
+function CheckModules($module) {
+    $service = Get-Module -ListAvailable -Name $module
+    if (-Not $service) {
+        Install-Module -Name $module -Scope CurrentUser -Force
+    }  
+}
 
-Install-Module -Name Az.OperationalInsights -Scope CurrentUser -Force
-
-Install-Module AzSentinel -Scope CurrentUser -Force
+CheckModules("Az.Resources")
+CheckModules("Az.OperationalInsights")
+CheckModules("AzSentinel")
 
 Write-Host "`r`nYou will now be asked to log in to your Azure environment. `nFor this script to work correctly, you need to provide credentials of a Global Admin or Security Admin for your organization. `nThis will allow the script to enable all required connectors.`r`n" -BackgroundColor Magenta
 
@@ -36,7 +41,7 @@ else{
 try {
 
     $WorkspaceObject = Get-AzOperationalInsightsWorkspace -Name $Workspace -ResourceGroupName $ResourceGroup  -ErrorAction Stop
-    $ExistingtLocation = $WorkspaceObject.Location
+    $ExistingLocation = $WorkspaceObject.Location
     Write-Output "Workspace named $Workspace in region $ExistingLocation already exists. Skipping..."
 
 } catch {
