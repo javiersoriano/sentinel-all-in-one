@@ -18,7 +18,7 @@ CheckModules("AzSentinel")
 
 Write-Host "`r`nYou will now be asked to log in to your Azure environment. `nFor this script to work correctly, you need to provide credentials of a Global Admin or Security Admin for your organization. `nThis will allow the script to enable all required connectors.`r`n" -BackgroundColor Magenta
 
-Read-Host -Prompt "Press any key to continue or CTRL+C to quit the script" 
+Read-Host -Prompt "Press enter to continue or CTRL+C to quit the script" 
 
 Connect-AzAccount
 
@@ -68,10 +68,117 @@ $Resource = "https://management.azure.com/"
 
 #Urls to be used for Sentinel API calls
 $baseUri = "/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroup}/providers/Microsoft.OperationalInsights/workspaces/${Workspace}"
+$connectedDataConnectorsUri = "$baseUri/providers/Microsoft.SecurityInsights/dataConnectors/?api-version=2020-01-01"
 
+function Get-ConnectedDataconnectors{
+    try {
+            $allConnectedDataconnectors = (Invoke-AzRestMethod -Path $connectedDataConnectorsUri -Method GET).Content | ConvertFrom-Json			
+        }
+    catch {
+        $errorReturn = $_
+        Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
+    }
+    return $allConnectedDataconnectors
+}
+
+function checkDataConnector($dataConnector){
+    $currentDataconnector = "" | Select-Object -Property guid,etag,isEnabled
+    if ($allConnectedDataconnectors.value.Length -ne 0){
+        foreach ($value in $allConnectedDataconnectors.value){			
+            if ($value.kind -eq $dataConnector) {
+                Write-Host "Successfully queried data connector $($value.kind) - already enabled"
+                Write-Verbose $value
+                
+                $currentDataconnector.guid = $value.name
+                $currentDataconnector.etag = $value.etag
+                $currentDataconnector.isEnabled = $true
+                break					
+            }
+        }
+        if ($currentDataconnector.isEnabled -ne $true)
+        {
+            $currentDataconnector.guid = (New-Guid).Guid
+            $currentDataconnector.etag = $null
+            $currentDataconnector.isEnabled = $false
+        }
+    }
+    else{        
+        $currentDataconnector.guid = (New-Guid).Guid
+        $currentDataconnector.etag = $null
+        $currentDataconnector.isEnabled = $false
+    }
+    return $currentDataconnector
+}
+
+function BuildDataconnectorPayload($dataConnector, $guid, $etag, $isEnabled){    
+    if ($dataConnector.kind -ne "AzureSecurityCenter")
+    {
+        $connectorProperties = $dataConnector.properties
+        $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
+    }
+    else {
+        $connectorProperties = $dataConnector.properties
+        $connectorProperties | Add-Member -NotePropertyName subscriptionId -NotePropertyValue ${context}.Subscription.Id
+    }	
+    
+    if ($isEnabled) {
+		# Compose body for connector update scenario
+		Write-Host "Updating data connector $($dataConnector.kind)"
+		Write-Verbose "Name: $guid"
+		Write-Verbose "Etag: $etag"
+		
+		$connectorBody = @{}
+
+		$connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $dataConnector.kind -Force
+		$connectorBody | Add-Member -NotePropertyName name -NotePropertyValue $guid -Force
+		$connectorBody | Add-Member -NotePropertyName etag -NotePropertyValue $etag -Force
+		$connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
+	}
+	else {
+		# Compose body for connector enable scenario
+		Write-Host "$($dataConnector.kind) data connector is not enabled yet"
+		Write-Host "Enabling data connector $($dataConnector.kind)"
+        Write-Verbose "Name: $guid"
+        
+		$connectorBody = @{}
+
+		$connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $dataConnector.kind -Force
+		$connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
+
+	}
+	return $connectorBody
+}
+
+function EnableOrUpdateDataconnector($baseUri, $guid, $connectorBody, $isEnabled){ 
+	$uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
+	try {
+		$result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
+		if ($result.StatusCode -eq 200) {
+			if ($isEnabled){
+				Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
+			}
+			else {
+				Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
+			}
+		}
+		else {
+			Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
+		}
+		Write-Host ($body.Properties | Format-List | Format-Table | Out-String)
+	}
+	catch {
+		$errorReturn = $_
+		Write-Verbose $_
+		Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
+	}
+}
 
 #Getting all rules from file
 $connectors = Get-Content -Raw -Path $ConnectorsFile | ConvertFrom-Json
+
+#Getting all connected Data connectors
+$allConnectedDataconnectors = Get-ConnectedDataconnectors
+
 
 foreach ($connector in $connectors.connectors) {
     Write-Host "`r`nProcessing connector: " -NoNewline 
@@ -139,419 +246,52 @@ foreach ($connector in $connectors.connectors) {
     }
 
     #AzureSecurityCenter connector
-    elseif ($connector.kind -eq "AzureSecurityCenter") {
-        $ascEnabled = $false
-        $guid = (New-Guid).Guid
-        $etag = ""
-        $connectorBody = ""
-        $uri = "$baseUri/providers/Microsoft.SecurityInsights/dataConnectors/?api-version=2020-01-01"
-
-        #Query for connected datasources and search AzureSecurityCenter
-        try {
-            $result = (Invoke-AzRestMethod -Path $uri -Method GET).Content | ConvertFrom-Json
-            foreach ($value in $result.value){
-                # Check if ASC is already enabled (assuming there will be only one ASC per workspace)
-                if ($value.kind -eq "AzureSecurityCenter") {
-                    Write-Host "Successfully queried data connector $($value.kind) - already enabled"
-                    Write-Verbose $value
-                    $guid = $value.name
-                    $etag = $value.etag
-                    $ascEnabled = $true
-                    break
-                }
-            }
-        }
-        catch {
-            $errorReturn = $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
-
-        if ($ascEnabled) {
-            # Compose body for connector update scenario
-            Write-Host "Updating data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-            Write-Verbose "Etag: $etag"
-            
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName subscriptionId -NotePropertyValue ${context}.Subscription.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName name -NotePropertyValue $guid -Force
-            $connectorBody | Add-Member -NotePropertyName etag -NotePropertyValue $etag -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connector.properties
-        }
-        else {
-            # Compose body for connector enable scenario
-            Write-Host "$($connector.kind) data connector is not enabled yet"
-            Write-Host "Enabling data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName subscriptionId -NotePropertyValue ${context}.Subscription.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-
-        }
-
-        # Enable or update AzureSecurityCenter with http put method
-        $uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
-        try {
-            $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
-            if ($result.StatusCode -eq 200) {
-                if ($ascEnabled){
-                    Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
-                }
-            }
-            else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
-            }
-            Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
-        }
-        catch {
-            $errorReturn = $_
-            Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
+    elseif ($connector.kind -eq "AzureSecurityCenter") {  
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
     }
     #Office365 connector
     elseif ($connector.kind -eq "Office365") {
-        $o365Enabled = $false
-        $guid = (New-Guid).Guid
-        $etag = ""
-        $connectorBody = ""
-        $uri = "$baseUri/providers/Microsoft.SecurityInsights/dataConnectors/?api-version=2020-01-01"
-
-        #Query for connected datasources and search Office365
-        try {
-            $result = (Invoke-AzRestMethod -Path $uri -Method GET).Content | ConvertFrom-Json
-            foreach ($value in $result.value){
-                # Check if O365 is already enabled 
-                if ($value.kind -eq "Office365") {
-                    Write-Host "Successfully queried data connector $($value.kind) - already enabled"
-                    Write-Verbose $value
-                    $guid = $value.name
-                    $etag = $value.etag
-                    $o365Enabled = $true
-                    break
-                }
-            }
-        }
-        catch {
-            $errorReturn = $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
-
-        if ($o365Enabled) {
-            # Compose body for connector update scenario
-            Write-Host "Updating data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-            Write-Verbose "Etag: $etag"
-            
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName name -NotePropertyValue $guid -Force
-            $connectorBody | Add-Member -NotePropertyName etag -NotePropertyValue $etag -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-        }
-        else {
-            # Compose body for connector enable scenario
-            Write-Host "$($connector.kind) data connector is not enabled yet"
-            Write-Host "Enabling data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-
-        }
-
-        # Enable or update Office365 with http put method
-        $uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
-        try {
-            $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
-            if ($result.StatusCode -eq 200) {
-                if ($o365Enabled){
-                    Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
-                }
-            }
-            else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)"  
-            }
-            Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
-        }
-        catch {
-            $errorReturn = $_
-            Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
     }
     #MicrosoftCloudAppSecurity connector
     elseif ($connector.kind -eq "MicrosoftCloudAppSecurity") {
-        $mcasEnabled = $false
-        $guid = (New-Guid).Guid
-        $etag = ""
-        $connectorBody = ""
-        $uri = "$baseUri/providers/Microsoft.SecurityInsights/dataConnectors/?api-version=2020-01-01"
-
-        #Query for connected datasources and search Office365
-        try {
-            $result = (Invoke-AzRestMethod -Path $uri -Method GET).Content | ConvertFrom-Json
-            foreach ($value in $result.value){
-                # Check if O365 is already enabled 
-                if ($value.kind -eq "MicrosoftCloudAppSecurity") {
-                    Write-Host "Successfully queried data connector $($value.kind) - already enabled"
-                    Write-Verbose $value
-                    $guid = $value.name
-                    $etag = $value.etag
-                    $mcasEnabled = $true
-                    break
-                }
-            }
-        }
-        catch {
-            $errorReturn = $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
-
-        if ($mcasEnabled) {
-            # Compose body for connector update scenario
-            Write-Host "Updating data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-            Write-Verbose "Etag: $etag"
-            
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName name -NotePropertyValue $guid -Force
-            $connectorBody | Add-Member -NotePropertyName etag -NotePropertyValue $etag -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-        }
-        else {
-            # Compose body for connector enable scenario
-            Write-Host "$($connector.kind) data connector is not enabled yet"
-            Write-Host "Enabling data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-
-        }
-
-        # Enable or update MicrosoftCloudAppSecurity with http put method
-        $uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
-        try {
-            $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
-            if ($result.StatusCode -eq 200) {
-                if ($mcasEnabled){
-                    Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
-                }
-            }
-            else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
-            }
-            Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
-        }
-        catch {
-            $errorReturn = $_
-            Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
     }
     #AzureAdvancedThreatProtection connector
     elseif ($connector.kind -eq "AzureAdvancedThreatProtection") {
-        $aatpEnabled = $false
-        $guid = (New-Guid).Guid
-        $etag = ""
-        $connectorBody = ""
-        $uri = "$baseUri/providers/Microsoft.SecurityInsights/dataConnectors/?api-version=2020-01-01"
-
-        #Query for connected datasources and search AzureAdvancedThreatProtection
-        try {
-            $result = (Invoke-AzRestMethod -Path $uri -Method GET).Content | ConvertFrom-Json
-            foreach ($value in $result.value){
-                # Check if AATP is already enabled 
-                if ($value.kind -eq "AzureAdvancedThreatProtection") {
-                    Write-Host "Successfully queried data connector $($value.kind) - already enabled"
-                    Write-Verbose $value
-                    $guid = $value.name
-                    $etag = $value.etag
-                    $aatpEnabled = $true
-                    break
-                }
-            }
-        }
-        catch {
-            $errorReturn = $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
-
-        if ($aatpEnabled) {
-            # Compose body for connector update scenario
-            Write-Host "Updating data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-            Write-Verbose "Etag: $etag"
-            
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName name -NotePropertyValue $guid -Force
-            $connectorBody | Add-Member -NotePropertyName etag -NotePropertyValue $etag -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-        }
-        else {
-            # Compose body for connector enable scenario
-            Write-Host "$($connector.kind) data connector is not enabled yet"
-            Write-Host "Enabling data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-
-        }
-
-        # Enable or update AzureATP with http put method
-        $uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
-        try {
-            $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
-            if ($result.StatusCode -eq 200) {
-                if ($aatpEnabled){
-                    Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
-                }
-            }
-            else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)"
-            }
-            Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
-        }
-        catch {
-            $errorReturn = $_
-            Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
+    }
+    #ThreatIntelligencePlatforms connector
+    elseif ($connector.kind -eq "ThreatIntelligence") {
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
     }
     #MicrosoftDefenderAdvancedThreatProtection connector
     elseif ($connector.kind -eq "MicrosoftDefenderAdvancedThreatProtection") {
-        $mdatpEnabled = $false
-        $guid = (New-Guid).Guid
-        $etag = ""
-        $connectorBody = ""
-        $uri = "$baseUri/providers/Microsoft.SecurityInsights/dataConnectors/?api-version=2019-01-01-preview"
-
-        #Query for connected datasources and search MicrosoftDefenderAdvancedThreatProtection
-        try {
-            $result = (Invoke-AzRestMethod -Path $uri -Method GET).Content | ConvertFrom-Json
-            foreach ($value in $result.value){
-                # Check if MDATP is already enabled 
-                if ($value.kind -eq "MicrosoftDefenderAdvancedThreatProtection") {
-                    Write-Host "Successfully queried data connector $($value.kind) - already enabled"
-                    Write-Verbose $value
-                    $guid = $value.name
-                    $etag = $value.etag
-                    $mdatpEnabled = $true
-                    break
-                }
-            }
-        }
-        catch {
-            $errorReturn = $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
-
-        if ($mdatpEnabled) {
-            # Compose body for connector update scenario
-            Write-Host "Updating data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-            Write-Verbose "Etag: $etag"
-            
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName name -NotePropertyValue $guid -Force
-            $connectorBody | Add-Member -NotePropertyName etag -NotePropertyValue $etag -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-        }
-        else {
-            # Compose body for connector enable scenario
-            Write-Host "$($connector.kind) data connector is not enabled yet"
-            Write-Host "Enabling data connector $($connector.kind)"
-            Write-Verbose "Name: $guid"
-
-            $connectorProperties = $connector.properties
-            $connectorProperties | Add-Member -NotePropertyName tenantId -NotePropertyValue ${context}.Tenant.Id
-
-            $connectorBody = @{}
-
-            $connectorBody | Add-Member -NotePropertyName kind -NotePropertyValue $connector.kind -Force
-            $connectorBody | Add-Member -NotePropertyName properties -NotePropertyValue $connectorProperties
-
-        }
-
-        # Enable or update MicrosoftDefenderAdvancedThreatProtection with http put method
-        $uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
-        try {
-            $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
-            if ($result.StatusCode -eq 200) {
-                if ($mdatpEnabled){
-                    Write-Host "Successfully updated data connector: $($connector.kind)" -ForegroundColor Green
-                }
-                else {
-                    Write-Host "Successfully enabled data connector: $($connector.kind)" -ForegroundColor Green
-                }
-            }
-            else {
-                Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
-            }
-            Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
-        }
-        catch {
-            $errorReturn = $_
-            Write-Verbose $_
-            Write-Error "Unable to invoke webrequest with error message: $errorReturn" -ErrorAction Stop
-        }
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
     }
     #AzureActiveDirectory
     elseif ($connector.kind -eq "AzureActiveDirectory") {
@@ -567,7 +307,8 @@ foreach ($connector in $connectors.connectors) {
 
         $connectorBody | Add-Member -NotePropertyName name -NotePropertyValue "AzureSentinel_${Workspace}"
         $connectorBody.Add("properties",$connectorProperties)
-
+        
+               
         try {
             $result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
             if ($result.StatusCode -eq 200) {

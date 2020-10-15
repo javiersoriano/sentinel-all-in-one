@@ -76,6 +76,16 @@
                     }
                 }
             }
-        }
+        },
+        {
+            "kind": "ThreatIntelligence",            
+            "properties": {
+                "dataTypes": {
+                    "indicators": {
+                        "state": "enabled"
+                    }
+                }
+            }
+        }        
     ]
 }

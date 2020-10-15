@@ -12,11 +12,10 @@ function CheckModules($module) {
     }  
 }
 
-
-function DeleteDataConnector ($dataConnector, $dataConnectorUri) {
+function DeleteDataConnector ($dataConnector, $dataConUri) {
     #Enable or Update AzureActivityLog Connector with http put method
     try {
-        $deleteResponse = Invoke-AzRestMethod -Path $dataConnectorUri -Method DELETE
+        $deleteResponse = Invoke-AzRestMethod -Path $dataConUri -Method DELETE
         if ($deleteResponse.StatusCode -eq 200) {            
             Write-Host "Successfully deleted Data connector: $($dataConnector)" -ForegroundColor Green                        
         }
@@ -36,6 +35,12 @@ function DeleteDataConnector ($dataConnector, $dataConnectorUri) {
 CheckModules("Az.Resources")
 CheckModules("Az.OperationalInsights")
 CheckModules("AzSentinel")
+
+Write-Host "`r`nYou will now be asked to log in to your Azure environment. `nFor this script to work correctly, you need to provide credentials of a Global Admin or Security Admin for your organization. `nThis will allow the script to enable all required connectors.`r`n" -BackgroundColor Magenta
+
+Read-Host -Prompt "Press enter to continue or CTRL+C to quit the script" 
+
+Connect-AzAccount
 
 $context = Get-AzContext
 
@@ -81,18 +86,18 @@ catch {
 #Getting all rules from file
 $connectorsToDelete = Get-Content -Raw -Path $ConnectorsFile | ConvertFrom-Json
 
-foreach ($toBeDeletedConnector in $connectorsToDelete.connectors) {
-    Write-Host "`r`nProcessing connector: " -NoNewline 
-    Write-Host "$($toBeDeletedConnector.kind)" -ForegroundColor Blue
+foreach ($toBeDeletedConnector in $connectorsToDelete.connectors) {   
     
     foreach ($dataConnector in $connectedDataConnectors.value){
         # Check if ASC is already enabled (assuming there will be only one ASC per workspace)
         if ($dataConnector.kind -eq $toBeDeletedConnector.kind) {
+            Write-Host "`r`nProcessing connector: " -NoNewline 
+            Write-Host "$($dataConnector.kind)" -ForegroundColor Blue
             Write-Host "Data connector $($dataConnector.kind) - enabled"
             Write-Verbose $dataConnector
             $guid = $dataConnector.name                    
-            $uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
-            DeleteDataConnector($dataConnector.kind, $uri)
+            $dataConnectorUri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
+            DeleteDataConnector $dataConnector.kind $dataConnectorUri
             break     
         }        
     }    
