@@ -18,7 +18,7 @@ CheckModules("AzSentinel")
 
 Write-Host "`r`nYou will now be asked to log in to your Azure environment. `nFor this script to work correctly, you need to provide credentials of a Global Admin or Security Admin for your organization. `nThis will allow the script to enable all required connectors.`r`n" -BackgroundColor Magenta
 
-Read-Host -Prompt "Press any key to continue or CTRL+C to quit the script" 
+Read-Host -Prompt "Press enter to continue or CTRL+C to quit the script" 
 
 Connect-AzAccount
 
@@ -149,7 +149,7 @@ function BuildDataconnectorPayload($dataConnector, $guid, $etag, $isEnabled){
 	return $connectorBody
 }
 
-function EnableOrUpdateDataconnector($baseUri, $guid, $connectorBody, $isEnabled){
+function EnableOrUpdateDataconnector($baseUri, $guid, $connectorBody, $isEnabled){ 
 	$uri = "${baseUri}/providers/Microsoft.SecurityInsights/dataConnectors/${guid}?api-version=2020-01-01"
 	try {
 		$result = Invoke-AzRestMethod -Path $uri -Method PUT -Payload ($connectorBody | ConvertTo-Json -Depth 3)
@@ -164,7 +164,7 @@ function EnableOrUpdateDataconnector($baseUri, $guid, $connectorBody, $isEnabled
 		else {
 			Write-Error "Unable to enable data connector $($connector.kind) with error: $($result.Content)" 
 		}
-		Write-Verbose ($body.Properties | Format-List | Format-Table | Out-String)
+		Write-Host ($body.Properties | Format-List | Format-Table | Out-String)
 	}
 	catch {
 		$errorReturn = $_
@@ -271,6 +271,14 @@ foreach ($connector in $connectors.connectors) {
     }
     #AzureAdvancedThreatProtection connector
     elseif ($connector.kind -eq "AzureAdvancedThreatProtection") {
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
+    }
+    #ThreatIntelligencePlatforms connector
+    elseif ($connector.kind -eq "ThreatIntelligence") {
         $dataConnectorBody = ""        
         #query for connected Data connectors
         $connectorProperties = checkDataConnector($connector.kind)
