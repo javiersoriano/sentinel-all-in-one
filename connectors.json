@@ -14,7 +14,7 @@
             }
         },
         {
-            "kind": "AzureActiveDirectory",
+            "kind": "AzureActiveDirectoryDiagnostics",
             "properties": {
                 "logs": [
                     {
@@ -26,6 +26,16 @@
                         "enabled": true
                     }
                 ]
+            }
+        },
+        {
+            "kind": "AzureActiveDirectory",
+            "properties": {
+                "dataTypes": {
+                    "alerts": {
+                        "state": "enabled"
+                    }
+                }
             }
         },
         {

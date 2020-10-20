@@ -1,7 +1,6 @@
 param(
     [Parameter(Mandatory=$true)]$ResourceGroup,
     [Parameter(Mandatory=$true)]$Workspace,
-    [Parameter(Mandatory=$true)]$ConnectorsFile,
     [Parameter(Mandatory=$true)]$Location
 )
 
@@ -26,6 +25,7 @@ $context = Get-AzContext
 
 $SubscriptionId = $context.Subscription.Id
 
+$ConnectorsFile = ".\connectors.json"
 #Create Resource Group
 Get-AzResourceGroup -Name $ResourceGroup -ErrorVariable notPresent -ErrorAction SilentlyContinue
 
@@ -55,13 +55,13 @@ try {
 $solutions = Get-AzOperationalInsightsIntelligencePack -resourcegroupname $ResourceGroup -WorkspaceName $Workspace -WarningAction:SilentlyContinue
 
 if (($solutions | Where-Object Name -eq 'SecurityInsights').Enabled) {
-    Write-Host "SecurityInsights solution is already enabled for workspace $($Workspace)"
+    Write-Host "Azure Sentinel is already installed on workspace $($Workspace)"
 }
 else {
     Set-AzSentinel -WorkspaceName $Workspace -Confirm:$false
 }
 
-Start-Sleep -s 15
+$msTemplates = Get-AzSentinelAlertRuleTemplates -workspace $Workspace -Kind MicrosoftSecurityIncidentCreation
 
 #Resource URL to authentincate against
 $Resource = "https://management.azure.com/"
@@ -173,6 +173,21 @@ function EnableOrUpdateDataconnector($baseUri, $guid, $connectorBody, $isEnabled
 	}
 }
 
+function EnableMSAnalyticsRule($msProduct){ 
+    try {
+        foreach ($rule in $msTemplates){
+            if ($rule.properties.productFilter -eq $msProduct) {
+                New-AzSentinelAlertRule -WorkspaceName $Workspace -Kind MicrosoftSecurityIncidentCreation -DisplayName $rule.properties.displayName -Description $rule.properties.description -Enabled $true -ProductFilter $msProduct -SeveritiesFilter "High" -DisplayNamesFilter ""       
+            }
+        }
+	}
+	catch {
+		$errorReturn = $_
+		Write-Verbose $_
+		Write-Error "Unable to create analytics rule with error message: $errorReturn" -ErrorAction Stop
+	}
+}
+
 #Getting all rules from file
 $connectors = Get-Content -Raw -Path $ConnectorsFile | ConvertFrom-Json
 
@@ -252,6 +267,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
+        Write-Host "Adding Analytics Rule for data connector Azure Security Center..."
+        EnableMSAnalyticsRule "Azure Security Center"
     }
     #Office365 connector
     elseif ($connector.kind -eq "Office365") {
@@ -268,6 +285,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
+        Write-Host "Adding Analytics Rule for data connector Microsoft Cloud App Security..."
+        EnableMSAnalyticsRule "Microsoft Cloud App Security"
     }
     #AzureAdvancedThreatProtection connector
     elseif ($connector.kind -eq "AzureAdvancedThreatProtection") {
@@ -276,6 +295,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
+        Write-Host "Adding Analytics Rule for data connector Azure Advanced Threat Protection..."
+        EnableMSAnalyticsRule "Azure Advanced Threat Protection"
     }
     #ThreatIntelligencePlatforms connector
     elseif ($connector.kind -eq "ThreatIntelligence") {
@@ -292,9 +313,21 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
+        Write-Host "Adding Analytics Rule for data connector Microsoft Defender Advanced Threat Protection..."
+        EnableMSAnalyticsRule "Microsoft Defender Advanced Threat Protection"
+    }
+    #Azure Active Directory Identity Protection connector
+    elseif ($connector.kind -eq "AzureActiveDirectory") {
+        $dataConnectorBody = ""        
+        #query for connected Data connectors
+        $connectorProperties = checkDataConnector($connector.kind)
+        $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
+        EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
+        Write-Host "Adding Analytics Rule for data connector Azure Active Directory Identity Protection..."
+        EnableMSAnalyticsRule "Azure Active Directory Identity Protection"
     }
     #AzureActiveDirectory
-    elseif ($connector.kind -eq "AzureActiveDirectory") {
+    elseif ($connector.kind -eq "AzureActiveDirectoryDiagnostics") {
         <# Azure Active Directory Audit/SignIn logs - requires special call and is therefore not connectors file
         # Be aware that you executing SPN needs Owner rights on tenant scope for this operation, can be added with following CLI
         # az role assignment create --role Owner --scope "/" --assignee {13ece749-d0a0-46cf-8000-b2552b520631}#>
