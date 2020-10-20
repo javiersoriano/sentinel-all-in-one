@@ -1,0 +1,243 @@
+Kind,Display Name,Connector
+Scheduled,Full Admin policy created and then attached to Roles, Users or Groups,AWS
+Scheduled,User Accessed Suspicious URL Categories,SymantecProxySG
+MicrosoftSecurityIncidentCreation,Create incidents based on Azure Security Center for IoT alerts,IoT
+Scheduled,Rare application consent,AzureActiveDirectory
+Scheduled,(Preview) TI map IP entity to AzureActivity,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to AzureActivity,AzureActivity
+MicrosoftSecurityIncidentCreation,Create incidents based on Office 365 Advanced Threat Protection alerts,OfficeATP
+Scheduled,(Preview) TI map URL entity to PaloAlto data,PaloAltoNetworks
+Scheduled,(Preview) TI map URL entity to PaloAlto data,ThreatIntelligence
+Scheduled,SharePointFileOperation via devices with previously unseen user agents,Office365
+Scheduled,Process execution frequency anomaly,SecurityEvents
+Scheduled,Palo Alto - potential beaconing detected,PaloAltoNetworks
+Scheduled,Excessive Failed Authentication from Invalid Inputs,SymantecVIP
+Scheduled,RDP Nesting,SecurityEvents
+Scheduled,SecurityEvent - Multiple authentication failures followed by a success,SecurityEvents
+Scheduled,Changes to AWS Security Group ingress and egress settings,AWS
+Scheduled,New High Severity Vulnerability Detected Across Multiple Hosts,QualysVulnerabilityManagement
+Scheduled,Office policy tampering,Office365
+Scheduled,Failed login attempts to Azure Portal,AzureActiveDirectory
+Scheduled,Security Event log cleared,SecurityEvents
+Scheduled,Anomalous sign-in location by user account and authenticating application,AzureActiveDirectory
+Scheduled,(Preview) TI map Domain entity to PaloAlto,PaloAltoNetworks
+Scheduled,(Preview) TI map Domain entity to PaloAlto,ThreatIntelligence
+Scheduled,Brute force attack against Azure Portal,AzureActiveDirectory
+Scheduled,ClientDeniedAccess,SymantecVIP
+Scheduled,Group added to built in domain local or global group,SecurityEvents
+Scheduled,Azure Key Vault access TimeSeries anomaly,WAF
+Scheduled,High count of failed logons by a user,AzureMonitor(IIS)
+Scheduled,Malware attachment delivered,ProofpointTAP
+Scheduled,Monitor AWS Credential abuse or hijacking,AWS
+Scheduled,Potential DHCP Starvation Attack,InfobloxNIOS
+Scheduled,DNS events related to mining pools,DNS
+Scheduled,(Preview) TI map Email entity to SigninLogs,ThreatIntelligence
+Scheduled,(Preview) TI map Email entity to SigninLogs,AzureActiveDirectory
+Scheduled,(Preview) TI map URL entity to SecurityAlert data,MicrosoftCloudAppSecurity
+Scheduled,(Preview) TI map URL entity to SecurityAlert data,AzureSecurityCenter
+Scheduled,(Preview) TI map URL entity to SecurityAlert data,ThreatIntelligence
+Scheduled,SSH - Potential Brute Force,Syslog
+Scheduled,Base64 encoded Windows process command-lines,SecurityEvents
+Scheduled,(Preview) TI map File Hash to CommonSecurityLog Event,PaloAltoNetworks
+Scheduled,(Preview) TI map File Hash to CommonSecurityLog Event,ThreatIntelligence
+Scheduled,Suspicious application consent similar to O365 Attack Toolkit,AzureActiveDirectory
+Scheduled,Known Malware Detected,VMwareCarbonBlack
+Scheduled,Malformed user agent,WAF
+Scheduled,Malformed user agent,Office365
+Scheduled,Known Phosphorus group domains/IP,DNS
+Scheduled,Known Phosphorus group domains/IP,AzureMonitor(VMInsights)
+Scheduled,Known Phosphorus group domains/IP,CiscoASA
+Scheduled,Known Phosphorus group domains/IP,PaloAltoNetworks
+Scheduled,Known Phosphorus group domains/IP,Office365
+Scheduled,Changes to AWS Elastic Load Balancer security groups,AWS
+Scheduled,Attempt to bypass conditional access rule in Azure AD,AzureActiveDirectory
+Scheduled,DNS events related to ToR proxies,DNS
+Scheduled,(Preview) TI map Email entity to SecurityAlert,AzureSecurityCenter
+Scheduled,(Preview) TI map Email entity to SecurityAlert,ThreatIntelligence
+MLBehaviorAnalytics,(Preview) Anomalous SSH Login Detection,Syslog
+Scheduled,Potential DGA detected,DNS
+Scheduled,Cisco ASA - average attack detection rate increase,CiscoASA
+Scheduled,Mail redirect via ExO transport rule,Office365
+Scheduled,Known IRIDIUM IP,Office365
+Scheduled,Known IRIDIUM IP,DNS
+Scheduled,Known IRIDIUM IP,AzureMonitor(VMInsights)
+Scheduled,Known IRIDIUM IP,CiscoASA
+Scheduled,Known IRIDIUM IP,PaloAltoNetworks
+Scheduled,Known IRIDIUM IP,SecurityEvents
+Scheduled,Known IRIDIUM IP,AzureActiveDirectory
+Scheduled,Known IRIDIUM IP,AzureMonitor(WireData)
+Scheduled,Known IRIDIUM IP,AzureMonitor(IIS)
+Scheduled,Known IRIDIUM IP,AzureActivity
+Scheduled,Known IRIDIUM IP,AWS
+Scheduled,(Preview) TI map Email entity to CommonSecurityLog,PaloAltoNetworks
+Scheduled,(Preview) TI map Email entity to CommonSecurityLog,ThreatIntelligence
+Scheduled,Process executed from binary hidden in Base64 encoded file,SecurityEvents
+MicrosoftSecurityIncidentCreation,Create incidents based on Azure Active Directory Identity Protection alerts,AzureActiveDirectoryIdentityProtection
+Scheduled,Excessive Windows logon failures,SecurityEvents
+Scheduled,Time series anomaly for data size transferred to public internet,CiscoASA
+Scheduled,Time series anomaly for data size transferred to public internet,PaloAltoNetworks
+Scheduled,Time series anomaly for data size transferred to public internet,AzureMonitor(VMInsights)
+Scheduled,THALLIUM domains included in DCU takedown,DNS
+Scheduled,THALLIUM domains included in DCU takedown,AzureMonitor(VMInsights)
+Scheduled,THALLIUM domains included in DCU takedown,CiscoASA
+Scheduled,THALLIUM domains included in DCU takedown,PaloAltoNetworks
+Scheduled,Time series anomaly detection for total volume of traffic,Barracuda
+Scheduled,Time series anomaly detection for total volume of traffic,CEF
+Scheduled,Time series anomaly detection for total volume of traffic,CheckPoint
+Scheduled,Time series anomaly detection for total volume of traffic,CiscoASA
+Scheduled,Time series anomaly detection for total volume of traffic,F5
+Scheduled,Time series anomaly detection for total volume of traffic,Fortinet
+Scheduled,Time series anomaly detection for total volume of traffic,PaloAltoNetworks
+Scheduled,Suspicious application consent for offline access,AzureActiveDirectory
+Scheduled,Failed logon attempts within 10 mins,SecurityEvents
+Scheduled,(Preview) TI map File Hash to Security Event,SecurityEvents
+Scheduled,(Preview) TI map File Hash to Security Event,ThreatIntelligence
+Scheduled,(Preview) TI map Domain entity to DnsEvent,DNS
+Scheduled,(Preview) TI map Domain entity to DnsEvent,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to AWSCloudTrail,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to AWSCloudTrail,AWS
+Scheduled,Powershell Empire cmdlets seen in command line,SecurityEvents
+Scheduled,Failed AzureAD logons but success logon to AWS Console,AzureActiveDirectory
+Scheduled,Failed AzureAD logons but success logon to AWS Console,AWS
+Scheduled,Multiple Password Reset by user,AzureActiveDirectory
+Scheduled,Multiple Password Reset by user,SecurityEvents
+Scheduled,Multiple Password Reset by user,Syslog
+Scheduled,Multiple Password Reset by user,Office365
+MicrosoftSecurityIncidentCreation,Create incidents based on Microsoft Defender Advanced Threat Protection alerts,MicrosoftDefenderAdvancedThreatProtection
+Scheduled,High count of connections by client IP on many ports,AzureMonitor(IIS)
+Scheduled,(Preview) TI map URL entity to AuditLogs,AzureActiveDirectory
+Scheduled,(Preview) TI map URL entity to AuditLogs,ThreatIntelligence
+Scheduled,Suspicious number of resource creation or deployment activities,AzureActivity
+Scheduled,High Number of Urgent Vulnerabilities Detected,QualysVulnerabilityManagement
+Scheduled,Suspicious application consent similar to PwnAuth,AzureActiveDirectory
+Scheduled,User account enabled and disabled within 10 mins,SecurityEvents
+Scheduled,Malware in the recycle bin,SecurityEvents
+Scheduled,Multiple Failed VPN User Logins,PulseConnectSecure
+Scheduled,Changes to Amazon VPC settings,AWS
+Scheduled,Suspicious Resource deployment,AzureActivity
+Scheduled,New executable via Office FileUploaded Operation,Office365
+Scheduled,SharePointFileOperation via previously unseen IPs,Office365
+Scheduled,Multiple users email forwarded to same destination,Office365
+Scheduled,Port Scan Detected,SophosXGFirewall
+Scheduled,User account created and deleted within 10 mins,SecurityEvents
+Scheduled,Fortinet - Beacon pattern detected,Fortinet
+Scheduled,Potential Password Spray Attack,OktaSSO
+Scheduled,Distributed Password cracking attempts in AzureAD,AzureActiveDirectory
+Scheduled,(Preview) TI map URL entity to OfficeActivity data,Office365
+Scheduled,(Preview) TI map URL entity to OfficeActivity data,ThreatIntelligence
+Scheduled,User account added to built in domain local or global group,SecurityEvents
+Scheduled,(Preview) TI map Domain entity to SecurityAlert,ThreatIntelligence
+Scheduled,(Preview) TI map Domain entity to SecurityAlert,MicrosoftCloudAppSecurity
+Scheduled,(Preview) TI map Domain entity to SecurityAlert,AzureSecurityCenter
+Scheduled,Squid proxy events for ToR proxies,Syslog
+Scheduled,Brute Force Attack against GitHub Account,AzureActiveDirectory
+ThreatIntelligence,(Preview) Microsoft Threat Intelligence Analytics,CEF
+Scheduled,Failed host logons but success logon to AzureAD,AzureActiveDirectory
+Scheduled,Failed host logons but success logon to AzureAD,SecurityEvents
+Scheduled,Failed host logons but success logon to AzureAD,Syslog
+Scheduled,Rare RDP Connections,SecurityEvents
+Scheduled,Potential Kerberoasting,SecurityEvents
+Scheduled,(Preview) TI map Domain entity to Syslog,Syslog
+Scheduled,(Preview) TI map Domain entity to Syslog,ThreatIntelligence
+Scheduled,Palo Alto - possible internal to external port scanning,PaloAltoNetworks
+Scheduled,Mass secret retrieval from Azure Key Vault,WAF
+Scheduled,(Preview) TI map Email entity to AzureActivity,AzureActivity
+Scheduled,(Preview) TI map Email entity to AzureActivity,ThreatIntelligence
+Scheduled,Failed AWS Console logons but success logon to AzureAD,AzureActiveDirectory
+Scheduled,Failed AWS Console logons but success logon to AzureAD,AWS
+Scheduled,(Preview) TI map Email entity to OfficeActivity,Office365
+Scheduled,(Preview) TI map Email entity to OfficeActivity,ThreatIntelligence
+Scheduled,Malicious Inbox Rule,Office365
+Scheduled,(Preview) TI map IP entity to SigninLogs,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to SigninLogs,AzureActiveDirectory
+Scheduled,(Preview) TI map URL entity to Syslog data,Syslog
+Scheduled,(Preview) TI map URL entity to Syslog data,ThreatIntelligence
+Scheduled,Failed logon attempts in authpriv,Syslog
+Scheduled,Excessive Amount of Denied Connections from a Single Source,SophosXGFirewall
+Scheduled,Excessive Denied Proxy Traffic,SymantecProxySG
+Scheduled,Login from User(s) from Different Countries within 3 hours,OktaSSO
+Scheduled,High count of failed attempts from same client IP,AzureMonitor(IIS)
+Scheduled,New internet-exposed SSH endpoints,Syslog
+Scheduled,Sign-ins from IPs that attempt sign-ins to disabled accounts,AzureActiveDirectory
+Scheduled,New UserAgent observed in last 24 hours,AWS
+Scheduled,New UserAgent observed in last 24 hours,Office365
+Scheduled,New UserAgent observed in last 24 hours,AzureMonitor(IIS)
+Scheduled,GitHub Signin Burst from Multiple Locations,AzureActiveDirectory
+Scheduled,Malware Link Clicked,ProofpointTAP
+Scheduled,Threats detected by Eset,EsetSMC
+MicrosoftSecurityIncidentCreation,Create incidents based on Azure Security Center alerts,AzureSecurityCenter
+Scheduled,(Preview) TI map IP entity to DnsEvents,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to DnsEvents,DNS
+Scheduled,Microsoft COVID-19 file hash indicator matches,PaloAltoNetworks
+Scheduled,Failed Logins from Unknown or Invalid User,OktaSSO
+Scheduled,Web sites blocked by Eset,EsetSMC
+Scheduled,Known Manganese IP and UserAgent activity,Office365
+Scheduled,Request for single resource on domain,Zscaler
+Scheduled,Sensitive Azure Key Vault operations,WAF
+MLBehaviorAnalytics,(Preview) Anomalous RDP Login Detections,SecurityEvents
+Scheduled,Excessive NXDOMAIN DNS Queries,InfobloxNIOS
+Scheduled,Password spray attack against Azure AD application,AzureActiveDirectory
+Scheduled,Login to AWS Management Console without MFA,AWS
+Scheduled,AD account with don't expire password - disabled,SecurityEvents
+Scheduled,Account added and removed from privileged groups,SecurityEvents
+Scheduled,Critical Threat Detected,VMwareCarbonBlack
+Scheduled,Known GALLIUM domains and hashes,DNS
+Scheduled,Known GALLIUM domains and hashes,AzureMonitor(VMInsights)
+Scheduled,Known GALLIUM domains and hashes,CiscoASA
+Scheduled,Known GALLIUM domains and hashes,PaloAltoNetworks
+Scheduled,Known GALLIUM domains and hashes,SecurityEvents
+Scheduled,Rare client observed with high reverse DNS lookup count,DNS
+Scheduled,Suspicious granting of permissions to an account,AzureActivity
+Scheduled,Exchange AuditLog disabled,Office365
+MLBehaviorAnalytics,(Private Preview) Anomalous Fileshare Detections,SecurityEvents
+Scheduled,IP with multiple failed Azure AD logins successfully logs in to Palo Alto VPN,AzureActiveDirectory
+Scheduled,IP with multiple failed Azure AD logins successfully logs in to Palo Alto VPN,PaloAltoNetworks
+Scheduled,AD user created password not set within 24-48 hours,SecurityEvents
+Scheduled,Possible contact with a domain generated by a DGA,Zscaler
+Scheduled,Possible contact with a domain generated by a DGA,Barracuda
+Scheduled,Possible contact with a domain generated by a DGA,CEF
+Scheduled,Possible contact with a domain generated by a DGA,CheckPoint
+Scheduled,Possible contact with a domain generated by a DGA,CiscoASA
+Scheduled,Possible contact with a domain generated by a DGA,F5
+Scheduled,Possible contact with a domain generated by a DGA,Fortinet
+Scheduled,Possible contact with a domain generated by a DGA,PaloAltoNetworks
+Scheduled,Failed AzureAD logons but success logon to host,AzureActiveDirectory
+Scheduled,Failed AzureAD logons but success logon to host,SecurityEvents
+Scheduled,Failed AzureAD logons but success logon to host,Syslog
+MicrosoftSecurityIncidentCreation,Create incidents based on Microsoft Cloud App Security alerts,MicrosoftCloudAppSecurity
+Scheduled,Squid proxy events related to mining pools,Syslog
+Scheduled,Rare subscription-level operations in Azure,AzureActivity
+Scheduled,Known Strontium group domains,DNS
+Scheduled,Known Strontium group domains,AzureMonitor(VMInsights)
+Scheduled,Known Strontium group domains,CiscoASA
+Scheduled,Known Strontium group domains,PaloAltoNetworks
+Scheduled,New user created and added to the built-in administrators group,SecurityEvents
+Scheduled,Large Number of Distinct Failed User Logins,PulseConnectSecure
+Scheduled,Changes to internet facing AWS RDS Database instances,AWS
+Scheduled,(Preview) TI map IP entity to VMConnection,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to VMConnection,AzureMonitor(VMInsights)
+Scheduled,Network endpoint to host executable correlation,TrendMicro
+Scheduled,Network endpoint to host executable correlation,SecurityEvents
+Scheduled,Attempts to sign in to disabled accounts,AzureActiveDirectory
+Scheduled,Multiple RDP connections from Single System,SecurityEvents
+MicrosoftSecurityIncidentCreation,Create incidents based on Azure Advanced Threat Protection alerts,AzureAdvancedThreatProtection
+Scheduled,Changes made to AWS CloudTrail logs,AWS
+Scheduled,MFA disabled for a user,AzureActiveDirectory
+Scheduled,MFA disabled for a user,AWS
+Scheduled,Malicious web application requests linked with MDATP alerts,MicrosoftDefenderAdvancedThreatProtection
+Scheduled,Malicious web application requests linked with MDATP alerts,AzureMonitor(IIS)
+Scheduled,(Preview) TI map Email entity to SecurityEvent,ThreatIntelligence
+Scheduled,(Preview) TI map Email entity to SecurityEvent,SecurityEvents
+Scheduled,Successful logon from IP and failure from a different IP,AzureActiveDirectory
+Scheduled,Anomalous User Agent connection attempt,AzureMonitor(IIS)
+Scheduled,(Preview) TI map IP entity to WireData,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to WireData,AzureMonitor(WireData)
+Scheduled,(Preview) TI map IP entity to W3CIISLog,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to W3CIISLog,AzureMonitor(IIS)
+Scheduled,(Preview) TI map IP entity to OfficeActivity,ThreatIntelligence
+Scheduled,(Preview) TI map IP entity to OfficeActivity,Office365
+Scheduled,Rare and potentially high-risk Office operations,Office365
+Scheduled,Cisco ASA - threat detection message fired,CiscoASA
+Scheduled,(Preview) TI map Domain entity to CommonSecurityLog,ThreatIntelligence
+Scheduled,Cisco - firewall block but success logon to Azure AD,CiscoASA
+Scheduled,Cisco - firewall block but success logon to Azure AD,AzureActiveDirectory
