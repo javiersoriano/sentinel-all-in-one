@@ -1,6 +1,8 @@
-# Sentinel All In One
+# Azure Sentinel All In One
 
-Sentinel All in One is a project that seeks to speed up deployment and initial configuration tasks of an Azure Sentinel environment. This is ideal for Proof of Concept scenarios and connector onboarding when highly privileged users are needed.
+![logo](./media/Sentinel21Logo.PNG| width=100)
+
+Azure Sentinel All in One is a project that seeks to speed up deployment and initial configuration tasks of an Azure Sentinel environment. This is ideal for Proof of Concept scenarios and connector onboarding when highly privileged users are needed.
 
 The main script in this repository takes care of the following steps:
 
