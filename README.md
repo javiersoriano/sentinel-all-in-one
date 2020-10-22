@@ -50,12 +50,18 @@ Once you have PowerShell Core installed on your machine, you just need two files
 
 * *SentinelAllInOne.ps1* - script that automates all the steps outlined above.
 
+The script uses your current Azure context, if you want to change the subscription you want to use, make sure you do that before executing the script. You can use `Connect-AzAccount -SubscriptionId <subscription_id>`  to do that
+
 Open a PowerShell core terminal, navigate to the folder where these two files are located and execute *SentinelAllInOne.ps1*. You will be asked to enter the following parameters:
 
  - **Resource Group** - Resource Group that will contain the Azure Sentinel environment. If the provided resource group already exists, the script will skip its creation.
  - **Workspace** - Name of the Azure Sentinel workspace. If it already exists, the script will skip its creation.
  - **Location** - Location for the resource group and Azure Sentinel workspace.
 
-The script will ask you to log in to your Azure account. Make sure you have the right permissions for the connectors contained in *connectors.json* file.
+If not logged in already, the script will ask you to log in to your Azure account. Make sure you have the right permissions to enable the connectors specified in *connectors.json* file.
 
 The script will then iterate through the connectors specified in the *connectors.json* file and enable them. It will also enable the corresponding Microsoft analytics rules.
+
+Here you have a GIF that shows the execution process:
+
+![demo](./media/SentinelAllInOne.gif)
