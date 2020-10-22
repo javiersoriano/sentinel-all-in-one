@@ -15,13 +15,16 @@ CheckModules("Az.Resources")
 CheckModules("Az.OperationalInsights")
 CheckModules("AzSentinel")
 
-Write-Host "`r`nYou will now be asked to log in to your Azure environment. `nFor this script to work correctly, you need to provide credentials of a Global Admin or Security Admin for your organization. `nThis will allow the script to enable all required connectors.`r`n" -BackgroundColor Magenta
+Write-Host "`r`nIf not logged in to Azure already, you will now be asked to log in to your Azure environment. `nFor this script to work correctly, you need to provide credentials of a Global Admin or Security Admin for your organization. `nThis will allow the script to enable all required connectors.`r`n" -BackgroundColor Magenta
 
 Read-Host -Prompt "Press enter to continue or CTRL+C to quit the script" 
 
-Connect-AzAccount
-
 $context = Get-AzContext
+
+if(!$context){
+    Connect-AzAccount
+    $context = Get-AzContext
+}
 
 $SubscriptionId = $context.Subscription.Id
 
@@ -176,8 +179,8 @@ function EnableOrUpdateDataconnector($baseUri, $guid, $connectorBody, $isEnabled
 function EnableMSAnalyticsRule($msProduct){ 
     try {
         foreach ($rule in $msTemplates){
-            if ($rule.properties.productFilter -eq $msProduct) {
-                New-AzSentinelAlertRule -WorkspaceName $Workspace -Kind MicrosoftSecurityIncidentCreation -DisplayName $rule.properties.displayName -Description $rule.properties.description -Enabled $true -ProductFilter $msProduct -SeveritiesFilter "High" -DisplayNamesFilter ""       
+            if ($rule.productFilter -eq $msProduct) {
+                New-AzSentinelAlertRule -WorkspaceName $Workspace -Kind MicrosoftSecurityIncidentCreation -DisplayName $rule.displayName -Description $rule.description -Enabled $true -ProductFilter $msProduct -DisplayNamesFilter ""       
             }
         }
 	}
