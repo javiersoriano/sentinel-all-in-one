@@ -29,6 +29,7 @@ These instructions will show you what you need to now to use Sentinel All in One
 - [PowerShell Core](https://github.com/PowerShell/PowerShell)
 - Azure user account with enough permissions to enable the required connectors. See table below.
 - Some data connectors also require a license to be present in order to be enabled. See table below.
+- Threat Intelligence Platforms connector requires additional setup documented [here](https://docs.microsoft.com/en-us/azure/sentinel/connect-threat-intelligence#connect-azure-sentinel-to-your-threat-intelligence-platform)
 
 The following table summarizes permissions and licenses needed to enable each Data Connector:
 
