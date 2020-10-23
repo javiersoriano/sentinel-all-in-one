@@ -31,19 +31,19 @@ These instructions will show you what you need to now to use Sentinel All in One
 - Some data connectors also require a license to be present in order to be enabled. See table below.
 - Threat Intelligence Platforms connector requires additional setup documented [here](https://docs.microsoft.com/en-us/azure/sentinel/connect-threat-intelligence#connect-azure-sentinel-to-your-threat-intelligence-platform)
 
-The following table summarizes permissions and licenses needed to enable each Data Connector:
+The following table summarizes permissions, licenses needed and cost to enable each Data Connector:
 
-| Data Connector                                 | License         |  Permissions                   |
-| ---------------------------------------------- | --------------- |--------------------------------|
-| Azure Activity                                 | None            |Reader                          |
-| Azure Security Center                          | ASC Standard    |Security Reader                 |
-| Azure Active Directory                         | Any AAD license |Global Admin or Security Admin  |
-| Azure Active Directory Identity Protection     | AAD Premium 2   |Global Admin or Security Admin  |
-| Office 365                                     | None            |Global Admin or Security Admin  |         |
-| Microsoft Cloud App Security                   | MCAS            |Global Admin or Security Admin  |
-| Azure Advanced Threat Protection               | AATP            |Global Admin or Security Admin  |       |
-| Microsoft Defender Advanced Threat Protection  | MDATP           |Global Admin or Security Admin  |
-| Threat Intelligence Platforms                  | None            |Global Admin or Security Admin  |
+| Data Connector                                 | License         |  Permissions                   | Cost      |
+| ---------------------------------------------- | --------------- |--------------------------------|-----------|
+| Azure Activity                                 | None            |Reader                          | Free      |
+| Azure Security Center                          | ASC Standard    |Security Reader                 | Free      |
+| Azure Active Directory                         | Any AAD license |Global Admin or Security Admin  | Billed    |
+| Azure Active Directory Identity Protection     | AAD Premium 2   |Global Admin or Security Admin  | Free      |
+| Office 365                                     | None            |Global Admin or Security Admin  | Free      |
+| Microsoft Cloud App Security                   | MCAS            |Global Admin or Security Admin  | Free      |
+| Azure Advanced Threat Protection               | AATP            |Global Admin or Security Admin  | Free      |
+| Microsoft Defender Advanced Threat Protection  | MDATP           |Global Admin or Security Admin  | Free      |
+| Threat Intelligence Platforms                  | None            |Global Admin or Security Admin  | Billed    |
 
 ### Usage
 
