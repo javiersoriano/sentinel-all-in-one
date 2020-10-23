@@ -180,7 +180,8 @@ function EnableMSAnalyticsRule($msProduct){
     try {
         foreach ($rule in $msTemplates){
             if ($rule.productFilter -eq $msProduct) {
-                New-AzSentinelAlertRule -WorkspaceName $Workspace -Kind MicrosoftSecurityIncidentCreation -DisplayName $rule.displayName -Description $rule.description -Enabled $true -ProductFilter $msProduct -DisplayNamesFilter ""       
+                New-AzSentinelAlertRule -WorkspaceName $Workspace -Kind MicrosoftSecurityIncidentCreation -DisplayName $rule.displayName -Description $rule.description -Enabled $true -ProductFilter $msProduct -DisplayNamesFilter ""  |Out-Null     
+                Write-Host "Done!" -ForegroundColor Green
             }
         }
 	}
@@ -270,8 +271,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
-        Write-Host "Adding Analytics Rule for data connector Azure Security Center..."
-        EnableMSAnalyticsRule "Azure Security Center"
+        Write-Host "Adding Analytics Rule for data connector Azure Security Center..." -NoNewline
+        EnableMSAnalyticsRule "Azure Security Center" 
     }
     #Office365 connector
     elseif ($connector.kind -eq "Office365") {
@@ -288,8 +289,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
-        Write-Host "Adding Analytics Rule for data connector Microsoft Cloud App Security..."
-        EnableMSAnalyticsRule "Microsoft Cloud App Security"
+        Write-Host "Adding Analytics Rule for data connector Microsoft Cloud App Security..." -NoNewline
+        EnableMSAnalyticsRule "Microsoft Cloud App Security" 
     }
     #AzureAdvancedThreatProtection connector
     elseif ($connector.kind -eq "AzureAdvancedThreatProtection") {
@@ -298,8 +299,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
-        Write-Host "Adding Analytics Rule for data connector Azure Advanced Threat Protection..."
-        EnableMSAnalyticsRule "Azure Advanced Threat Protection"
+        Write-Host "Adding Analytics Rule for data connector Azure Advanced Threat Protection..." -NoNewline
+        EnableMSAnalyticsRule "Azure Advanced Threat Protection" 
     }
     #ThreatIntelligencePlatforms connector
     elseif ($connector.kind -eq "ThreatIntelligence") {
@@ -316,8 +317,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
-        Write-Host "Adding Analytics Rule for data connector Microsoft Defender Advanced Threat Protection..."
-        EnableMSAnalyticsRule "Microsoft Defender Advanced Threat Protection"
+        Write-Host "Adding Analytics Rule for data connector Microsoft Defender Advanced Threat Protection..." -NoNewline
+        EnableMSAnalyticsRule "Microsoft Defender Advanced Threat Protection" 
     }
     #Azure Active Directory Identity Protection connector
     elseif ($connector.kind -eq "AzureActiveDirectory") {
@@ -326,8 +327,8 @@ foreach ($connector in $connectors.connectors) {
         $connectorProperties = checkDataConnector($connector.kind)
         $dataConnectorBody = BuildDataconnectorPayload $connector $connectorProperties.guid $connectorProperties.etag $connectorProperties.isEnabled
         EnableOrUpdateDataconnector $baseUri $connectorProperties.guid $dataConnectorBody $connectorProperties.isEnabled
-        Write-Host "Adding Analytics Rule for data connector Azure Active Directory Identity Protection..."
-        EnableMSAnalyticsRule "Azure Active Directory Identity Protection"
+        Write-Host "Adding Analytics Rule for data connector Azure Active Directory Identity Protection..." -NoNewline
+        EnableMSAnalyticsRule "Azure Active Directory Identity Protection" 
     }
     #AzureActiveDirectory
     elseif ($connector.kind -eq "AzureActiveDirectoryDiagnostics") {
