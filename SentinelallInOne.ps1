@@ -5,7 +5,13 @@ param(
 )
 
 function CheckModules($module) {
-    $service = Get-Module -ListAvailable -Name $module
+    if($module -eq "AzSentinel"){
+        $service = Get-InstalledModule -Name AzSentinel -MinimumVersion 0.6.13
+    }
+    else{
+        $service = Get-Module -ListAvailable -Name $module
+    }
+    
     if (-Not $service) {
         Install-Module -Name $module -Scope CurrentUser -Force
     }  
