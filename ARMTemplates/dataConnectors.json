@@ -6,7 +6,7 @@
             "type": "array",
             "defaultValue": [],
             "metadata": {
-                "description": "The kind of data connectors that can be deployed via ARM templates: [\"AzureActivityLog\",\"SecurityInsightsSecurityEventCollectionConfiguration\",\"WindowsFirewall\",\"DnsAnalytics\"]"
+                "description": "The kind of data connectors to enable"
             }
         },
         "workspaceName": {
