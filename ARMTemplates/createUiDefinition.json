@@ -1,0 +1,102 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {
+                "name": "workspaceName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Workspace Name",
+                "placeholder": "",
+                "defaultValue": "",
+                "toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+                    "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                },
+                "visible": true
+            }
+        ],
+        "steps": [
+            {
+                "name": "DataConnectors",
+                "label": "Data connectors",
+                "elements": [
+                    {
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please select which connectors you want to onboard into your Azure Sentinel environment",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://www.microsoft.com"
+                            }
+                        }
+                    },
+                    {
+                        "name": "enableDataConnectorsKind",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Example drop down",
+                        "placeholder": "",
+                        "multiselect": true,
+                        "defaultValue": "",
+                        "toolTip": "Select the data connectors that you would like to enable",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Office365",
+                                    "value": "o365"
+                                },
+                                {
+                                    "label": "Azure ATP",
+                                    "value": "aatp"
+                                },
+                                {
+                                    "label": "Azure AD Identity Protection",
+                                    "value": "aadip"
+                                },
+                                {
+                                    "label": "Microsoft Defender ATP",
+                                    "value": "mdatp"
+                                },
+                                {
+                                    "label": "Azure Security Center",
+                                    "value": "asc"
+                                },
+                                {
+                                    "label": "Microsoft Cloud App Security",
+                                    "value": "mcas"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "tags",
+                "label": "Tags",
+                "elements": [
+                    {
+                        "name": "tagsByResource",
+                        "type": "Microsoft.Common.TagsByResource",
+                        "resources": [
+                            "Microsoft.Storage/storageAccounts",
+                            "Microsoft.Compute/virtualMachines"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "storageAccountNamePrefix": "[steps('storageConfig').storageAccounts.prefix]",
+            "storageAccountType": "[steps('storageConfig').storageAccounts.type]",
+            "location": "[location()]",
+            "tagsByResource": "[steps('tags').tagsByResource]"
+        }
+    }
+}
