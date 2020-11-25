@@ -64,7 +64,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/armtemplate/ARMTemplates"
+            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/armtemplate/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -128,7 +128,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('dataConnectors.json', parameters('_artifactsLocationSasToken')))]",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/dataConnectors.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
