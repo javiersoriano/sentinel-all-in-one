@@ -17,11 +17,39 @@
                     "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
                 },
                 "visible": true
+            },
+			{
+                "name": "dailyQuota",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Set daily cap in GB",
+                "placeholder": "",
+                "defaultValue": "100",
+                "toolTip": "Only numbers allowed",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[0-9]{1,4}$",
+                    "validationMessage": "Only numbers allowed, and the value must be 1-4 characters long."
+                },
+                "visible": true
+            },
+			{
+                "name": "dataRetention",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Number of days of retention",
+                "placeholder": "",
+                "defaultValue": "30",
+                "toolTip": "Only numbers allowed",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[30-730]",
+                    "validationMessage": "Retention must be between 30 and 730 days."
+                },
+                "visible": true
             }
         ],
         "steps": [
             {
-                "name": "DataConnectors",
+                "name": "dataConnectors",
                 "label": "Data connectors",
                 "elements": [
                     {
@@ -39,7 +67,7 @@
                     {
                         "name": "enableDataConnectorsKind",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Example drop down",
+                        "label": "Select data connectors to onboard",
                         "placeholder": "",
                         "multiselect": true,
                         "defaultValue": "",
@@ -74,7 +102,30 @@
                             "required": true
                         },
                         "visible": true
-                    }
+                    },
+                    {
+                        "name": "tenantId",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Enter your AAD tenant ID:",
+                        "placeholder": "",
+                        "defaultValue": "",
+                        "toolTip": "GUID format",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$",
+                            "validationMessage": "AAD tenant ID must have GUID format." 
+                        },
+                        "visible": true
+                    },
+					{
+						"name": "enableAlerts",
+						"type": "Microsoft.Common.CheckBox",
+						"label": "Enable analytics rules for selected connectors?",
+						"constraints": {
+							"required": false,
+							"validationMessage": "Please acknowledge the legal conditions."
+						}
+            		}
                 ]
             },
             {
@@ -93,10 +144,14 @@
             }
         ],
         "outputs": {
-            "storageAccountNamePrefix": "[steps('storageConfig').storageAccounts.prefix]",
-            "storageAccountType": "[steps('storageConfig').storageAccounts.type]",
+            "workspaceName": "[basics('workspaceName')]",
+            "dailyQuota": "[basics('dailyQuota')]",
+            "dataRetention": "[basics('dataRetention')]",
+            "tenantId": "[steps('dataConnectors').tenantId]",
+            "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "location": "[location()]",
-            "tagsByResource": "[steps('tags').tagsByResource]"
+            "tagsByResource": "[steps('tags').tagsByResource]",
+            "enableAlerts": "[steps('dataConnectors').enableAlerts]"
         }
     }
 }

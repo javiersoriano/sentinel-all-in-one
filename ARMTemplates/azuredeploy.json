@@ -53,12 +53,18 @@
             },
             "defaultValue": []
         },
+        "tenantId": {
+            "type": "string",
+             "metadata": {
+                "description": "Azure AD tenant ID"
+            }
+        },
         "_artifactsLocation": {
             "type": "string",
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/OTRF/Azure-Sentinel2Go/master/"
+            "defaultValue": "https://github.com/javiersoriano/sentinel-all-in-one/tree/armtemplate/ARMTemplates"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -76,11 +82,10 @@
         }
     },
     "variables": {
-        "uniqueWorkspace": "[concat(parameters('workspaceName'), uniquestring(resourceGroup().id, parameters('utcValue')))]"
     },
     "resources": [
         {
-            "name": "[variables('uniqueWorkspace')]",
+            "name": "[parameters('workspaceName')]",
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
@@ -95,18 +100,18 @@
             }
         },
         {
-            "name": "[concat('SecurityInsights','(', variables('uniqueWorkspace'),')')]",
+            "name": "[concat('SecurityInsights','(', parameters('workspaceName'),')')]",
             "type": "Microsoft.OperationsManagement/solutions",
             "apiVersion": "2015-11-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace'))]"
+                "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
             ],
             "properties": {
-                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('uniqueWorkspace'))]"
+                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
             },
             "plan": {
-                "name": "[concat('SecurityInsights','(', variables('uniqueWorkspace'),')')]",
+                "name": "[concat('SecurityInsights','(', parameters('workspaceName'),')')]",
                 "product": "OMSGallery/SecurityInsights",
                 "publisher": "Microsoft",
                 "promotionCode": ""
@@ -118,23 +123,23 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', variables('uniqueWorkspace'),')'))]"
+                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('azure-sentinel/linkedtemplates/log-analytics/additionalSolutions.json', parameters('_artifactsLocationSasToken')))]",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('dataConnectors.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "solutionTypes": {
-                        "value": "[parameters('enableAdditionalLASolutions')]"
+                    "dataConnectorsKind": {
+                        "value": "[parameters('enableDataConnectorsKind')]"
                     },
                     "workspaceName": {
-                        "value": "[variables('uniqueWorkspace')]"
+                        "value": "[parameters('workspaceName')]"
                     },
-                    "workspaceId": {
-                         "value": "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace'))]"
+                    "tenantId": {
+                         "value": "[parameters('tenantId')]"
                      },
                     "location": {
                         "value": "[parameters('location')]"
@@ -148,7 +153,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', variables('uniqueWorkspace'),')'))]"
+                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -161,10 +166,10 @@
                         "value": "[parameters('enableDataConnectorsKind')]"
                     },
                     "workspaceName": {
-                        "value": "[variables('uniqueWorkspace')]"
+                        "value": "[parameters('workspaceName')]"
                     },
                     "workspaceId": {
-                         "value": "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace'))]"
+                         "value": "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
                      },
                      "subscriptionId": {
                          "value": "[subscription().subscriptionId]"
@@ -179,15 +184,15 @@
     "outputs": {
         "workspaceName": {
             "type": "string",
-            "value": "[variables('uniqueWorkspace')]"
+            "value": "[parameters('workspaceName')]"
         },
         "workspaceIdOutput": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace')), '2015-11-01-preview').customerId]"
+            "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').customerId]"
         },
         "workspaceKeyOutput": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace')), '2015-11-01-preview').primarySharedKey]"
+            "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').primarySharedKey]"
         }
     }
 }
