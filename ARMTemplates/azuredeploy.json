@@ -64,7 +64,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://github.com/javiersoriano/sentinel-all-in-one/tree/armtemplate/ARMTemplates"
+            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/armtemplate/ARMTemplates"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
