@@ -141,9 +141,6 @@
                     "tenantId":{
                         "value": "[parameters('tenantId')]"
                     },
-                    "workspaceId": {
-                         "value": "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
-                     },
                      "subscriptionId": {
                          "value": "[subscription().subscriptionId]"
                      },
