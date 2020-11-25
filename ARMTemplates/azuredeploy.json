@@ -59,6 +59,12 @@
                 "description": "Azure AD tenant ID"
             }
         },
+        "enableAlerts": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable analytics rules"
+            }
+        },
         "_artifactsLocation": {
             "type": "string",
             "metadata": {
@@ -144,6 +150,33 @@
                      "subscriptionId": {
                          "value": "[subscription().subscriptionId]"
                      },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[parameters('enableAlerts')]",
+            "name": "enableDataConnectorsKind",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/alertRules.json', parameters('_artifactsLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "dataConnectorsKind": {
+                        "value": "[parameters('enableDataConnectorsKind')]"
+                    },
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
                     "location": {
                         "value": "[parameters('location')]"
                     }
