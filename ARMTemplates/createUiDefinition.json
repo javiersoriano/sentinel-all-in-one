@@ -4,7 +4,7 @@
     "version": "0.1.2-preview",
     "parameters": {
         "config": {
-            "isWizard": true,
+            "isWizard": false,
             "basics": {
 				"description": "**Azure Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/javiersoriano/sentinel-all-in-one/tree/armtemplate)."
 			}
