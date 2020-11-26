@@ -21,10 +21,10 @@
 			{
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Daily ingestion limit in GBs. This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
+                "label": "Daily ingestion limit in GBs. 0 means no limit will be set.",
                 "placeholder": "",
-                "defaultValue": "",
-                "toolTip": "Only numbers allowed",
+                "defaultValue": "0",
+                "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
                 "constraints": {
                     "required": true,
                     "regex": "^[0-9]{1,4}$",
