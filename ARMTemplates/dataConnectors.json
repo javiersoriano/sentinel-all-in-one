@@ -34,6 +34,20 @@
             "metadata": {
                 "description": "Location for all resources."
             }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "The location of resources"
+            },
+            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/armtemplate/"
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Auto-generated token to access _artifactsLocation. Leave it blank unless you need to provide your own value."
+            },
+            "defaultValue": ""
         }
     },
     "variables": {
