@@ -75,7 +75,7 @@
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Office 365",
+                                    "label": "Office365",
                                     "value": "o365"
                                 },
                                 {
