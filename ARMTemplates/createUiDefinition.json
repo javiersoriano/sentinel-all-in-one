@@ -21,9 +21,9 @@
 			{
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Set daily cap in GB",
+                "label": "Daily ingestion limit in GBs. This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
                 "placeholder": "",
-                "defaultValue": "100",
+                "defaultValue": "",
                 "toolTip": "Only numbers allowed",
                 "constraints": {
                     "required": true,
