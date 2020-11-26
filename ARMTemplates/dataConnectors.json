@@ -133,6 +133,27 @@
                     }
                 }
             }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'aatp')]",
+            "name": "aad",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/AzureAD.json', parameters('_artifactsLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceId":{
+                        "value": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('workspaceName'))]"
+                    }
+                }
+            }
         }        
     ]
 }
