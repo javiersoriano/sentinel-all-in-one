@@ -21,7 +21,7 @@
 			{
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Daily ingestion limit in GBs. 0 means no limit will be set.",
+                "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
                 "placeholder": "",
                 "defaultValue": "0",
                 "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
@@ -70,12 +70,14 @@
                         "label": "Select data connectors to onboard",
                         "placeholder": "",
                         "multiselect": true,
+                        "selectAll": true,
+                        "multiline": true,
                         "defaultValue": "",
                         "toolTip": "Select the data connectors that you would like to enable",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Office365",
+                                    "label": "Office 365",
                                     "value": "o365"
                                 },
                                 {
