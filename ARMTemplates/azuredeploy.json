@@ -94,11 +94,12 @@
         }
     },
     "variables": {
+        "workspaceName": "[uniqueString(concat(parameters('workspaceName'),parameters('dailyQuota')))]"
     },
     "resources": [
         {
             "condition": "[not(equals(parameters('dailyQuota'),0))]",
-            "name": "[parameters('workspaceName')]",
+            "name": "[variables('workspaceName')]",
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
@@ -117,7 +118,7 @@
         },
         {
             "condition": "[equals(parameters('dailyQuota'),0)]",
-            "name": "[concat(parameters('workspaceName'),'capped')]",
+            "name": "[variables('workspaceName')]",
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
             "location": "[parameters('location')]",
@@ -132,18 +133,18 @@
             }
         },
         {
-            "name": "[concat('SecurityInsights','(', parameters('workspaceName'),')')]",
+            "name": "[concat('SecurityInsights','(', variables('workspaceName'),')')]",
             "type": "Microsoft.OperationsManagement/solutions",
             "apiVersion": "2015-11-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
+                "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('workspaceName'))]"
             ],
             "properties": {
-                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName'))]"
             },
             "plan": {
-                "name": "[concat('SecurityInsights','(', parameters('workspaceName'),')')]",
+                "name": "[concat('SecurityInsights','(', variables('workspaceName'),')')]",
                 "product": "OMSGallery/SecurityInsights",
                 "publisher": "Microsoft",
                 "promotionCode": ""
@@ -155,7 +156,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
+                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', variables('workspaceName'),')'))]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -168,7 +169,7 @@
                         "value": "[parameters('enableDataConnectorsKind')]"
                     },
                     "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
+                        "value": "[variables('workspaceName')]"
                     },
                     "tenantId":{
                         "value": "[parameters('tenantId')]"
@@ -188,7 +189,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
+                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', variables('workspaceName'),')'))]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -201,7 +202,7 @@
                         "value": "[parameters('enableDataConnectorsKind')]"
                     },
                     "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
+                        "value": "[variables('workspaceName')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
@@ -213,15 +214,15 @@
     "outputs": {
         "workspaceName": {
             "type": "string",
-            "value": "[parameters('workspaceName')]"
+            "value": "[variables('workspaceName')]"
         },
         "workspaceIdOutput": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').customerId]"
+            "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces/', variables('workspaceName')), '2015-11-01-preview').customerId]"
         },
         "workspaceKeyOutput": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').primarySharedKey]"
+            "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', variables('workspaceName')), '2015-11-01-preview').primarySharedKey]"
         }
     }
 }
