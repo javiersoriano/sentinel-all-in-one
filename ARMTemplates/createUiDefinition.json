@@ -70,9 +70,7 @@
                         "label": "Select data connectors to onboard",
                         "placeholder": "",
                         "multiselect": true,
-                        "selectAll": true,
-                        "multiLine": true,
-                        "defaultValue": "",
+                        "defaultValue": "o365",
                         "toolTip": "Select the data connectors that you would like to enable",
                         "constraints": {
                             "allowedValues": [
