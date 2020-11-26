@@ -149,13 +149,10 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'aatp')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'aadip')]",
             "name": "aad",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
-            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
