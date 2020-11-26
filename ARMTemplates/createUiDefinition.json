@@ -71,7 +71,7 @@
                         "placeholder": "",
                         "multiselect": true,
                         "selectAll": true,
-                        "multiline": true,
+                        "multiLine": true,
                         "defaultValue": "",
                         "toolTip": "Select the data connectors that you would like to enable",
                         "constraints": {
