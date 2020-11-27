@@ -141,7 +141,7 @@
                             "regex": "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$",
                             "validationMessage": "AAD tenant ID must have GUID format."
                         },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'o365')), true, false)]" 
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'o365')), true, false)]"
                     },
                     {
                         "name": "enableAlerts",
@@ -151,20 +151,46 @@
                             "required": false,
                             "validationMessage": "Please acknowledge the legal conditions."
                         },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'asc')), true, false)]" 
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'asc')), true, false)]"
+                    },
+                    {
+                        "name": "securityCollectionTier",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Security Events to stream into Sentinel ",
+                        "defaultValue": "Recommended",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "All",
+                                    "value": "All"
+                                },
+                                {
+                                    "label": "Common",
+                                    "value": "Recommended"
+                                },
+                                {
+                                    "label": "Minimal",
+                                    "value": "Minimal"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents'), true, false)]"
                     }
-                ]
-            }
-        ],
-        "outputs": {
-            "workspaceName": "[basics('workspaceName')]",
-            "dailyQuota": "[basics('dailyQuota')]",
-            "dataRetention": "[basics('dataRetention')]",
-            "tenantId": "[steps('dataConnectors').tenantId]",
-            "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
-            "location": "[location()]",
-            "tagsByResource": "[steps('tags').tagsByResource]",
-            "enableAlerts": "[steps('dataConnectors').enableAlerts]"
+            ]
         }
+    ],
+    "outputs": {
+        "workspaceName": "[basics('workspaceName')]",
+        "dailyQuota": "[basics('dailyQuota')]",
+        "dataRetention": "[basics('dataRetention')]",
+        "tenantId": "[steps('dataConnectors').tenantId]",
+        "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
+        "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
+        "location": "[location()]",
+        "tagsByResource": "[steps('tags').tagsByResource]",
+        "enableAlerts": "[steps('dataConnectors').enableAlerts]"
     }
+}
 }
