@@ -17,7 +17,7 @@
         },
         "securityCollectionTier": {
             "type": "string",
-            "defaultValue": "Common",
+            "defaultValue": "Recommended",
             "metadata": {
                 "description": "SecurityEvent logging level"
             }
