@@ -141,7 +141,7 @@
                             "regex": "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$",
                             "validationMessage": "AAD tenant ID must have GUID format."
                         },
-                        "visible": true
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'o365')), true, false)]" 
                     },
                     {
                         "name": "enableAlerts",
@@ -150,7 +150,8 @@
                         "constraints": {
                             "required": false,
                             "validationMessage": "Please acknowledge the legal conditions."
-                        }
+                        },
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'asc')), true, false)]" 
                     }
                 ]
             }
