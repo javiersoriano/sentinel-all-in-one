@@ -77,6 +77,7 @@
                         "placeholder": "",
                         "multiselect": true,
                         "defaultValue": "o365",
+                        "defaultDescription": "A value for selection",
                         "toolTip": "Select the data connectors that you would like to enable",
                         "constraints": {
                             "allowedValues": [
