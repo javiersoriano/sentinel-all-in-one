@@ -83,12 +83,12 @@
                             "allowedValues": [
                                 {
                                     "label": "Office365",
-                                    "description": "Activity logs for Sharepoint, Exchange and Teams (Free ingestion)",
+                                    "description": "Activity logs for Sharepoint, Exchange and Teams Free ingestion",
                                     "value": "o365"
                                 },
                                 {
                                     "label": "Azure ATP",
-                                    "description": "Azure Advanced Threat Protection alerts (Free ingestion)",
+                                    "description": "Azure Advanced Threat Protection alerts Free ingestion",
                                     "value": "aatp"
                                 },
                                 {
