@@ -52,6 +52,19 @@
             },
             "defaultValue": []
         },
+        "securityCollectionTier": {
+            "type": "string",
+            "defaultValue": "Recommended",
+            "allowedValues": [
+                "All",
+                "Recommended",
+                "Minimal",
+                "None"
+            ],
+            "metadata": {
+                "description": "Tier for gathering Windows Security Events."
+            }
+        },
         "enableDataConnectorsKind": {
             "type": "array",
             "metadata": {
@@ -160,6 +173,9 @@
                      "subscriptionId": {
                          "value": "[subscription().subscriptionId]"
                      },
+                    "securityCollectionTier":{
+                        "value": "[parameters('securityCollectionTier')]"
+                    },
                     "location": {
                         "value": "[parameters('location')]"
                     }

@@ -156,7 +156,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'aadip')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'aad')]",
             "name": "aad",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
