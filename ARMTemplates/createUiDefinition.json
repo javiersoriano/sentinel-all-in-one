@@ -93,47 +93,47 @@
                                 },
                                 {
                                     "label": "Azure AD Identity Protection",
-                                    "description": "Azure Active Directory Protection alerts (Free ingestion)",
+                                    "description": "Azure Active Directory Protection alerts Free ingestion",
                                     "value": "aadip"
                                 },
                                 {
                                     "label": "Microsoft Defender ATP",
-                                    "description": "Microsoft Defender Advanced Threat Protection alerts (Free ingestion)",
+                                    "description": "Microsoft Defender Advanced Threat Protection alerts Free ingestion",
                                     "value": "mdatp"
                                 },
                                 {
                                     "label": "Azure Security Center",
-                                    "description": "Azure Security Center alerts (Free ingestion).",
+                                    "description": "Azure Security Center alerts Free ingestion.",
                                     "value": "asc"
                                 },
                                 {
                                     "label": "Microsoft Cloud App Security",
-                                    "description": "Microsoft Cloud App Security alerts (Free) and Cloud Discovery logs (Billed)",
+                                    "description": "Microsoft Cloud App Security alerts Free and Cloud Discovery logs Billed",
                                     "value": "mcas"
                                 },
                                 {
                                     "label": "Azure Activity",
-                                    "description": "Azure Activity logs (Free ingestion)",
+                                    "description": "Azure Activity logs Free ingestion",
                                     "value": "AzureActivity"
                                 },
                                 {
                                     "label": "Security Events",
-                                    "description": "Common Security Events from Windows servers with MMA installed (Billed)",
+                                    "description": "Common Security Events from Windows servers with MMA installed Billed",
                                     "value": "SecurityEvents"
                                 },
                                 {
                                     "label": "Windows Firewall",
-                                    "description": "Windows Firewall logs from Windows servers with MMA installed (Billed)",
+                                    "description": "Windows Firewall logs from Windows servers with MMA installed Billed",
                                     "value": "WindowsFirewall"
                                 },
                                 {
                                     "label": "DNS Analytics",
-                                    "description": "DNS logs from Windows servers with MMA installed (Billed)",
+                                    "description": "DNS logs from Windows servers with MMA installed Billed",
                                     "value": "DNSAnalytics"
                                 },
                                 {
                                     "label": "Linux Syslog",
-                                    "description": "Syslog messages from Linux servers with MMA installed (Billed)",
+                                    "description": "Syslog messages from Linux servers with MMA installed Billed",
                                     "value": "LinuxSyslog"
                                 }
                             ],
