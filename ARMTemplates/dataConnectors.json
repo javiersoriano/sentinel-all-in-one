@@ -98,7 +98,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'mdcas')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'mcas')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
             "location": "[parameters('location')]",
@@ -164,6 +164,74 @@
                         "value": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('workspaceName'))]"
                     }
                 }
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActivity')]",
+            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
+            "apiVersion": "2020-03-01-preview",
+            "location": "[parameters('location')]",
+            "name": "[concat(parameters('workspaceName'), '/', replace(parameters('subscriptionId'),'-', ''))]",
+            "kind": "AzureActivityLog",
+            "properties": {
+                "linkedResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/providers/microsoft.insights/eventtypes/management')]"
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'SecurityEvents')]",
+            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
+            "apiVersion": "2020-03-01-preview",
+            "location": "[parameters('location')]",
+            "name": "[concat(parameters('workspaceName'), '/SecurityInsightsSecurityEventCollectionConfiguration')]",
+            "kind": "SecurityInsightsSecurityEventCollectionConfiguration",
+            "properties": {
+                "tier": "[parameters('securityCollectionTier')]",
+                "tierSetMethod": "Custom"
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'WindowsFirewall')]",
+            "type": "Microsoft.OperationsManagement/solutions",
+            "apiVersion": "2015-11-01-preview",
+            "name": "[concat('WindowsFirewall','(', parameters('workspaceName'),')')]",
+            "location": "[parameters('location')]",
+            "plan": {
+                "name": "[concat('WindowsFirewall','(', parameters('workspaceName'),')')]",
+                "promotionCode": "",
+                "product": "OMSGallery/WindowsFirewall",
+                "publisher": "Microsoft"
+            },
+            "properties": {
+                "workspaceResourceId": "[parameters('workspaceId')]",
+                "containedResources": []
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'DNSAnalytics')]",
+            "type": "Microsoft.OperationsManagement/solutions",
+            "apiVersion": "2015-11-01-preview",
+            "name": "[concat('DnsAnalytics','(', parameters('workspaceName'),')')]",
+            "location": "[parameters('location')]",
+            "plan": {
+                "name": "[concat('DnsAnalytics','(', parameters('workspaceName'),')')]",
+                "promotionCode": "",
+                "product": "OMSGallery/DnsAnalytics",
+                "publisher": "Microsoft"
+            },
+            "properties": {
+                "workspaceResourceId": "[parameters('workspaceId')]",
+                "containedResources": []
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'LinuxSyslog')]",
+            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
+            "apiVersion": "2020-03-01-preview",
+            "location": "[parameters('location')]",
+            "name": "[concat(parameters('workspaceName'), '/syslogCollection')]",
+            "kind": "LinuxSyslogCollection",
+            "properties": {
+                "state": "Enabled"
             }
         }        
     ]

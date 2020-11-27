@@ -6,8 +6,8 @@
         "config": {
             "isWizard": false,
             "basics": {
-				"description": "**Azure Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/javiersoriano/sentinel-all-in-one/tree/armtemplate)."
-			}
+                "description": "**Azure Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/javiersoriano/sentinel-all-in-one/tree/armtemplate)."
+            }
         },
         "basics": [
             {
@@ -24,7 +24,7 @@
                 },
                 "visible": true
             },
-			{
+            {
                 "name": "dailyQuota",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
@@ -38,7 +38,7 @@
                 },
                 "visible": true
             },
-			{
+            {
                 "name": "dataRetention",
                 "type": "Microsoft.Common.TextBox",
                 "label": "Number of days of retention",
@@ -103,6 +103,26 @@
                                 {
                                     "label": "Microsoft Cloud App Security",
                                     "value": "mcas"
+                                },
+                                {
+                                    "label": "Azure Activity",
+                                    "value": "AzureActivity"
+                                },
+                                {
+                                    "label": "Security Events",
+                                    "value": "SecurityEvents"
+                                },
+                                {
+                                    "label": "Windows Firewall",
+                                    "value": "WindowsFirewall"
+                                },
+                                {
+                                    "label": "DNS Analytics",
+                                    "value": "DNSAnalytics"
+                                },
+                                {
+                                    "label": "Linux Syslog",
+                                    "value": "LinuxSyslog"
                                 }
                             ],
                             "required": true
@@ -119,32 +139,18 @@
                         "constraints": {
                             "required": true,
                             "regex": "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$",
-                            "validationMessage": "AAD tenant ID must have GUID format." 
+                            "validationMessage": "AAD tenant ID must have GUID format."
                         },
                         "visible": true
                     },
-					{
-						"name": "enableAlerts",
-						"type": "Microsoft.Common.CheckBox",
-						"label": "Enable analytics rules for selected connectors?",
-						"constraints": {
-							"required": false,
-							"validationMessage": "Please acknowledge the legal conditions."
-						}
-            		}
-                ]
-            },
-            {
-                "name": "tags",
-                "label": "Tags",
-                "elements": [
                     {
-                        "name": "tagsByResource",
-                        "type": "Microsoft.Common.TagsByResource",
-                        "resources": [
-                            "Microsoft.Storage/storageAccounts",
-                            "Microsoft.Compute/virtualMachines"
-                        ]
+                        "name": "enableAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable analytics rules for selected connectors?",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Please acknowledge the legal conditions."
+                        }
                     }
                 ]
             }
