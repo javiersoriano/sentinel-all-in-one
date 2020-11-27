@@ -82,27 +82,27 @@
                             "allowedValues": [
                                 {
                                     "label": "Office365",
-                                    "description": "Activity logs for Sharepoint, Exchange and Teams. Free ingestion.",
+                                    "description": "Activity logs for Sharepoint, Exchange and Teams (Free ingestion)",
                                     "value": "o365"
                                 },
                                 {
                                     "label": "Azure ATP",
-                                    "description": "Azure Advanced Threat Protection alerts. Free ingestion.",
+                                    "description": "Azure Advanced Threat Protection alerts (Free ingestion)",
                                     "value": "aatp"
                                 },
                                 {
                                     "label": "Azure AD Identity Protection",
-                                    "description": "Azure Active Directory Protection alerts. Free ingestion.",
+                                    "description": "Azure Active Directory Protection alerts (Free ingestion)",
                                     "value": "aadip"
                                 },
                                 {
                                     "label": "Microsoft Defender ATP",
-                                    "description": "Microsoft Defender Advanced Threat Protection alerts. Free ingestion.",
+                                    "description": "Microsoft Defender Advanced Threat Protection alerts (Free ingestion)",
                                     "value": "mdatp"
                                 },
                                 {
                                     "label": "Azure Security Center",
-                                    "description": "Azure Security Center alerts. Free ingestion.",
+                                    "description": "Azure Security Center alerts (Free ingestion).",
                                     "value": "asc"
                                 },
                                 {
@@ -112,12 +112,12 @@
                                 },
                                 {
                                     "label": "Azure Activity",
-                                    "description": "Azure Activity logs. Free ingestion.",
+                                    "description": "Azure Activity logs (Free ingestion)",
                                     "value": "AzureActivity"
                                 },
                                 {
                                     "label": "Security Events",
-                                    "description": "Security Events from Windows servers with MMA installed (Billed)",
+                                    "description": "Common Security Events from Windows servers with MMA installed (Billed)",
                                     "value": "SecurityEvents"
                                 },
                                 {
