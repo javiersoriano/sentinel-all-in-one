@@ -1,0 +1,170 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "config": {
+            "isWizard": false,
+            "basics": {
+                "description": "**Azure Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/javiersoriano/sentinel-all-in-one/tree/armtemplate)."
+            }
+        },
+        "basics": [
+            {
+                "name": "workspaceName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Workspace Name",
+                "placeholder": "",
+                "defaultValue": "",
+                "toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+                    "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                },
+                "visible": true
+            },
+            {
+                "name": "dailyQuota",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
+                "placeholder": "",
+                "defaultValue": "0",
+                "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[0-9]{1,4}$",
+                    "validationMessage": "Only numbers allowed, and the value must be 1-4 characters long."
+                },
+                "visible": true
+            },
+            {
+                "name": "dataRetention",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Number of days of retention",
+                "placeholder": "",
+                "defaultValue": "30",
+                "toolTip": "Only numbers allowed",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[30-730]",
+                    "validationMessage": "Retention must be between 30 and 730 days."
+                },
+                "visible": true
+            }
+        ],
+        "steps": [
+            {
+                "name": "dataConnectors",
+                "label": "Data connectors",
+                "elements": [
+                    {
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please select which connectors you want to onboard into your Azure Sentinel environment",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://www.microsoft.com"
+                            }
+                        }
+                    },
+                    {
+                        "name": "enableDataConnectorsKind",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select data connectors to onboard",
+                        "placeholder": "",
+                        "multiselect": true,
+                        "defaultValue": "o365",
+                        "toolTip": "Select the data connectors that you would like to enable",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Office365",
+                                    "value": "o365"
+                                },
+                                {
+                                    "label": "Azure ATP",
+                                    "value": "aatp"
+                                },
+                                {
+                                    "label": "Azure AD Identity Protection",
+                                    "value": "aadip"
+                                },
+                                {
+                                    "label": "Microsoft Defender ATP",
+                                    "value": "mdatp"
+                                },
+                                {
+                                    "label": "Azure Security Center",
+                                    "value": "asc"
+                                },
+                                {
+                                    "label": "Microsoft Cloud App Security",
+                                    "value": "mcas"
+                                },
+                                {
+                                    "label": "Azure Activity",
+                                    "value": "AzureActivity"
+                                },
+                                {
+                                    "label": "Security Events",
+                                    "value": "SecurityEvents"
+                                },
+                                {
+                                    "label": "Windows Firewall",
+                                    "value": "WindowsFirewall"
+                                },
+                                {
+                                    "label": "DNS Analytics",
+                                    "value": "DNSAnalytics"
+                                },
+                                {
+                                    "label": "Linux Syslog",
+                                    "value": "LinuxSyslog"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "tenantId",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Enter your AAD tenant ID:",
+                        "placeholder": "",
+                        "defaultValue": "",
+                        "toolTip": "GUID format",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$",
+                            "validationMessage": "AAD tenant ID must have GUID format."
+                        },
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'o365')), true, false)]" 
+                    },
+                    {
+                        "name": "enableAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable analytics rules for selected connectors?",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Please acknowledge the legal conditions."
+                        },
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'asc')), true, false)]" 
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "workspaceName": "[basics('workspaceName')]",
+            "dailyQuota": "[basics('dailyQuota')]",
+            "dataRetention": "[basics('dataRetention')]",
+            "tenantId": "[steps('dataConnectors').tenantId]",
+            "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
+            "location": "[location()]",
+            "tagsByResource": "[steps('tags').tagsByResource]",
+            "enableAlerts": "[steps('dataConnectors').enableAlerts]"
+        }
+    }
+}
