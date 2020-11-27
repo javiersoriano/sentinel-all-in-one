@@ -15,6 +15,13 @@
                 "description": "Name for the Log Analytics workspace used to aggregate data"
             }
         },
+        "securityCollectionTier": {
+            "type": "string",
+            "defaultValue": "Common",
+            "metadata": {
+                "description": "SecurityEvent logging level"
+            }
+        },
         "tenantId": {
             "type": "string",
             "metadata": {
@@ -202,7 +209,7 @@
                 "publisher": "Microsoft"
             },
             "properties": {
-                "workspaceResourceId": "[parameters('workspaceId')]",
+                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('workspaceName'))]",
                 "containedResources": []
             }
         },
@@ -219,7 +226,7 @@
                 "publisher": "Microsoft"
             },
             "properties": {
-                "workspaceResourceId": "[parameters('workspaceId')]",
+                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('workspaceName'))]",
                 "containedResources": []
             }
         },
