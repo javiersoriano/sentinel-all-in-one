@@ -74,7 +74,7 @@
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('o365Name'))]",
             "kind": "Office365",
             "properties": {
-                "tenantId": "[parameters('tenantId')]",
+                "tenantId": "[subscription().tenantId]",
                 "dataTypes": {
                     "exchange": {
                         "state": "enabled"
@@ -96,7 +96,7 @@
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mdatpName'))]",
             "kind": "MicrosoftDefenderAdvancedThreatProtection",
             "properties": {
-                "tenantId": "[parameters('tenantId')]",
+                "tenantId": "[subscription().tenantId]",
                 "dataTypes": {
                     "alerts": {
                         "state": "enabled"
@@ -112,7 +112,7 @@
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mcasName'))]",
             "kind": "MicrosoftCloudAppSecurity",
             "properties": {
-                "tenantId": "[parameters('tenantId')]",
+                "tenantId": "[subscription().tenantId]",
                 "dataTypes": {
                     "alerts": {
                         "state": "enabled"
@@ -147,7 +147,7 @@
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aatpName'))]",
             "kind": "AzureAdvancedThreatProtection",
             "properties": {
-                "tenantId": "[parameters('tenantId')]",
+                "tenantId": "[subscription().tenantId]",
                 "dataTypes": {
                     "alerts": {
                         "state": "enabled"

@@ -74,12 +74,14 @@
         },
         "tenantId": {
             "type": "string",
+            "defaultValue": "",
              "metadata": {
                 "description": "Azure AD tenant ID"
             }
         },
         "enableAlerts": {
             "type": "bool",
+            "defaultValue": false,
             "metadata": {
                 "description": "Enable analytics rules"
             }

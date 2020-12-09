@@ -130,20 +130,6 @@
                         "visible": true
                     },
                     {
-                        "name": "tenantId",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Enter your AAD tenant ID:",
-                        "placeholder": "",
-                        "defaultValue": "",
-                        "toolTip": "GUID format",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$",
-                            "validationMessage": "AAD tenant ID must have GUID format."
-                        },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'o365')), true, false)]"
-                    },
-                    {
                         "name": "enableAlerts",
                         "type": "Microsoft.Common.CheckBox",
                         "label": "Enable analytics rules for selected connectors?",
@@ -185,7 +171,6 @@
         "workspaceName": "[basics('workspaceName')]",
         "dailyQuota": "[basics('dailyQuota')]",
         "dataRetention": "[basics('dataRetention')]",
-        "tenantId": "[steps('dataConnectors').tenantId]",
         "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
         "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
         "location": "[location()]",

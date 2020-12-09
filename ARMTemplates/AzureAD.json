@@ -9,11 +9,14 @@
             }
         }
     },
+    "variables": {
+        "aadDiagnosticsName": "[concat('AzSentinel-',uniqueString(parameters('workspaceId')))]"
+    },
     "resources": [
         {
             "type": "microsoft.aadiam/diagnosticSettings",
             "apiVersion": "2017-04-01",
-            "name": "setByARM",
+            "name": "[variables('aadDiagnosticsName')]",
             "properties": {
                 "workspaceId": "[parameters('workspaceId')]",
                 "logs": [
