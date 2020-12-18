@@ -222,7 +222,7 @@
             //    }
             //},
             "properties": {
-                "forceUpdateTag": 1,
+                "forceUpdateTag": "1",
                 "azPowerShellVersion": "5.2", 
                 "arguments": "[concat('-WorkspaceName', ' ', parameters('workspaceName'))]",
                 "environmentVariables": [
