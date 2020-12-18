@@ -224,7 +224,7 @@
             "properties": {
                 "forceUpdateTag": 1,
                 "azPowerShellVersion": "5.2", 
-                "arguments": "-name \\\"John Dole\\\"",
+                "arguments": "[concat('-WorkspaceName', ' ', parameters('workspaceName'))]",
                 "environmentVariables": [
                     {
                         "name": "someSecret",
@@ -232,8 +232,9 @@
                     }
                 ],
                 "scriptContent": "
+                param([string] $WorkspaceName)
                 Install-Module -Name AzSentinel -MinimumVersion 0.6.13 -Scope CurrentUser -Force
-                New-AzSentinelHuntingRule -WorkspaceName testscriptsori -DisplayName \"testhunting\" -Description \"testhunting\" -Tactics \"Discovery\",\"Exfiltration\" -Query 'Usage'
+                New-AzSentinelHuntingRule -WorkspaceName $WorkspaceName -DisplayName \"testhunting\" -Description \"testhunting\" -Tactics \"Discovery\",\"Exfiltration\" -Query 'Usage'
                 ", // or "primaryScriptUri": "https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/deployment-script/deploymentscript-helloworld.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
