@@ -74,7 +74,7 @@
         },
         "tenantId": {
             "type": "string",
-             "metadata": {
+            "metadata": {
                 "description": "Azure AD tenant ID"
             }
         },
@@ -108,7 +108,7 @@
     },
     "variables": {
         "quoatSetting": {
-             "dailyQuotaGb": "[parameters('dailyQuota')]"
+            "dailyQuotaGb": "[parameters('dailyQuota')]"
         }
     },
     "resources": [
@@ -167,13 +167,13 @@
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
-                    "tenantId":{
+                    "tenantId": {
                         "value": "[parameters('tenantId')]"
                     },
-                     "subscriptionId": {
-                         "value": "[subscription().subscriptionId]"
-                     },
-                    "securityCollectionTier":{
+                    "subscriptionId": {
+                        "value": "[subscription().subscriptionId]"
+                    },
+                    "securityCollectionTier": {
                         "value": "[parameters('securityCollectionTier')]"
                     },
                     "location": {
@@ -207,6 +207,38 @@
                         "value": "[parameters('location')]"
                     }
                 }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deploymentScripts",
+            "apiVersion": "2020-10-01",
+            "name": "runPowerShellInline",
+            "location": "[resourceGroup().location]",
+            "kind": "AzurePowerShell", 
+            //"identity": {
+            //    "type": "userAssigned",
+            //    "userAssignedIdentities": {
+            //        "/subscriptions/01234567-89AB-CDEF-0123-456789ABCDEF/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID": {}
+            //    }
+            //},
+            "properties": {
+                "forceUpdateTag": 1,
+                "azPowerShellVersion": "5.2", 
+                "arguments": "-name \\\"John Dole\\\"",
+                "environmentVariables": [
+                    {
+                        "name": "someSecret",
+                        "secureValue": "if this is really a secret, don't put it here... in plain text..."
+                    }
+                ],
+                "scriptContent": "
+                Install-Module -Name AzSentinel -MinimumVersion 0.6.13 -Scope CurrentUser -Force
+                New-AzSentinelHuntingRule -WorkspaceName testscriptsori -DisplayName \"testhunting\" -Description \"testhunting\" -Tactics \"Discovery\",\"Exfiltration\" -Query 'Usage'
+                ", // or "primaryScriptUri": "https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/deployment-script/deploymentscript-helloworld.ps1",
+                "supportingScriptUris": [],
+                "timeout": "PT30M",
+                "cleanupPreference": "OnSuccess",
+                "retentionInterval": "P1D"
             }
         }
     ],
