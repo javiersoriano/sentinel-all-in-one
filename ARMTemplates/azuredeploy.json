@@ -214,9 +214,6 @@
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
                     "dataConnectorsList":{
                         "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
                     }
