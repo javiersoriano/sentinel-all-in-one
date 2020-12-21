@@ -37,11 +37,15 @@
         "ascRuleId": "[concat('asc', uniqueString(parameters('ruleGuid')))]",
         "mcasRuleId": "[concat('mcas', uniqueString(parameters('ruleGuid')))]",
         "aatpRuleId": "[concat('aatp', uniqueString(parameters('ruleGuid')))]",
-        "mdatpRuleId": "[concat('mdatp', uniqueString(parameters('ruleGuid')))]"
+        "mdatpRuleId": "[concat('mdatp', uniqueString(parameters('ruleGuid')))]",
+        "fusionRuleId": "[concat('fusion', uniqueString('Fusion'))]",
+        "mlbaSsh": "[concat('mlba',uniqueString('SSH'))]",
+        "mlbaRdp": "[concat('mlba',uniqueString('RDP'))]"
+
     },
     "resources": [
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'asc')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureSecurityCenter')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('ascRuleId'))]",
             "apiVersion": "2020-01-01",
@@ -57,7 +61,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'aatp')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureAdvancedThreatProtection')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aatpRuleId'))]",
             "apiVersion": "2020-01-01",
@@ -73,7 +77,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'mcas')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mcasRuleId'))]",
             "apiVersion": "2020-01-01",
@@ -89,7 +93,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'mdatp')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftDefenderAdvancedThreatProtection')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mdatpRuleId'))]",
             "apiVersion": "2020-01-01",
@@ -102,6 +106,44 @@
                 "displayName": "Create incidents based on all alerts generated in Microsoft Defender Advanced Threat Protection",
                 "enabled": true,
                 "productFilter": "Microsoft Defender Advanced Threat Protection"
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'Syslog')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaSsh'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "MLBehaviorAnalytics",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "enabled": true,
+                "alertRuleTemplateName": "fa118b98-de46-4e94-87f9-8e6d5060b60b"
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'SecurityEvents')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaRdp'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "MLBehaviorAnalytics",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "enabled": true,
+                "alertRuleTemplateName": "737a2ce1-70a3-4968-9e90-3e6aca836abf"
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('fusionRuleId'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "Fusion",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "enabled": true,
+                "alertRuleTemplateName": "f71aba3d-28fb-450b-b192-4e76a83015c8"
             }
         }
     ],

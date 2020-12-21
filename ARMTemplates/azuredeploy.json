@@ -45,13 +45,6 @@
             },
             "defaultValue": true
         },
-        "enableAdditionalLASolutions": {
-            "type": "array",
-            "metadata": {
-                "description": "Additional Log Solutions that you can install on the top of your Log Analytics Workspace. (e.g [\"ServiceMap\",\"WireData2\",\"InfrastructureInsights\"])"
-            },
-            "defaultValue": []
-        },
         "securityCollectionTier": {
             "type": "string",
             "defaultValue": "Recommended",
@@ -71,12 +64,6 @@
                 "description": "The kind of data connectors that can be deployed via ARM templates are the following: [\"AzureActivityLog\",\"SecurityInsightsSecurityEventCollectionConfiguration\",\"WindowsFirewall\",\"DnsAnalytics\"], Reference: https://docs.microsoft.com/en-us/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
             },
             "defaultValue": []
-        },
-        "tenantId": {
-            "type": "string",
-            "metadata": {
-                "description": "Azure AD tenant ID"
-            }
         },
         "enableAlerts": {
             "type": "bool",
@@ -168,7 +155,7 @@
                         "value": "[parameters('workspaceName')]"
                     },
                     "tenantId": {
-                        "value": "[parameters('tenantId')]"
+                        "value": "[subscription().tenantId]"
                     },
                     "subscriptionId": {
                         "value": "[subscription().subscriptionId]"
@@ -215,27 +202,17 @@
             "name": "runPowerShellInline",
             "location": "[resourceGroup().location]",
             "kind": "AzurePowerShell", 
-            //"identity": {
-            //    "type": "userAssigned",
-            //    "userAssignedIdentities": {
-            //        "/subscriptions/01234567-89AB-CDEF-0123-456789ABCDEF/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID": {}
-            //    }
-            //},
             "properties": {
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0", 
-                "arguments": "[concat('-WorkspaceName', ' ', parameters('workspaceName'))]",
+                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Connectors ',parameters('enableDataConnectorsKind'))]",
                 "environmentVariables": [
                     {
                         "name": "someSecret",
                         "secureValue": "if this is really a secret, don't put it here... in plain text..."
                     }
                 ],
-                "scriptContent": "
-                param([string] $WorkspaceName)
-                Install-Module -Name AzSentinel -MinimumVersion 0.6.13 -Scope CurrentUser -Force
-                New-AzSentinelHuntingRule -WorkspaceName $WorkspaceName -DisplayName \"testhunting\" -Description \"testhunting\" -Tactics \"Discovery\",\"Exfiltration\" -Query 'Usage'
-                ", // or "primaryScriptUri": "https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/deployment-script/deploymentscript-helloworld.ps1",
+                "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/ARMTemplates/Scripts/EnableRules.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
                 "cleanupPreference": "OnSuccess",
