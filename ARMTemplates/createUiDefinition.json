@@ -82,27 +82,27 @@
                             "allowedValues": [
                                 {
                                     "label": "Office365",
-                                    "value": "o365"
+                                    "value": "Office365"
                                 },
                                 {
                                     "label": "Azure ATP",
-                                    "value": "aatp"
+                                    "value": "AzureAdvancedThreatProtection"
                                 },
                                 {
                                     "label": "Azure AD Identity Protection",
-                                    "value": "aadip"
+                                    "value": "AzureActiveDirectoryIdentityProtection"
                                 },
                                 {
                                     "label": "Microsoft Defender ATP",
-                                    "value": "mdatp"
+                                    "value": "MicrosoftDefenderAdvancedThreatProtection"
                                 },
                                 {
                                     "label": "Azure Security Center",
-                                    "value": "asc"
+                                    "value": "AzureSecurityCenter"
                                 },
                                 {
                                     "label": "Microsoft Cloud App Security",
-                                    "value": "mcas"
+                                    "value": "MicrosoftCloudAppSecurity"
                                 },
                                 {
                                     "label": "Azure Activity",
@@ -118,11 +118,11 @@
                                 },
                                 {
                                     "label": "DNS Analytics",
-                                    "value": "DNSAnalytics"
+                                    "value": "DNS"
                                 },
                                 {
                                     "label": "Linux Syslog",
-                                    "value": "LinuxSyslog"
+                                    "value": "Syslog"
                                 }
                             ],
                             "required": true
@@ -130,28 +130,14 @@
                         "visible": true
                     },
                     {
-                        "name": "tenantId",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Enter your AAD tenant ID:",
-                        "placeholder": "",
-                        "defaultValue": "",
-                        "toolTip": "GUID format",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$",
-                            "validationMessage": "AAD tenant ID must have GUID format."
-                        },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'o365')), true, false)]"
-                    },
-                    {
                         "name": "enableAlerts",
                         "type": "Microsoft.Common.CheckBox",
                         "label": "Enable analytics rules for selected connectors?",
                         "constraints": {
                             "required": false,
-                            "validationMessage": "Please acknowledge the legal conditions."
+                            "validationMessage": "Please select"
                         },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'asc')), true, false)]"
+                        "visible": true
                     },
                     {
                         "name": "securityCollectionTier",
@@ -185,7 +171,6 @@
         "workspaceName": "[basics('workspaceName')]",
         "dailyQuota": "[basics('dailyQuota')]",
         "dataRetention": "[basics('dataRetention')]",
-        "tenantId": "[steps('dataConnectors').tenantId]",
         "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
         "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
         "location": "[location()]",

@@ -45,13 +45,6 @@
             },
             "defaultValue": true
         },
-        "enableAdditionalLASolutions": {
-            "type": "array",
-            "metadata": {
-                "description": "Additional Log Solutions that you can install on the top of your Log Analytics Workspace. (e.g [\"ServiceMap\",\"WireData2\",\"InfrastructureInsights\"])"
-            },
-            "defaultValue": []
-        },
         "securityCollectionTier": {
             "type": "string",
             "defaultValue": "Recommended",
@@ -72,12 +65,6 @@
             },
             "defaultValue": []
         },
-        "tenantId": {
-            "type": "string",
-             "metadata": {
-                "description": "Azure AD tenant ID"
-            }
-        },
         "enableAlerts": {
             "type": "bool",
             "metadata": {
@@ -89,7 +76,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/armtemplate/"
+            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -108,7 +95,7 @@
     },
     "variables": {
         "quoatSetting": {
-             "dailyQuotaGb": "[parameters('dailyQuota')]"
+            "dailyQuotaGb": "[parameters('dailyQuota')]"
         }
     },
     "resources": [
@@ -167,13 +154,13 @@
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
-                    "tenantId":{
-                        "value": "[parameters('tenantId')]"
+                    "tenantId": {
+                        "value": "[subscription().tenantId]"
                     },
-                     "subscriptionId": {
-                         "value": "[subscription().subscriptionId]"
-                     },
-                    "securityCollectionTier":{
+                    "subscriptionId": {
+                        "value": "[subscription().subscriptionId]"
+                    },
+                    "securityCollectionTier": {
                         "value": "[parameters('securityCollectionTier')]"
                     },
                     "location": {
@@ -208,6 +195,30 @@
                     }
                 }
             }
+        },
+        {
+            "condition": "[parameters('enableAlerts')]",
+            "name": "enableScheduledAlerts",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments/', 'enableAlerts')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "dataConnectorsList":{
+                        "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
+                    }
+                }
+            }
         }
     ],
     "outputs": {
@@ -222,6 +233,10 @@
         "workspaceKeyOutput": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').primarySharedKey]"
+        },
+        "dataConnectorsList": {
+            "type": "string",
+            "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
         }
     }
 }

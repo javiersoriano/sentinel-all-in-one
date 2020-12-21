@@ -67,7 +67,7 @@
     },
     "resources": [
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'o365')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'Office365')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
             "location": "[parameters('location')]",
@@ -89,7 +89,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'mdatp')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftDefenderAdvancedThreatProtection')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
             "location": "[parameters('location')]",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'mcas')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
             "location": "[parameters('location')]",
@@ -124,7 +124,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'asc')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureSecurityCenter')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
             "location": "[parameters('location')]",
@@ -140,7 +140,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'aatp')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureAdvancedThreatProtection')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
             "location": "[parameters('location')]",
@@ -151,24 +151,6 @@
                 "dataTypes": {
                     "alerts": {
                         "state": "enabled"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'aad')]",
-            "name": "aad",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-05-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/AzureAD.json', parameters('_artifactsLocationSasToken')))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "workspaceId":{
-                        "value": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('workspaceName'))]"
                     }
                 }
             }
@@ -214,7 +196,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'DNSAnalytics')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'DNS')]",
             "type": "Microsoft.OperationsManagement/solutions",
             "apiVersion": "2015-11-01-preview",
             "name": "[concat('DnsAnalytics','(', parameters('workspaceName'),')')]",
@@ -231,7 +213,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'LinuxSyslog')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'Syslog')]",
             "type": "Microsoft.OperationalInsights/workspaces/dataSources",
             "apiVersion": "2020-03-01-preview",
             "location": "[parameters('location')]",
