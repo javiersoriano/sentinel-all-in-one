@@ -202,7 +202,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
+                "[resourceId('Microsoft.Resources/deployments/', 'enableAlerts')]"
             ],
             "properties": {
                 "mode": "Incremental",
