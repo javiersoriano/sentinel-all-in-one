@@ -205,14 +205,14 @@
             "properties": {
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0", 
-                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Connectors ',parameters('enableDataConnectorsKind'))]",
+                "arguments": "[concat('-Workspace ', string(parameters('workspaceName')), ' -ResourceGroup ', string(resourceGroup().name), ' -Connectors ', string(parameters('enableDataConnectorsKind')))]",
                 "environmentVariables": [
                     {
                         "name": "someSecret",
                         "secureValue": "if this is really a secret, don't put it here... in plain text..."
                     }
                 ],
-                "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/ARMTemplates/Scripts/EnableRules.ps1",
+                "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/script/ARMTemplates/Scripts/EnableRules.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
                 "cleanupPreference": "OnSuccess",
