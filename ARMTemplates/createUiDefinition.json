@@ -137,7 +137,7 @@
                             "required": false,
                             "validationMessage": "Please select"
                         },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'asc')), true, false)]"
+                        "visible": true
                     },
                     {
                         "name": "securityCollectionTier",

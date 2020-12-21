@@ -197,26 +197,30 @@
             }
         },
         {
-            "type": "Microsoft.Resources/deploymentScripts",
-            "apiVersion": "2020-10-01",
-            "name": "runPowerShellInline",
-            "location": "[resourceGroup().location]",
-            "kind": "AzurePowerShell", 
+            "condition": "[parameters('enableAlerts')]",
+            "name": "enableScheduledAlerts",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', parameters('workspaceName'),')'))]"
+            ],
             "properties": {
-                "forceUpdateTag": "1",
-                "azPowerShellVersion": "3.0", 
-                "arguments": "[concat('-Workspace ', string(parameters('workspaceName')), ' -ResourceGroup ', string(resourceGroup().name), ' -Connectors ', string(parameters('enableDataConnectorsKind')))]",
-                "environmentVariables": [
-                    {
-                        "name": "someSecret",
-                        "secureValue": "if this is really a secret, don't put it here... in plain text..."
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "dataConnectorsList":{
+                        "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
                     }
-                ],
-                "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/script/ARMTemplates/Scripts/EnableRules.ps1",
-                "supportingScriptUris": [],
-                "timeout": "PT30M",
-                "cleanupPreference": "OnSuccess",
-                "retentionInterval": "P1D"
+                }
             }
         }
     ],
@@ -232,6 +236,10 @@
         "workspaceKeyOutput": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').primarySharedKey]"
+        },
+        "dataConnectorsList": {
+            "type": "string",
+            "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
         }
     }
 }
