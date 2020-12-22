@@ -4,7 +4,69 @@
 
 Azure Sentinel All in One is a project that seeks to speed up deployment and initial configuration tasks of an Azure Sentinel environment. This is ideal for Proof of Concept scenarios and connector onboarding when highly privileged users are needed.
 
-The main script in this repository takes care of the following steps:
+There's two version of Sentinel All-In-One: Powershell script and ARM template. There's slight differences on what things get automated with each. We try to summarize it here:
+
+| All-In-One version                                 | Data Connectors         |  Analytics Rules  |
+| -------------------------------------------------- | ----------------------- |-------------------|
+| Powershell script                                  | Azure Activity, Azure Security Center, Azure Active Directory, Azure Active Directory Identity Protection, Office 365, Microsoft Cloud App Security, Azure Advanced Threat Protection, Microsoft Defender Advanced ThreatProtection, Threat Intelligence Platforms | Microsoft Incident Creation rules |
+| ARM template                                       | Azure Activity, Azure Security Center, Azure Active Directory Identity Protection, Office 365, Microsoft Cloud App Security, Azure Advanced Threat Protection, Microsoft Defender Advanced ThreatProtection, Security Events, DNS (Preview), Windows Firewall     | Microsoft Incident Creation, Fusion, ML Behavior Analytics, Scheduled      |
+
+## Prerequisites
+
+- Azure user account with enough permissions to enable the required connectors. See table below. Write permissions to the workspace are always needed.
+- Some data connectors also require a license to be present in order to be enabled. See table below.
+- [PowerShell Core](https://github.com/PowerShell/PowerShell) needs to be installed ONLY if using Powershell version
+- Threat Intelligence Platforms connector requires additional setup documented [here](https://docs.microsoft.com/en-us/azure/sentinel/connect-threat-intelligence#connect-azure-sentinel-to-your-threat-intelligence-platform)
+
+The following table summarizes permissions, licenses and permissions needed and cost to enable each Data Connector:
+
+| Data Connector                                 | License         |  Permissions                    | Cost      |
+| ---------------------------------------------- | --------------- |---------------------------------|-----------|
+| Azure Activity                                 | None            | Subscription Reader             | Free      |
+| Azure Security Center                          | ASC Standard    | Security Reader                 | Free      |
+| Azure Active Directory                         | Any AAD license | Global Admin or Security Admin  | Billed    |
+| Azure Active Directory Identity Protection     | AAD Premium 2   | Global Admin or Security Admin  | Free      |
+| Office 365                                     | None            | Global Admin or Security Admin  | Free      |
+| Microsoft Cloud App Security                   | MCAS            | Global Admin or Security Admin  | Free      |
+| Azure Advanced Threat Protection               | AATP            | Global Admin or Security Admin  | Free      |
+| Microsoft Defender Advanced Threat Protection  | MDATP           | Global Admin or Security Admin  | Free      |
+| Threat Intelligence Platforms                  | None            | Global Admin or Security Admin  | Billed    |
+| Security Events                                | None            | None                            | Billed    |
+| Linux Syslog                                   | None            | None                            | Billed    |
+| DNS (preview)                                  | None            | None                            | Billed    |
+| Windows Firewall                               | None            | None                            | Billed    |
+
+## ARM template instructions
+
+The template performs the following tasks:
+
+- Creates resource group (if given resource group doesn't exist yet)
+- Creates Log Analytics workspace (if given workspace doesn't exist yet)
+- Installs Azure Sentinel on top of the workspace (if not installed yet)
+- Enables the following Data Connectors: 
+    + Azure Activity
+    + Azure Security Center
+    + Azure Active Directory Identity Protection
+    + Office 365 (Sharepoint, Exchange and Teams)
+    + Microsoft Cloud App Security
+    + Azure Advanced Threat Protection
+    + Microsoft Defender Advanced Threat Protection
+    + Security Events
+    + Linux Syslog
+    + DNS (Preview)
+    + Windows Firewall
+- Enables analytics rules for selected Microsoft 1st party products 
+- Enables Fusion rule and ML Behavior Analytics rules for RDP or SSH (if selected)
+- Enables Scheduled analytics rules that apply to all the enabled connectors 
+
+### Try it now
+
+[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjaviersoriano%2Fsentinel-all-in-one%2Fmaster%2FARMTemplates%2Fazuredeploy.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fjaviersoriano%2Fsentinel-all-in-one%2Fmaster%2FARMTemplates%2FcreateUiDefinition.json)
+
+
+## Powershell script Instructions
+
+The Powershell script in this folder (*SentinelallInOne.ps1*) takes care of the following steps:
 
 - Creates resource group (if given resource group doesn't exist yet)
 - Creates Log Analytics workspace (if given workspace doesn't exist yet)
@@ -21,10 +83,10 @@ The main script in this repository takes care of the following steps:
     + Threat Intelligence Platforms
 - Enables Analytics Rules for enabled Microsoft 1st party products 
 
-## Getting started
+### Getting started
 These instructions will show you what you need to now to use Sentinel All in One.
 
-### Prerequisites
+#### Prerequisites
 
 - [PowerShell Core](https://github.com/PowerShell/PowerShell)
 - Azure user account with enough permissions to enable the required connectors. See table below.
@@ -45,7 +107,7 @@ The following table summarizes permissions, licenses needed and cost to enable e
 | Microsoft Defender Advanced Threat Protection  | MDATP           |Global Admin or Security Admin  | Free      |
 | Threat Intelligence Platforms                  | None            |Global Admin or Security Admin  | Billed    |
 
-### Usage
+#### Usage
 
 Once you have PowerShell Core installed on your machine, you just need two files from this repo: 
 
