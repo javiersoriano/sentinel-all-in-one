@@ -4,7 +4,7 @@
 
 Azure Sentinel All in One is a project that seeks to speed up deployment and initial configuration tasks of an Azure Sentinel environment. This is ideal for Proof of Concept scenarios and connector onboarding when highly privileged users are needed.
 
-There's two versions of Sentinel All-In-One: **Powershell script** and **ARM template**. There's slight differences on what things get automated with each. We try to summarize it here:
+There's two versions of Sentinel All-In-One: **Powershell script** and **ARM template**. There's slight differences on what things get automated with each. We try to summarize them here:
 
 | All-In-One version                                 | Data Connectors         |  Analytics Rules  |
 | -------------------------------------------------- | ----------------------- |-------------------|
@@ -18,7 +18,7 @@ There's two versions of Sentinel All-In-One: **Powershell script** and **ARM tem
 - [PowerShell Core](https://github.com/PowerShell/PowerShell) needs to be installed ONLY if using Powershell version
 - Threat Intelligence Platforms connector requires additional setup documented [here](https://docs.microsoft.com/en-us/azure/sentinel/connect-threat-intelligence#connect-azure-sentinel-to-your-threat-intelligence-platform)
 
-The following table summarizes permissions, licenses and permissions needed and cost to enable each Data Connector:
+The following table summarizes permissions, licenses and permissions needed and related cost to enable each Data Connector:
 
 | Data Connector                                 | License         |  Permissions                    | Cost      |
 | ---------------------------------------------- | --------------- |---------------------------------|-----------|
@@ -43,7 +43,7 @@ The template performs the following tasks:
 - Creates resource group (if given resource group doesn't exist yet)
 - Creates Log Analytics workspace (if given workspace doesn't exist yet)
 - Installs Azure Sentinel on top of the workspace (if not installed yet)
-- Enables the following Data Connectors: 
+- Enables selected Data Connectors from tihs list: 
     + Azure Activity
     + Azure Security Center
     + Azure Active Directory Identity Protection
@@ -56,8 +56,12 @@ The template performs the following tasks:
     + DNS (Preview)
     + Windows Firewall
 - Enables analytics rules for selected Microsoft 1st party products 
-- Enables Fusion rule and ML Behavior Analytics rules for RDP or SSH (if selected)
+- Enables Fusion rule and ML Behavior Analytics rules for RDP or SSH (if Security Events or Syslog data sources are selected)
 - Enables Scheduled analytics rules that apply to all the enabled connectors 
+
+It takes around **10 minutes** to deploy.
+
+In order to create the Scheduled analytics rules, the deployment template uses an [ARM deployment script](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template) which requires a [user assigned identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview). You will see this resource in your resource group when the deployment finishes. You can remove after depployment if desired.
 
 ### Try it now
 
