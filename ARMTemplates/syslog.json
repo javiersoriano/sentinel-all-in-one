@@ -1,0 +1,78 @@
+{
+    "requests": [
+        {
+            "httpMethod": "PUT",
+            "relativeUrl": "/subscriptions/1186543f-81e7-4a2c-ad55-fae1cc1c9eac/resourceGroups/nimaran6/providers/Microsoft.OperationalInsights/workspaces/nimaran6ws/datasources/DataSource_LinuxSyslog_74dadcb8-7e40-4219-bb20-ca11b32251f5?api-version=2015-11-01-preview",
+            "content": {
+                "kind": "LinuxSyslog",
+                "properties": {
+                    "syslogName": "auth",
+                    "syslogSeverities": [
+                        {
+                            "Severity": "emerg"
+                        },
+                        {
+                            "Severity": "alert"
+                        },
+                        {
+                            "Severity": "crit"
+                        },
+                        {
+                            "Severity": "err"
+                        },
+                        {
+                            "Severity": "warning"
+                        },
+                        {
+                            "Severity": "notice"
+                        },
+                        {
+                            "Severity": "info"
+                        },
+                        {
+                            "Severity": "debug"
+                        }
+                    ],
+                    "dataSourceId": "DataSource_LinuxSyslog_74dadcb8-7e40-4219-bb20-ca11b32251f5"
+                }
+            }
+        },
+        {
+            "httpMethod": "PUT",
+            "relativeUrl": "/subscriptions/1186543f-81e7-4a2c-ad55-fae1cc1c9eac/resourceGroups/nimaran6/providers/Microsoft.OperationalInsights/workspaces/nimaran6ws/datasources/DataSource_LinuxSyslog_eefb063f-0183-41c5-adf2-bf1bc974b5dc?api-version=2015-11-01-preview",
+            "content": {
+                "kind": "LinuxSyslog",
+                "properties": {
+                    "syslogName": "syslog",
+                    "syslogSeverities": [
+                        {
+                            "Severity": "emerg"
+                        },
+                        {
+                            "Severity": "alert"
+                        },
+                        {
+                            "Severity": "crit"
+                        },
+                        {
+                            "Severity": "err"
+                        },
+                        {
+                            "Severity": "warning"
+                        },
+                        {
+                            "Severity": "notice"
+                        },
+                        {
+                            "Severity": "info"
+                        },
+                        {
+                            "Severity": "debug"
+                        }
+                    ],
+                    "dataSourceId": "DataSource_LinuxSyslog_eefb063f-0183-41c5-adf2-bf1bc974b5dc"
+                }
+            }
+        }
+    ]
+}

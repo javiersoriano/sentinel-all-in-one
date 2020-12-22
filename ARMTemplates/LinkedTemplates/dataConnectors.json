@@ -218,10 +218,37 @@
             "apiVersion": "2020-03-01-preview",
             "location": "[parameters('location')]",
             "name": "[concat(parameters('workspaceName'), '/syslogCollection')]",
-            "kind": "LinuxSyslogCollection",
+            "kind": "LinuxSyslog",
             "properties": {
-                "state": "Enabled"
+                "syslogName": "auth",
+                "syslogSeverities": [
+                    {
+                        "Severity": "emerg"
+                    },
+                    {
+                        "Severity": "alert"
+                    },
+                    {
+                        "Severity": "crit"
+                    },
+                    {
+                        "Severity": "err"
+                    },
+                    {
+                        "Severity": "warning"
+                    },
+                    {
+                        "Severity": "notice"
+                    },
+                    {
+                        "Severity": "info"
+                    },
+                    {
+                        "Severity": "debug"
+                    }
+                ],
+                "dataSourceId": "[concat(parameters('workspaceName'), '/syslogCollection')]"
             }
-        }        
+        }
     ]
 }
