@@ -4,7 +4,7 @@
 
 Azure Sentinel All in One is a project that seeks to speed up deployment and initial configuration tasks of an Azure Sentinel environment. This is ideal for Proof of Concept scenarios and connector onboarding when highly privileged users are needed.
 
-There's two version of Sentinel All-In-One: Powershell script and ARM template. There's slight differences on what things get automated with each. We try to summarize it here:
+There's two versions of Sentinel All-In-One: **Powershell script** and **ARM template**. There's slight differences on what things get automated with each. We try to summarize it here:
 
 | All-In-One version                                 | Data Connectors         |  Analytics Rules  |
 | -------------------------------------------------- | ----------------------- |-------------------|
@@ -13,7 +13,7 @@ There's two version of Sentinel All-In-One: Powershell script and ARM template. 
 
 ## Prerequisites
 
-- Azure user account with enough permissions to enable the required connectors. See table below. Write permissions to the workspace are always needed.
+- Azure user account with enough permissions to enable the required connectors. See table below for additional permissions. Write permissions to the workspace are **always** needed.
 - Some data connectors also require a license to be present in order to be enabled. See table below.
 - [PowerShell Core](https://github.com/PowerShell/PowerShell) needs to be installed ONLY if using Powershell version
 - Threat Intelligence Platforms connector requires additional setup documented [here](https://docs.microsoft.com/en-us/azure/sentinel/connect-threat-intelligence#connect-azure-sentinel-to-your-threat-intelligence-platform)

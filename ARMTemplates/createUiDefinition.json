@@ -4,7 +4,7 @@
     "version": "0.1.2-preview",
     "parameters": {
         "config": {
-            "isWizard": false,
+            "isWizard": true,
             "basics": {
                 "description": "**Azure Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/javiersoriano/sentinel-all-in-one/tree/armtemplate)."
             }
@@ -43,7 +43,7 @@
                 "type": "Microsoft.Common.TextBox",
                 "label": "Number of days of retention",
                 "placeholder": "",
-                "defaultValue": "30",
+                "defaultValue": "90",
                 "toolTip": "Only numbers allowed",
                 "constraints": {
                     "required": true,
