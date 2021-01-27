@@ -156,6 +156,25 @@
             }
         },
         {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActiveDirectoryIdentityProtection')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
+            "apiVersion": "2020-01-01",
+            "location": "[parameters('location')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aadipName'))]",
+            "kind": "Office365",
+            "properties": {
+                "tenantId": "[parameters('tenantId')]",
+                "dataTypes": {
+                    "tenantId": "[parameters('tenantId')]",
+                    "dataTypes": {
+                        "alerts": {
+                            "state": "enabled"
+                        }
+                    }
+                }
+            }
+        },
+        {
             "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActivity')]",
             "type": "Microsoft.OperationalInsights/workspaces/dataSources",
             "apiVersion": "2020-03-01-preview",
@@ -222,6 +241,6 @@
             "properties": {
                 "state": "Enabled"
             }
-        }        
+        }
     ]
 }

@@ -165,6 +165,52 @@
                         "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents'), true, false)]"
                     }
             ]
+        },
+        {
+            "name": "analyticsRules",
+            "label": "Analytics Rules",
+            "elements": [
+                {
+                    "name": "enableFusionAlert",
+                    "type": "Microsoft.Common.CheckBox",
+                    "label": "Enable Fusion alert rule?",
+                    "constraints": {
+                        "required": false,
+                        "validationMessage": "Please select"
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "enableMicrosoftAlerts",
+                    "type": "Microsoft.Common.CheckBox",
+                    "label": "Enable Microsoft alert rules for selected connectors?",
+                    "constraints": {
+                        "required": false,
+                        "validationMessage": "Enables rules coming from selected Microsoft security products"
+                    },
+                    "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'aatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'mcas'),contains(steps('dataConnectors').enableDataConnectorsKind,'mdatp'),contains(steps('dataConnectors').enableDataConnectorsKind,'asc')), true, false)]"
+                },
+                {
+                    "name": "enableMLAlerts",
+                    "type": "Microsoft.Common.CheckBox",
+                    "label": "Enable ML Behavior Analytics alert rules?",
+                    "constraints": {
+                        "required": false,
+                        "validationMessage": "Enables SSH and/or RDP anomalous login alerts"
+                    },
+                    "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'Syslog'),contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents')), true, false)]"
+                },
+                {
+                    "name": "enableScheduledAlerts",
+                    "type": "Microsoft.Common.CheckBox",
+                    "label": "Enable Scheduled alert rules for selected connectors?",
+                    "constraints": {
+                        "required": false,
+                        "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
+                    },
+                    "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'Syslog'),contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents')), true, false)]"
+                }
+            ]
         }
     ],
     "outputs": {
@@ -175,7 +221,10 @@
         "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
         "location": "[location()]",
         "tagsByResource": "[steps('tags').tagsByResource]",
-        "enableAlerts": "[steps('dataConnectors').enableAlerts]"
+        "enableFusionAlert": "[steps('analyticsRules').enableFusionAlert]",
+        "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
+        "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
+        "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]"
     }
 }
 }
