@@ -32,13 +32,16 @@
             }
         },
         "enableFusionAlert": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": false
         },
         "enableMicrosoftAlerts": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": false
         },
         "enableMLAlerts": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": false
         }
     },
     "functions": [],
