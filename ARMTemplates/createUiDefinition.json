@@ -130,16 +130,6 @@
                         "visible": true
                     },
                     {
-                        "name": "enableAlerts",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable analytics rules for selected connectors?",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Please select"
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "securityCollectionTier",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Security Events to stream into Sentinel ",
