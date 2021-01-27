@@ -89,6 +89,12 @@
                 "description": "Enable Scheduled analytics rules"
             }
         },
+        "mcasDiscoveryLogs": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable MCAS Discovery Logs"
+            }
+        },
         "_artifactsLocation": {
             "type": "string",
             "metadata": {
@@ -180,6 +186,9 @@
                     },
                     "securityCollectionTier": {
                         "value": "[parameters('securityCollectionTier')]"
+                    },
+                    "mcasDiscoveryLogs": {
+                        "value": "[parameters('mcasDiscoveryLogs')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"

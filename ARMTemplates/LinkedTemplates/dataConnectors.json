@@ -35,26 +35,15 @@
                 "description": "Sbscription Id to monitor"
             }
         },
+        "mcasDiscoveryLogs": {
+            "type": "bool"
+        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "Location for all resources."
             }
-        },
-        "_artifactsLocation": {
-            "type": "string",
-            "metadata": {
-                "description": "The location of resources"
-            },
-            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/armtemplate/"
-        },
-        "_artifactsLocationSasToken": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Auto-generated token to access _artifactsLocation. Leave it blank unless you need to provide your own value."
-            },
-            "defaultValue": ""
         }
     },
     "variables": {
@@ -118,7 +107,7 @@
                         "state": "enabled"
                     },
                     "discoveryLogs": {
-                        "state": "enabled"
+                        "state": "[parameters('mcasDiscoveryLogs')]"
                     }
                 }
             }
@@ -156,20 +145,17 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActiveDirectoryIdentityProtection')]",
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActiveDirectory')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
             "location": "[parameters('location')]",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aadipName'))]",
-            "kind": "Office365",
+            "kind": "AzureActiveDirectory",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
                 "dataTypes": {
-                    "tenantId": "[parameters('tenantId')]",
-                    "dataTypes": {
-                        "alerts": {
-                            "state": "enabled"
-                        }
+                    "alerts": {
+                        "state": "enabled"
                     }
                 }
             }

@@ -50,12 +50,29 @@
         "mcasRuleId": "[concat('mcas', uniqueString(parameters('ruleGuid')))]",
         "aatpRuleId": "[concat('aatp', uniqueString(parameters('ruleGuid')))]",
         "mdatpRuleId": "[concat('mdatp', uniqueString(parameters('ruleGuid')))]",
+        "aadipRuleId": "[concat('aadip', uniqueString(parameters('ruleGuid')))]",
         "fusionRuleId": "[concat('fusion', uniqueString('Fusion'))]",
         "mlbaSsh": "[concat('mlba',uniqueString('SSH'))]",
         "mlbaRdp": "[concat('mlba',uniqueString('RDP'))]"
 
     },
     "resources": [
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'AzureActiveDirectory'),parameters('enableMicrosoftAlerts'))]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aadipRuleId'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "MicrosoftSecurityIncidentCreation",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                // https://docs.microsoft.com/en-us/rest/api/securityinsights/alertrules/createorupdate#scheduledalertrule
+                "description": "Create incidents based on Azure Active Directory Identity Protection alerts",
+                "displayName": "Create incidents based on all alerts generated in Azure Active Directory Identity Protection",
+                "enabled": true,
+                "productFilter": "Azure Active Directory Identity Protection"
+            }
+        },
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'AzureSecurityCenter'),parameters('enableMicrosoftAlerts'))]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
@@ -147,7 +164,7 @@
             }
         },
         {
-            "condition": "[and(contains(parameters('dataConnectorsKind'), 'SecurityEvents'),parameters('enableFusionAlert'))]",
+            "condition": "[parameters('enableFusionAlert')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('fusionRuleId'))]",
             "apiVersion": "2020-01-01",
@@ -165,6 +182,5 @@
             "type": "string",
             "value": "[parameters('ruleGUID')]"
         }
-        // TODO get the Etag?
     }
 }
