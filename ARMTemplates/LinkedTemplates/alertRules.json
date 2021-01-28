@@ -53,8 +53,8 @@
         "aadipRuleId": "[concat('aadip', uniqueString(parameters('ruleGuid')))]",
         "o365RuleId": "[concat('o365', uniqueString(parameters('ruleGuid')))]",
         "fusionRuleId": "[concat('fusion', uniqueString(parameters('ruleGuid')))]",
-        "mlbaSsh": "[concat('mlba',uniqueString(parameters('ruleGuid')))]",
-        "mlbaRdp": "[concat('mlba',uniqueString(parameters('ruleGuid')))]"
+        "mlbaSsh": "[concat('mlbaSsh',uniqueString(parameters('ruleGuid')))]",
+        "mlbaRdp": "[concat('mlbaRdp',uniqueString(parameters('ruleGuid')))]"
 
     },
     "resources": [
