@@ -65,10 +65,34 @@
             },
             "defaultValue": []
         },
-        "enableAlerts": {
+        "enableFusionAlert": {
             "type": "bool",
             "metadata": {
-                "description": "Enable analytics rules"
+                "description": "Enable Fusion analytics rules"
+            }
+        },
+        "enableMicrosoftAlerts": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable Microsoft analytics rules"
+            }
+        },
+        "enableMLAlerts": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable ML Behavior Analytics rules"
+            }
+        },
+        "enableScheduledAlerts": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable Scheduled analytics rules"
+            }
+        },
+        "mcasDiscoveryLogs": {
+            "type": "bool",
+            "metadata": {
+                "description": "Enable MCAS Discovery Logs"
             }
         },
         "_artifactsLocation": {
@@ -76,7 +100,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/"
+            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/addons/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -163,6 +187,9 @@
                     "securityCollectionTier": {
                         "value": "[parameters('securityCollectionTier')]"
                     },
+                    "mcasDiscoveryLogs": {
+                        "value": "[parameters('mcasDiscoveryLogs')]"
+                    },
                     "location": {
                         "value": "[parameters('location')]"
                     }
@@ -170,7 +197,7 @@
             }
         },
         {
-            "condition": "[parameters('enableAlerts')]",
+            "condition": "[or(parameters('enableFusionAlert'),parameters('enableMicrosoftAlerts'),parameters('enableMLAlerts'))]",
             "name": "enableAlerts",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -192,12 +219,21 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "enableFusionAlert":{
+                        "value": "[parameters('enableFusionAlert')]"
+                    },
+                    "enableMicrosoftAlerts":{
+                        "value": "[parameters('enableMicrosoftAlerts')]"
+                    },
+                    "enableMLAlerts":{
+                        "value": "[parameters('enableMLAlerts')]"
                     }
                 }
             }
         },
         {
-            "condition": "[parameters('enableAlerts')]",
+            "condition": "[parameters('enableScheduledAlerts')]",
             "name": "enableScheduledAlerts",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
