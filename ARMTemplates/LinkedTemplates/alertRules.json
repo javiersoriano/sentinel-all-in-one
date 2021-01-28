@@ -53,8 +53,8 @@
         "aadipRuleId": "[concat('aadip', uniqueString(parameters('ruleGuid')))]",
         "o365RuleId": "[concat('o365', uniqueString(parameters('ruleGuid')))]",
         "fusionRuleId": "[concat('fusion', uniqueString(parameters('ruleGuid')))]",
-        "mlbaSsh": "[concat('mlbaSsh',uniqueString(parameters('ruleGuid')))]",
-        "mlbaRdp": "[concat('mlbaRdp',uniqueString(parameters('ruleGuid')))]"
+        "mlbaSshRuleId": "[concat('mlSsh',uniqueString(parameters('ruleGuid')))]",
+        "mlbaRdpRuleId": "[concat('mlRdp',uniqueString(parameters('ruleGuid')))]"
 
     },
     "resources": [
@@ -157,7 +157,7 @@
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'Syslog'),parameters('enableMLAlerts'))]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaSsh'))]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaSshRuleId'))]",
             "apiVersion": "2020-01-01",
             "kind": "MLBehaviorAnalytics",
             "location": "[parameters('location')]",
@@ -170,7 +170,7 @@
         {
             "condition": "[and(contains(parameters('dataConnectorsKind'), 'SecurityEvents'),parameters('enableMLAlerts'))]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaRdp'))]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaRdpRuleId'))]",
             "apiVersion": "2020-01-01",
             "kind": "MLBehaviorAnalytics",
             "location": "[parameters('location')]",
