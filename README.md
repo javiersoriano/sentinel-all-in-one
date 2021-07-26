@@ -2,8 +2,11 @@
 
 ![logo](./media/Sentinel21Logo.PNG)
 
+```diff
+- **We have moved this project to Azure Sentinel's official GitHub repository here: [https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One](https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One)**
+```
 
-**We have moved this project to Azure Sentinel's official GitHub repository [here](https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One)**
+===================================================================================================================================================================
 
 Azure Sentinel All in One is a project that seeks to speed up deployment and initial configuration tasks of an Azure Sentinel environment. This is ideal for Proof of Concept scenarios and connector onboarding when highly privileged users are needed.
 
