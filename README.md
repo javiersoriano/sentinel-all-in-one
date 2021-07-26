@@ -2,8 +2,7 @@
 
 ![logo](./media/Sentinel21Logo.PNG)
 
-<span style="color:red">*We have moved this project to Azure Sentinel's official GitHub repository here: [https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One](https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One)*
-</span>
+<span style="color:red"> *We have moved this project to Azure Sentinel's official GitHub repository here*: [https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One](https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One) </span>
 
 
 ===================================================================================================================================================================
