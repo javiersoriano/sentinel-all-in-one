@@ -231,7 +231,7 @@
                         "type": "Microsoft.Common.CheckBox",
                         "label": "Enable User Entity Behavior Analytics (UEBA)?",
                         "constraints": {
-                            "required": true,
+                            "required": false,
                             "validationMessage": "Please choose"
                         }
                     },
@@ -254,7 +254,7 @@
                                     "value": "ActiveDirectory"
                                 }
                             ],
-                            "required": true
+                            "required": false
                         },
                         "visible": "[if(steps('settings').enableUeba, true, false)]"
                     },
@@ -264,7 +264,7 @@
                         "label": "Enable Sentinel diagnostics?",
                         "toolTip": "Select send Sentinel health information to SentinelHealth table",
                         "constraints": {
-                            "required": true,
+                            "required": false,
                             "validationMessage": "Please select"
                         },
                         "visible": true
