@@ -101,7 +101,7 @@
                 "label": "Select Commitment Tier for Log Analytics",
                 "placeholder": "",
                 "multiselect": false,
-                "defaultValue": "100",
+                "defaultValue": 100,
                 "toolTip": "Select the Commitment Tier",
                 "constraints": {
                     "allowedValues": [
@@ -170,7 +170,7 @@
                 "label": "Select Commitment Tier for Sentinel",
                 "placeholder": "",
                 "multiselect": false,
-                "defaultValue": "100",
+                "defaultValue": 100,
                 "toolTip": "Select the Commitment Tier",
                 "constraints": {
                     "allowedValues": [
