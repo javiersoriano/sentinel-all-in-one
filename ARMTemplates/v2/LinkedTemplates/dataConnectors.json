@@ -15,13 +15,6 @@
                 "description": "Name for the Log Analytics workspace used to aggregate data"
             }
         },
-        "securityCollectionTier": {
-            "type": "string",
-            "defaultValue": "Recommended",
-            "metadata": {
-                "description": "SecurityEvent logging level"
-            }
-        },
         "tenantId": {
             "type": "string",
             "metadata": {
@@ -34,9 +27,6 @@
             "metadata": {
                 "description": "Sbscription Id to monitor"
             }
-        },
-        "mcasDiscoveryLogs": {
-            "type": "bool"
         },
         "location": {
             "type": "string",
@@ -79,73 +69,6 @@
             }
         },
         {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftDefenderAdvancedThreatProtection')]",
-            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
-            "apiVersion": "2020-01-01",
-            "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mdatpName'))]",
-            "kind": "MicrosoftDefenderAdvancedThreatProtection",
-            "properties": {
-                "tenantId": "[parameters('tenantId')]",
-                "dataTypes": {
-                    "alerts": {
-                        "state": "enabled"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity')]",
-            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
-            "apiVersion": "2020-01-01",
-            "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mcasName'))]",
-            "kind": "MicrosoftCloudAppSecurity",
-            "properties": {
-                "tenantId": "[parameters('tenantId')]",
-                "dataTypes": {
-                    "alerts": {
-                        "state": "enabled"
-                    },
-                    "discoveryLogs": {
-                        "state": "[if(parameters('mcasDiscoveryLogs'),'enabled','disabled')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureSecurityCenter')]",
-            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
-            "apiVersion": "2020-01-01",
-            "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('ascName'))]",
-            "kind": "AzureSecurityCenter",
-            "properties": {
-                "subscriptionId": "[parameters('subscriptionId')]",
-                "dataTypes": {
-                    "alerts": {
-                        "state": "enabled"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureAdvancedThreatProtection')]",
-            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
-            "apiVersion": "2020-01-01",
-            "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aatpName'))]",
-            "kind": "AzureAdvancedThreatProtection",
-            "properties": {
-                "tenantId": "[parameters('tenantId')]",
-                "dataTypes": {
-                    "alerts": {
-                        "state": "enabled"
-                    }
-                }
-            }
-        },
-        {
             "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActiveDirectory')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
@@ -170,63 +93,6 @@
             "kind": "AzureActivityLog",
             "properties": {
                 "linkedResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/providers/microsoft.insights/eventtypes/management')]"
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'SecurityEvents')]",
-            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
-            "apiVersion": "2020-03-01-preview",
-            "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'), '/SecurityInsightsSecurityEventCollectionConfiguration')]",
-            "kind": "SecurityInsightsSecurityEventCollectionConfiguration",
-            "properties": {
-                "tier": "[parameters('securityCollectionTier')]",
-                "tierSetMethod": "Custom"
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'WindowsFirewall')]",
-            "type": "Microsoft.OperationsManagement/solutions",
-            "apiVersion": "2015-11-01-preview",
-            "name": "[concat('WindowsFirewall','(', parameters('workspaceName'),')')]",
-            "location": "[parameters('location')]",
-            "plan": {
-                "name": "[concat('WindowsFirewall','(', parameters('workspaceName'),')')]",
-                "promotionCode": "",
-                "product": "OMSGallery/WindowsFirewall",
-                "publisher": "Microsoft"
-            },
-            "properties": {
-                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('workspaceName'))]",
-                "containedResources": []
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'DNS')]",
-            "type": "Microsoft.OperationsManagement/solutions",
-            "apiVersion": "2015-11-01-preview",
-            "name": "[concat('DnsAnalytics','(', parameters('workspaceName'),')')]",
-            "location": "[parameters('location')]",
-            "plan": {
-                "name": "[concat('DnsAnalytics','(', parameters('workspaceName'),')')]",
-                "promotionCode": "",
-                "product": "OMSGallery/DnsAnalytics",
-                "publisher": "Microsoft"
-            },
-            "properties": {
-                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('workspaceName'))]",
-                "containedResources": []
-            }
-        },
-        {
-            "condition": "[contains(parameters('dataConnectorsKind'), 'Syslog')]",
-            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
-            "apiVersion": "2020-03-01-preview",
-            "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'), '/syslogCollection')]",
-            "kind": "LinuxSyslogCollection",
-            "properties": {
-                "state": "Enabled"
             }
         },
         {
