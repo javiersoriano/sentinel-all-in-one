@@ -6,7 +6,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "**Azure Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/Azure/Azure-Sentinel/Tools/Sentinel-All-In-One/).",
+                "description": "**Microsoft Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/Azure/Azure-Sentinel/Tools/Sentinel-All-In-One/).",
                 "location": {
                     "label": "Location",
                     "toolTip": "Location for all resources",
@@ -72,27 +72,276 @@
                     "validationMessage": "Retention must be between 30 and 730 days."
                 },
                 "visible": true
+            },
+            {
+                "name": "pricingTierLA",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Select pricing tier for Log Analytics",
+                "placeholder": "",
+                "multiselect": false,
+                "defaultValue": "PAYG",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "Pay-as-you-go",
+                            "value": "PerGB2018"
+                        },
+                        {
+                            "label": "Commitment Tier",
+                            "value": "CapacityReservation"
+                        }
+                    ],
+                    "required": true
+                },
+                "visible": true
+            },
+            {
+                "name": "capacityReservationLA",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Select Commitment Tier for Log Analytics",
+                "placeholder": "",
+                "multiselect": false,
+                "defaultValue": "100",
+                "toolTip": "Select the Commitment Tier",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "100 GB",
+                            "value": 100
+                        },
+                        {
+                            "label": "200 GB",
+                            "value": 200
+                        },
+                        {
+                            "label": "300 GB",
+                            "value": 300
+                        },
+                        {
+                            "label": "400 GB",
+                            "value": 400
+                        },
+                        {
+                            "label": "500 GB",
+                            "value": 500
+                        },
+                        {
+                            "label": "1000 GB",
+                            "value": 1000
+                        },
+                        {
+                            "label": "2000 GB",
+                            "value": 2000
+                        },
+                        {
+                            "label": "5000 GB",
+                            "value": 5000
+                        }
+                    ],
+                    "required": true
+                },
+                "visible": "[if(equals(basics('pricingTierLA'),'CapacityReservation'), true, false)]"
+            },
+            {
+                "name": "pricingTierSentinel",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Select pricing tier for Sentinel",
+                "placeholder": "",
+                "multiselect": false,
+                "defaultValue": "PAYG",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "Pay-as-you-go",
+                            "value": "PerGB"
+                        },
+                        {
+                            "label": "Commitment Tier",
+                            "value": "CapacityReservation"
+                        }
+                    ],
+                    "required": true
+                },
+                "visible": true
+            },
+            {
+                "name": "capacityReservationSentinel",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Select Commitment Tier for Sentinel",
+                "placeholder": "",
+                "multiselect": false,
+                "defaultValue": "100",
+                "toolTip": "Select the Commitment Tier",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "100 GB",
+                            "value": 100
+                        },
+                        {
+                            "label": "200 GB",
+                            "value": 200
+                        },
+                        {
+                            "label": "300 GB",
+                            "value": 300
+                        },
+                        {
+                            "label": "400 GB",
+                            "value": 400
+                        },
+                        {
+                            "label": "500 GB",
+                            "value": 500
+                        },
+                        {
+                            "label": "1000 GB",
+                            "value": 1000
+                        },
+                        {
+                            "label": "2000 GB",
+                            "value": 2000
+                        },
+                        {
+                            "label": "5000 GB",
+                            "value": 5000
+                        }
+                    ],
+                    "required": true
+                },
+                "visible": "[if(equals(basics('pricingTierSentinel'),'CapacityReservation'), true, false)]"
             }
         ],
         "steps": [
+            {
+                "name": "settings",
+                "label": "Settings",
+                "elements": [
+                    {
+                        "name": "infoBoxSettings",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Please select which settings you would like to enable in your Microsoft Sentinel environment"
+                        }
+                    },
+                    {
+                        "name": "enableUeba",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable User Entity Behavior Analytics (UEBA)?",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "Please choose"
+                        }
+                    },
+                    {
+                        "name": "identityProviders",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select which Identity Providers will be synchronized with UEBA",
+                        "placeholder": "",
+                        "multiselect": true,
+                        "defaultValue": "aad",
+                        "toolTip": "Select the identity providers that you would like to enable for UEBA",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Azure Active Directory",
+                                    "value": "AzureActiveDirectory"
+                                },
+                                {
+                                    "label": "Active Directory (requires Microsoft Defender for Identity)",
+                                    "value": "ActiveDirectory"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[if(steps('settings').enableUeba, true, false)]"
+                    },
+                    {
+                        "name": "enableDiagnostics",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable Sentinel diagnostics?",
+                        "toolTip": "Select send Sentinel health information to SentinelHealth table",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "Please select"
+                        },
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "solutions",
+                "label": "Content Hub Solutions",
+                "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Please select which Solutions you want to install into your Microsoft Sentinel environment",
+                            "uri": "https://learn.microsoft.com/azure/sentinel/sentinel-solutions-catalog"
+                        }
+                    },
+                    {
+                        "name": "enableSolutions",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select Content Hub solutions to install",
+                        "placeholder": "",
+                        "multiselect": true,
+                        "defaultValue": "o365",
+                        "toolTip": "Select the solutions that you would like to install",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Microsoft 365",
+                                    "value": "Microsoft365"
+                                },
+                                {
+                                    "label": "Azure Active Directory",
+                                    "value": "AzureAD"
+                                },
+                                {
+                                    "label": "Microsoft Teams",
+                                    "value": "Teams"
+                                },
+                                {
+                                    "label": "Azure Activity",
+                                    "value": "AzureActivity"
+                                },
+                                {
+                                    "label": "GitHub Threat Monitoring",
+                                    "value": "GitHub"
+                                },
+                                {
+                                    "label": "Microsoft Defender for Endpoint",
+                                    "value": "MicrosoftDefenderForEndpoint"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    }
+                ]
+            },
             {
                 "name": "dataConnectors",
                 "label": "Data connectors",
                 "elements": [
                     {
-                        "name": "textBlock1",
-                        "type": "Microsoft.Common.TextBlock",
+                        "name": "infoBoxConnectors",
+                        "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
-                            "text": "Please select which connectors you want to onboard into your Azure Sentinel environment",
-                            "link": {
-                                "label": "Learn more",
-                                "uri": "https://www.microsoft.com"
-                            }
+                            "icon": "Info",
+                            "text": "Please select which Data Connectors you would like to configure in your Microsoft Sentinel environment",
+                            "uri": "https://learn.microsoft.com/en-us/azure/sentinel/data-connectors-reference"
                         }
                     },
                     {
-                        "name": "enableDataConnectorsKind",
+                        "name": "enableDataConnectors",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Select data connectors to onboard",
                         "placeholder": "",
@@ -102,89 +351,21 @@
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Office365",
+                                    "label": "Office 365",
                                     "value": "Office365"
                                 },
                                 {
-                                    "label": "Azure ATP",
-                                    "value": "AzureAdvancedThreatProtection"
-                                },
-                                {
-                                    "label": "Azure AD Identity Protection",
-                                    "value": "AzureActiveDirectory"
-                                },
-                                {
-                                    "label": "Microsoft Defender ATP",
-                                    "value": "MicrosoftDefenderAdvancedThreatProtection"
-                                },
-                                {
-                                    "label": "Azure Security Center",
-                                    "value": "AzureSecurityCenter"
-                                },
-                                {
-                                    "label": "Microsoft Cloud App Security",
-                                    "value": "MicrosoftCloudAppSecurity"
+                                    "label": "Microsoft 365 Defender",
+                                    "value": "Microsoft365Defender"
                                 },
                                 {
                                     "label": "Azure Activity",
                                     "value": "AzureActivity"
-                                },
-                                {
-                                    "label": "Security Events",
-                                    "value": "SecurityEvents"
-                                },
-                                {
-                                    "label": "Windows Firewall",
-                                    "value": "WindowsFirewall"
-                                },
-                                {
-                                    "label": "DNS Analytics",
-                                    "value": "DNS"
-                                },
-                                {
-                                    "label": "Linux Syslog",
-                                    "value": "Syslog"
                                 }
                             ],
                             "required": true
                         },
                         "visible": true
-                    },
-                    {
-                        "name": "mcasDiscoveryLogs",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable MCAS Discovery Logs?",
-                        "toolTip": "Select to bring MCAS discovery logs into Sentinel. These logs are billed.",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Please select"
-                        },
-                        "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity'), true, false)]"
-                    },
-                    {
-                        "name": "securityCollectionTier",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Security Events to stream into Sentinel ",
-                        "defaultValue": "Recommended",
-                        "toolTip": "",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "All",
-                                    "value": "All"
-                                },
-                                {
-                                    "label": "Common",
-                                    "value": "Recommended"
-                                },
-                                {
-                                    "label": "Minimal",
-                                    "value": "Minimal"
-                                }
-                            ],
-                            "required": true
-                        },
-                        "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents'), true, false)]"
                     }
                 ]
             },
@@ -192,28 +373,6 @@
                 "name": "analyticsRules",
                 "label": "Analytics Rules",
                 "elements": [
-                    {
-                        "name": "enableFusionAlert",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable Fusion alert rule?",
-                        "toolTip": "Select to enable Fusion analyttic rule. Details here: https://docs.microsoft.com/azure/sentinel/fusion",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Please select"
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "enableMicrosoftAlerts",
-                        "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable Microsoft alert rules for selected connectors?",
-                        "toolTip": "Select to enable Microsoft rules for the connectors you selected in the previous step.",
-                        "constraints": {
-                            "required": false,
-                            "validationMessage": "Enables rules coming from selected Microsoft security products"
-                        },
-                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'AzureAdvancedThreatProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureActiveDirectoryIdentityProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftDefenderAdvancedThreatProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureSecurityCenter'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity')), true, false)]"
-                    },
                     {
                         "name": "enableMLAlerts",
                         "type": "Microsoft.Common.CheckBox",
@@ -243,12 +402,16 @@
             "workspaceName": "[basics('workspaceName')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
-            "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
-            "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
-            "mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
+            "pricingTierLA": "[basics('pricingTierLA')]",
+            "capacityReservationLA": "[basics('capacityReservationLA')]",
+            "pricingTierSentinel": "[basics('pricingTierSentinel')]",
+            "capacityReservationSentinel": "[basics('capacityReservationSentinel')]",
+            "enableUeba": "[steps('settings').enableUeba]",
+            "identityProviders": "[steps('settings').identityProviders]",
+            "enableDiagnostics": "[steps('settings').enableDiagnostics]",
+            "enableSolutions": "[steps('solutions').enableSolutions]",
+            "enableDataConnectors": "[steps('dataConnectors').enableDataConnectors]",
             "location": "[location()]",
-            "enableFusionAlert": "[steps('analyticsRules').enableFusionAlert]",
-            "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
             "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
             "rgName": "[basics('rgName')]"
