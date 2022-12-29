@@ -46,7 +46,152 @@
                     }
                 }
             }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'Microsoft365')]",
+            "name": "Microsoft365",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-office365-66e732d2-f8b7-4c08-8d12-aa8c143acbdd-azure-sentinel-solution-office365/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "SharePoint & OneDrive"
+                    },
+                    "workbook2-name": {
+                        "value": "Office 365"
+                    },
+                    "workbook3-name": {
+                        "value": "Exchange Online"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'Teams')]",
+            "name": "Teams",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/sentinel4teams.sentinelforteams-f4df5439-7b5b-439c-9a5d-e734aa1d26c5-sentinelforteamssolution/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Microsoft Teams"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'AzureActivity')]",
+            "name": "Teams",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-azureactivity-c9097f86-9937-4d19-9849-736db696b675-azure-sentinel-solution-azureactivity/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Azure Activity"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'GitHub')]",
+            "name": "GitHub",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/microsoftcorporation1622712991604.sentinel4github-e79536fa-7961-46e9-9c38-57b58d630302-sentinel4github/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "GitHub Security"
+                    },
+                    "workbook2-name": {
+                        "value": "GitHub Workbook"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'MicrosoftDefenderForEndpoint')]",
+            "name": "MicrosoftDefenderForEndpoint",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-microsoftdefenderendpoint-b9a486d7-c89d-416c-85d6-af952bfd363c-microsoftdefenderendpoint/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Microsoft Defender For EndPoint"
+                    }
+                }
+            }
         }
     ],
     "outputs": {}
 }
+
