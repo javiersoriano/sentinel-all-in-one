@@ -108,33 +108,6 @@
             }
         },
         {
-            "condition": "[contains(parameters('enableSolutions'), 'AzureActivity')]",
-            "name": "Teams",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2021-04-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-azureactivity-c9097f86-9937-4d19-9849-736db696b675-azure-sentinel-solution-azureactivity/Artifacts/mainTemplate.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "workspace": {
-                        "value": "[parameters('workspaceName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "workspace-location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "workbook1-name": {
-                        "value": "Azure Activity"
-                    }
-                }
-            }
-        },
-        {
             "condition": "[contains(parameters('enableSolutions'), 'GitHub')]",
             "name": "GitHub",
             "type": "Microsoft.Resources/deployments",
