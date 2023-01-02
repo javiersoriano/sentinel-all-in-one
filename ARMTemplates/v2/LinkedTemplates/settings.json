@@ -46,15 +46,18 @@
         },
         {
             "condition": "[parameters('enableDiagnostics')]",
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.Insights'), concat('/diagnosticSettings/', parameters('settingName')))]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.Insights/', parameters('settingName'))]",
-            "type": "Microsoft.OperationalInsights/workspaces/providers/diagnosticSettings",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights', '/SentinelHealth', '/Microsoft.Insights/', parameters('settingName'))]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/settings/providers/diagnosticSettings",
             "apiVersion": "2021-05-01-preview",
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
                 "logs": [
                     {
-                        "category": "Audit",
+                        "category": "Automation",
+                        "enabled": true
+                    },
+                    {
+                        "category": "DataConnectors",
                         "enabled": true
                     }
                 ]
