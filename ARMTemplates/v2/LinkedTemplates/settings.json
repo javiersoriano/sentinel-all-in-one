@@ -58,10 +58,6 @@
                         "enabled": true
                     },
                     {
-                        "category": "Automation",
-                        "enabled": true
-                    },
-                    {
                         "category": "DataConnectors",
                         "enabled": true
                     }
