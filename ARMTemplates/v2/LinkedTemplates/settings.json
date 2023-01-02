@@ -56,10 +56,6 @@
                     {
                         "category": "Audit",
                         "enabled": true
-                    },
-                    {
-                        "category": "DataConnectors",
-                        "enabled": true
                     }
                 ]
             }
