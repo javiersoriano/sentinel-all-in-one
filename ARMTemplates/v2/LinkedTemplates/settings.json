@@ -24,10 +24,13 @@
         "enableDiagnostics": {
             "type": "bool",
             "defaultValue": false
+        },
+        "settingName": {
+            "type": "string",
+            "defaultValue": "HealthSettings"
         }
     },
     "variables": {
-        
     },
     "resources": [
         {
@@ -43,13 +46,17 @@
         },
         {
             "condition": "[parameters('enableDiagnostics')]",
-            "type": "Microsoft.Insights/diagnosticSettings",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspaceName'), 'Microsoft.Insights'), concat('/diagnosticSettings/', parameters('settingName')))]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.Insights/', parameters('settingName'))]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/diagnosticSettings",
             "apiVersion": "2021-05-01-preview",
-            "name": "diagnosticsSettings",
-            "scope": "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'),'/Microsoft.SecurityInsights/settings/SentinelHealth')]",
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
                 "logs": [
+                    {
+                        "category": "Audit",
+                        "enabled": true
+                    },
                     {
                         "category": "Automation",
                         "enabled": true
@@ -61,7 +68,6 @@
                 ]
             }
         }
-
     ],
     "outputs": {}
 }
