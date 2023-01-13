@@ -300,24 +300,24 @@
                                     "value": "Microsoft365"
                                 },
                                 {
-                                    "label": "Azure Active Directory",
-                                    "value": "AzureAD"
-                                },
-                                {
                                     "label": "Microsoft Teams",
                                     "value": "Teams"
+                                },
+                                {
+                                    "label": "Microsoft Defender for Cloud",
+                                    "value": "MicrosoftDefenderForCloud"
+                                },
+                                {
+                                    "label": "Microsoft Defender for Endpoint",
+                                    "value": "MicrosoftDefenderForEndpoint"
                                 },
                                 {
                                     "label": "Azure Activity",
                                     "value": "AzureActivity"
                                 },
                                 {
-                                    "label": "GitHub Threat Monitoring",
-                                    "value": "GitHub"
-                                },
-                                {
-                                    "label": "Microsoft Defender for Endpoint",
-                                    "value": "MicrosoftDefenderForEndpoint"
+                                    "label": "Threat Intelligence",
+                                    "value": "ThreatIntelligence"
                                 }
                             ],
                             "required": false
@@ -352,15 +352,28 @@
                             "allowedValues": [
                                 {
                                     "label": "Office 365",
+                                    "description": "The value to select for option 1.",
                                     "value": "Office365"
                                 },
                                 {
                                     "label": "Microsoft 365 Defender",
+                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
                                     "value": "Microsoft365Defender"
                                 },
                                 {
                                     "label": "Azure Activity",
+                                    "description": "The value to select for option 1.",
                                     "value": "AzureActivity"
+                                },
+                                {
+                                    "label": "Microsoft Defender for Cloud",
+                                    "description": "The value to select for option 1.",
+                                    "value": "MicrosoftDefenderForCloud"
+                                },
+                                {
+                                    "label": "Threat Intelligence Platforms",
+                                    "description": "The value to select for option 1.",
+                                    "value": "ThreatIntelligence"
                                 }
                             ],
                             "required": false
@@ -373,6 +386,16 @@
                 "name": "analyticsRules",
                 "label": "Analytics Rules",
                 "elements": [
+                    {
+                        "name": "infoBoxRules",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Please select which analytics rules you would like to enable in your Microsoft Sentinel environment",
+                            "uri": "https://learn.microsoft.com/en-us/azure/sentinel/data-connectors-reference"
+                        }
+                    },
                     {
                         "name": "enableMLAlerts",
                         "type": "Microsoft.Common.CheckBox",
@@ -388,12 +411,43 @@
                         "name": "enableScheduledAlerts",
                         "type": "Microsoft.Common.CheckBox",
                         "label": "Enable Scheduled alert rules for selected connectors?",
-                        "toolTip": "Select to enable scheduled analytics rules for selected connectors",
+                        "toolTip": "Select to enable scheduled and NRT analytics rules for connectors selected in the previous tab",
                         "constraints": {
                             "required": false,
                             "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "severityLevels",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Select the severity of the rules to enable",
+                        "placeholder": "",
+                        "multiselect": true,
+                        "defaultValue": "",
+                        "toolTip": "Select the data connectors that you would like to enable",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "High",
+                                    "value": "high"
+                                },
+                                {
+                                    "label": "Medium",
+                                    "value": "medium"
+                                },
+                                {
+                                    "label": "Low",
+                                    "value": "low"
+                                },
+                                {
+                                    "label": "Informational",
+                                    "value": "informational"
+                                }
+                            ],
+                            "required": false
+                        },
+                        "visible": "[if(steps('analyticsRules').enableScheduledAlerts, true, false)]"
                     }
                 ]
             }
@@ -414,6 +468,7 @@
             "location": "[location()]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
             "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
+            "severityLevels": "[steps('analyticsRules').severityLevels]",
             "rgName": "[basics('rgName')]"
         }
     }
