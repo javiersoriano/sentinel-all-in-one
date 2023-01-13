@@ -81,7 +81,7 @@
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
                 "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Connectors ', parameters('dataConnectorsList'), ' -SeveritiesToInclude ', parameters('severityLevels'))]",
-                "primaryScriptUri": "https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Tools/Sentinel-All-In-One/ARMTemplates/v2/Scripts/EnableRules.ps1",
+                "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/ARMTemplates/v2/Scripts/EnableRules.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
                 "cleanupPreference": "OnSuccess",
