@@ -83,6 +83,13 @@
             },
             "defaultValue": []
         },
+        "severityLevels": {
+            "type": "array",
+            "metadata": {
+                "description": "Severity levels desired for Analytics Rules"
+            },
+            "defaultValue": []
+        },
         "dailyQuota": {
             "type": "int",
             "metadata": {
@@ -354,6 +361,9 @@
                     },
                     "dataConnectorsList":{
                         "value": "[replace(replace(string(parameters('enableDataConnectors')),'\"',''),'[','')]"
+                    },
+                    "severityLevels": {
+                        "value": "[replace(replace(string(parameters('severityLevels')),'\"',''),'[','')]"
                     }
                 }
             }
