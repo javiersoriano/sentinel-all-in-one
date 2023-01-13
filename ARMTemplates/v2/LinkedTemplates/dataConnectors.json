@@ -38,10 +38,8 @@
     },
     "variables": {
         "o365Name": "[concat('o365', uniqueString(resourceGroup().id))]",
-        "mdatpName": "[concat('mdatp', uniqueString(resourceGroup().id))]",
-        "aatpName": "[concat('aatp', uniqueString(resourceGroup().id))]",
+        "m365dName": "[concat('m365d', uniqueString(resourceGroup().id))]",
         "ascName": "[concat('asc', uniqueString(resourceGroup().id))]",
-        "mcasName": "[concat('mcas', uniqueString(resourceGroup().id))]",
         "aadipName": "[concat('aadip', uniqueString(resourceGroup().id))]",
         "tiName": "[concat('ti', uniqueString(resourceGroup().id))]"
     },
@@ -106,6 +104,22 @@
                 "subscriptionId": "[parameters('subscriptionId')]",
                 "dataTypes": {
                     "alerts": {
+                        "state": "enabled"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'Microsoft365Defender')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
+            "apiVersion": "2022-12-01-preview",
+            "location": "[parameters('location')]",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('m365dName'))]",
+            "kind": "MicrosoftThreatProtection",
+            "properties": {
+                "tenantId": "[parameters('tenantId')]",
+                "dataTypes": {
+                    "incidents": {
                         "state": "enabled"
                     }
                 }

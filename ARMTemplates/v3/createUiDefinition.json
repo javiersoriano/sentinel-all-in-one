@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+      "basics": [
+        {
+            "name": "rgName",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Resource Group Name",
+            "placeholder": "",
+            "defaultValue": "",
+            "toolTip": "Enter a resource group name.",
+            "constraints": {
+                "required": true,
+                "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+                "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+            },
+            "visible": true  
+        },
+        {
+            "name": "workspaceName",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Workspace Name",
+            "placeholder": "",
+            "defaultValue": "",
+            "toolTip": "The Workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+            "constraints": {
+                "required": true,
+                "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+                "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+            },
+            "visible": true
+        }
+      ],
+      "steps": [],
+      "outputs": {
+        "rgName": "[basics('rgName')]",
+        "workspaceName": "[basics('workspaceName')]"
+      }
+    }
+  }
