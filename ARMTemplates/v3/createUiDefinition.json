@@ -3,19 +3,6 @@
     "handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
     "parameters": {
-        "config": {
-            "isWizard": false,
-            "basics": {
-                "description": "**Microsoft Sentinel All-In-One** deployment, see more information about this project [here](https://github.com/Azure/Azure-Sentinel/Tools/Sentinel-All-In-One/).",
-                "location": {
-                    "label": "Location",
-                    "toolTip": "Location for all resources",
-                    "resourceTypes": [
-                        "Microsoft.OperationalInsights"
-                    ]
-                }
-            }
-        },
         "basics": [
         {
             "name": "rgName",
