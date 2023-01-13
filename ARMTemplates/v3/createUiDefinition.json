@@ -51,7 +51,7 @@
         "rgName": "[basics('rgName')]",
         "workspaceName": "[basics('workspaceName')]",
         "location": "[location()]",
-        "subscriptionId": "[subscription()]"
+        "subscriptionId": "[subscription().subscriptionId]"
       }
     }
   }
