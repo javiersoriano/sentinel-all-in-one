@@ -217,7 +217,7 @@
         },
         {
             "condition": "[contains(parameters('enableSolutions'), 'ThreatIntelligence')]",
-            "name": "AzureActivity",
+            "name": "ThreatIntelligence",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
             "properties": {
