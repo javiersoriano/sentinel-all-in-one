@@ -261,7 +261,7 @@
                     {
                         "name": "enableDiagnostics",
                         "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable Sentinel diagnostics?",
+                        "label": "Enable Sentinel health diagnostics?",
                         "toolTip": "Select send Sentinel health information to SentinelHealth table",
                         "constraints": {
                             "required": false,
@@ -312,6 +312,26 @@
                                     "value": "MicrosoftDefenderForEndpoint"
                                 },
                                 {
+                                    "label": "Microsoft Defender for IoT",
+                                    "value": "IOT"
+                                },
+                                {
+                                    "label": "Dynamics 365 CE",
+                                    "value": "Dynamics365"
+                                },
+                                {
+                                    "label": "Microsoft Insider Risk Management",
+                                    "value": "OfficeIRM"
+                                },
+                                {
+                                    "label": "Microsoft Project",
+                                    "value": "Office365Project"
+                                },
+                                {
+                                    "label": "Microsoft PowerBI",
+                                    "value": "OfficePowerBI"
+                                },
+                                {
                                     "label": "Azure Activity",
                                     "value": "AzureActivity"
                                 },
@@ -359,6 +379,26 @@
                                     "label": "Microsoft 365 Defender",
                                     "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
                                     "value": "Microsoft365Defender"
+                                },
+                                {
+                                    "label": "Dynamics 365",
+                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "value": "Dynamics365"
+                                },
+                                {
+                                    "label": "Microsoft  Project",
+                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "value": "Office365Project"
+                                },
+                                {
+                                    "label": "Microsoft Insider Risk Management",
+                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "value": "OfficeIRM"
+                                },
+                                {
+                                    "label": "Microsoft PowerBI",
+                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "value": "OfficePowerBI"
                                 },
                                 {
                                     "label": "Azure Activity",

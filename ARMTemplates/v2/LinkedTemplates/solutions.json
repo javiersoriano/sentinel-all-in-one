@@ -189,6 +189,141 @@
             }
         },
         {
+            "condition": "[contains(parameters('enableSolutions'), 'IOT')]",
+            "name": "IOT",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-unifiedmicrosoftsocforot-cae2b2b9-c3c2-4ac9-bbc2-88593364209f-azure-sentinel-solution-unifiedmicrosoftsocforot/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Microsoft Defender for IoT"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'Dynamics365')]",
+            "name": "Dynamics365",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/sentinel4dynamics365.sentinel4dynamics365-c897bacb-34dd-48b4-9e09-7a263c491ca3-sentinel4dynamics365/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Dynamics 365 Activity"
+                    },
+                    "watchlist1-id": {
+                        "value": "D365-SecurityConfig"
+                    },
+                    "watchlist2-id": {
+                        "value": "D365-UserConfig"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'OfficeIRM')]",
+            "name": "OfficeIRM",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-insiderriskmanagement-e1394c17-e445-4aa9-a1d7-aa4d7e0feb8e-azure-sentinel-solution-insiderriskmanagement/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Insider Risk Management"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'Office365Project')]",
+            "name": "Office365Project",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-microsoftproject-77f0af33-1748-4b7c-bf81-02c91f0ba11a-azure-sentinel-solution-microsoftproject/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'OfficePowerBI')]",
+            "name": "OfficePowerBI",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-microsoftpowerbi-d68fd5a5-150f-43bc-b9be-01af723c4215-azure-sentinel-solution-microsoftpowerbi/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
             "condition": "[contains(parameters('enableSolutions'), 'AzureActivity')]",
             "name": "AzureActivity",
             "type": "Microsoft.Resources/deployments",
