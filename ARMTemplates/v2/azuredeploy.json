@@ -314,8 +314,7 @@
             "apiVersion": "2020-06-01",
             "resourceGroup": "[parameters('rgName')]",
             "dependsOn": [
-                "workspaceCreation",
-                "[resourceId('Microsoft.Resources/resourceGroups',parameters('rgName'))]"
+                "[resourceId('Microsoft.Resources/deployments', 'enableSolutions')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -360,10 +359,10 @@
                         "value": "[parameters('workspaceName')]"
                     },
                     "dataConnectorsList":{
-                        "value": "[replace(replace(string(parameters('enableDataConnectors')),'\"',''),'[','')]"
+                        "value": "[replace(replace(replace(string(parameters('enableDataConnectors')),'\"',''),'[',''),']','')]"
                     },
                     "severityLevels": {
-                        "value": "[replace(replace(string(parameters('severityLevels')),'\"',''),'[','')]"
+                        "value": "[replace(replace(replace(string(parameters('severityLevels')),'\"',''),'[',''),']','')]"
                     }
                 }
             }

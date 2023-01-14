@@ -470,15 +470,15 @@
                             "allowedValues": [
                                 {
                                     "label": "High",
-                                    "value": "high"
+                                    "value": "High"
                                 },
                                 {
                                     "label": "Medium",
-                                    "value": "medium"
+                                    "value": "Medium"
                                 },
                                 {
                                     "label": "Low",
-                                    "value": "low"
+                                    "value": "Low"
                                 },
                                 {
                                     "label": "Informational",
