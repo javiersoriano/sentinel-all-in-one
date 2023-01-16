@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory = $true)][string]$ResourceGroup,
     [Parameter(Mandatory = $true)][string]$Workspace,
-    [Parameter(Mandatory = $true)][string[]]$Connectors,
+    [Parameter(Mandatory = $false)][string[]]$Connectors,
     [Parameter(Mandatory = $false)][string[]]$SeveritiesToInclude = @("Informational", "Low", "Medium", "High")
 )
 
@@ -167,10 +167,11 @@ $results = Invoke-RestMethod -Uri $solutionURL -Method POST -Headers $authHeader
 #Iterate through all the rule templates
 foreach ($result in $results.data) {
     #Make sure that the template's severity is one we want to include
-    Write-Host "Severity is... " $result.properties.template.resources.properties.severity
+    $severity = $result.properties.template.resources.properties.severity[0]
+    Write-Host "Severity is... " $severity " of type " $severity.GetType()
     Write-Host "Severities to include..." $SeveritiesToInclude
-    Write-Host "condition is..." $SeveritiesToInclude.Contains($result.properties.template.resources.properties.severity)
-    if ($SeveritiesToInclude.Contains($result.properties.template.resources.properties.severity)) {
+    Write-Host "condition is..." $SeveritiesToInclude.Contains($severity)
+    if ($SeveritiesToInclude.Contains($severity)) {
         Write-Host "Enabling solution rule template... " $result.properties.template.resources.properties.displayName
         #Get to the actual template data
         $template = $result.properties.template.resources.properties
@@ -292,7 +293,7 @@ foreach ($result in $results.data) {
             $alertUriGuid = $alertUri + $guid + '?api-version=2022-12-01-preview'
 
             try {
-                Invoke-AzRestMethod -Path $alertUriGuid -Method PUT -Payload ($body | ConvertTo-Json -EnumAsStrings -Depth 5)
+                Invoke-AzRestMethod -Path $alertUriGuid -Method PUT -Payload ($body | ConvertTo-Json -EnumsAsStrings -Depth 5)
             }
             catch {
                 #Most likely any errors are due to the rule template having errors, typically in the query
