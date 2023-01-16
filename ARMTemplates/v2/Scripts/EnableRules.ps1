@@ -138,7 +138,7 @@ $query = @"
     Resources 
     | where type =~ 'Microsoft.Resources/templateSpecs/versions' 
     | where tags['hidden-sentinelContentType'] =~ 'AnalyticsRule' 
-    and tags['hidden-sentinelWorkspaceId'] =~ '/subscriptions/$($subscriptionId)/resourceGroups/$($ResourceGroupName)/providers/Microsoft.OperationalInsights/workspaces/$($WorkspaceName)' 
+    and tags['hidden-sentinelWorkspaceId'] =~ '/subscriptions/$($subscriptionId)/resourceGroups/$($ResourceGroup)/providers/Microsoft.OperationalInsights/workspaces/$($Workspace)' 
     | extend version = name 
     | extend parsed_version = parse_version(version) 
     | extend resources = parse_json(parse_json(parse_json(properties).template).resources) 
@@ -152,8 +152,6 @@ $body = @{
     "subscriptions" = @($SubscriptionId)
     "query"         = $query
 }
-
-Start-Sleep -Seconds 120
 
 $azureProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile
 $profileClient = New-Object -TypeName Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient -ArgumentList ($azureProfile)
