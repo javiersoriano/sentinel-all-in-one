@@ -69,7 +69,7 @@
             "dependsOn": ["[concat('Microsoft.Authorization/roleAssignments/', parameters('roleGuid'))]"],
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
-            "name": "runPowerShellInline",
+            "name": "deployRules",
             "location": "[resourceGroup().location]",
             "kind": "AzurePowerShell",
             "identity": {
