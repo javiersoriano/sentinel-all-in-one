@@ -291,52 +291,67 @@
                         "label": "Select Content Hub solutions to install",
                         "placeholder": "",
                         "multiselect": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "defaultDescription": "A value for selection",
                         "defaultValue": "o365",
                         "toolTip": "Select the solutions that you would like to install",
                         "constraints": {
                             "allowedValues": [
                                 {
                                     "label": "Microsoft 365",
+                                    "description": "Ingest operational logs from Microsoft 365 to gain insights into user and admin activity across your collaboration platforms such as Teams, SharePoint and Exchange.",
                                     "value": "Microsoft365"
                                 },
                                 {
                                     "label": "Microsoft Teams",
+                                    "description": "Teams security logs visibility and threat protection for communication and data sharing in the Microsoft 365 Cloud via Microsoft Teams.",
                                     "value": "Teams"
                                 },
                                 {
                                     "label": "Microsoft Defender for Cloud",
+                                    "description": "Ingest Security alerts reported in Microsoft Defender for Cloud on assessing your hybrid cloud workload's security posture",
                                     "value": "MicrosoftDefenderForCloud"
                                 },
                                 {
                                     "label": "Microsoft Defender for Endpoint",
+                                    "description": "Ingest security alerts from the Defender for Endpoint platform, integrating them into your Sentinel Incidents queue",
                                     "value": "MicrosoftDefenderForEndpoint"
                                 },
                                 {
                                     "label": "Microsoft Defender for IoT",
+                                    "description": "Ingest Security alerts reported in Microsoft Defender for IoT on assessing your Internet of Things (IoT)/Operational Technology (OT) infrastructure",
                                     "value": "IOT"
                                 },
                                 {
                                     "label": "Dynamics 365 CE",
+                                    "description": "Collect Dynamics 365 CE Apps logs, gain visibility of activities and analyze them to detect threats and malicious activities",
                                     "value": "Dynamics365"
                                 },
                                 {
                                     "label": "Microsoft Insider Risk Management",
+                                    "description": "Investigate risk-based behavior across 25+ Microsoft products. This solution is a better-together story between Microsoft Sentinel and Microsoft Purview Insider Risk Management. The solution includes the Insider Risk Management Workbook, (5) Hunting Queries,(1) Data Connector, (5) Analytics Rules, (1) Playbook automation and the Microsoft Purview Insider Risk Management connector",
                                     "value": "OfficeIRM"
                                 },
                                 {
                                     "label": "Microsoft Project",
+                                    "description": "Stream your Microsoft Project audit logs into Microsoft Sentinel in order to track your project activities",
                                     "value": "Office365Project"
                                 },
                                 {
                                     "label": "Microsoft PowerBI",
+                                    "description": "Track user activities in your PowerBI environment",
                                     "value": "OfficePowerBI"
                                 },
                                 {
                                     "label": "Azure Activity",
+                                    "description": "Ingest Azure Activity Administrative, Security, Service Health, Alert, Recommendation, Policy, Autoscale and Resource Health logs using Diagnostic Settings into Microsoft Sentinel",
                                     "value": "AzureActivity"
                                 },
                                 {
                                     "label": "Threat Intelligence",
+                                    "description": "Ingest threat indicators into Microsoft Sentinel. Threat indicators can be IP addresses, domains, URLs and file hashes and can be used to correlate across log sources for known indicators of compromise and/or indicators of active attack",
                                     "value": "ThreatIntelligence"
                                 }
                             ],
@@ -376,32 +391,32 @@
                             "allowedValues": [
                                 {
                                     "label": "Office 365",
-                                    "description": "The value to select for option 1.",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
                                     "value": "Office365"
                                 },
                                 {
                                     "label": "Microsoft 365 Defender",
-                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
                                     "value": "Microsoft365Defender"
                                 },
                                 {
                                     "label": "Dynamics 365",
-                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
                                     "value": "Dynamics365"
                                 },
                                 {
                                     "label": "Microsoft  Project",
-                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
                                     "value": "Office365Project"
                                 },
                                 {
                                     "label": "Microsoft Insider Risk Management",
-                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
                                     "value": "OfficeIRM"
                                 },
                                 {
                                     "label": "Microsoft PowerBI",
-                                    "description": "This will only enable bi-directional sync on alerts & incidents, but it won't enable streaming of Advanced Hunting tables.",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
                                     "value": "OfficePowerBI"
                                 },
                                 {
@@ -411,12 +426,12 @@
                                 },
                                 {
                                     "label": "Microsoft Defender for Cloud",
-                                    "description": "The value to select for option 1.",
+                                    "description": "Security Reader permission required",
                                     "value": "MicrosoftDefenderForCloud"
                                 },
                                 {
                                     "label": "Threat Intelligence Platforms",
-                                    "description": "The value to select for option 1.",
+                                    "description": "Global Admin or Security Admin permission required",
                                     "value": "ThreatIntelligence"
                                 }
                             ],
