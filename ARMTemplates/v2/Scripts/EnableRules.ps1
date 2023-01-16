@@ -163,6 +163,8 @@ $authHeader = @{
 
 #Load all the rule templates from solutions
 $results = Invoke-RestMethod -Uri $solutionURL -Method POST -Headers $authHeader -Body ($body | ConvertTo-Json -EnumsAsStrings -Depth 5)
+Write-Host "results..." $results
+
 
 #Iterate through all the rule templates
 foreach ($result in $results.data) {
@@ -170,7 +172,7 @@ foreach ($result in $results.data) {
     $severity = $result.properties.template.resources.properties.severity[0]
     Write-Host "Severity is... " $severity " of type " $severity.GetType()
     Write-Host "Severities to include..." $SeveritiesToInclude
-    Write-Host "condition is..." $SeveritiesToInclude.Contains($severity)
+    Write-Host "condition is..." $SeveritiesToInclude.Contains($severity)   
     if ($SeveritiesToInclude.Contains($severity)) {
         Write-Host "Enabling solution rule template... " $result.properties.template.resources.properties.displayName
         #Get to the actual template data
