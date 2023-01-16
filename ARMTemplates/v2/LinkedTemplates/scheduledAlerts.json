@@ -84,7 +84,7 @@
                 "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/ARMTemplates/v2/Scripts/EnableRules.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
-                "cleanupPreference": "OnSuccess",
+                "cleanupPreference": "OnExpiration",
                 "retentionInterval": "P1D"
             }
         }

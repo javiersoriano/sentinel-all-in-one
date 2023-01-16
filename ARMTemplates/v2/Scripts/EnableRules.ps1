@@ -31,7 +31,7 @@ catch {
 
 $return = @()
 
-if (!$Connectors) {
+if ($Connectors) {
     foreach ($item in $alertRulesTemplates) {
         #Make sure that the template's severity is one we want to include
         if ($SeveritiesToInclude.Contains($item.properties.severity)) {
