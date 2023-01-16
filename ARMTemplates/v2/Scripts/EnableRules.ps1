@@ -31,7 +31,7 @@ catch {
 
 $return = @()
 
-if ($Connectors) {
+if (!$Connectors) {
     foreach ($item in $alertRulesTemplates) {
         #Make sure that the template's severity is one we want to include
         if ($SeveritiesToInclude.Contains($item.properties.severity)) {
@@ -71,6 +71,7 @@ if ($Connectors) {
                                 Invoke-AzRestMethod -Path $alertUriGuid -Method PUT -Payload ($alertBody | ConvertTo-Json -Depth 3)
                             }
                             catch {
+                                Write-Host "Can't enable rule template with connectors: " $item.properties.requiredDataConnectors
                                 Write-Verbose $_
                                 Write-Error "Unable to create alert rule with error code: $($_.Exception.Message)" -ErrorAction Stop
                             }
@@ -110,6 +111,7 @@ if ($Connectors) {
                                 Invoke-AzRestMethod -Path $alertUriGuid -Method PUT -Payload ($alertBody | ConvertTo-Json -Depth 3)
                             }
                             catch {
+                                Write-Host "Can't enable rule template with connectors: " $item.properties.requiredDataConnectors
                                 Write-Verbose $_
                                 Write-Error "Unable to create alert rule with error code: $($_.Exception.Message)" -ErrorAction Stop
                             }
@@ -151,13 +153,25 @@ $body = @{
     "query"         = $query
 }
 
+$azureProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile
+$profileClient = New-Object -TypeName Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient -ArgumentList ($azureProfile)
+$token = $profileClient.AcquireAccessToken($context.Subscription.TenantId)
+$authHeader = @{
+    'Content-Type'  = 'application/json'
+    'Authorization' = 'Bearer ' + $token.AccessToken
+}
+
 #Load all the rule templates from solutions
-$results = Invoke-AzRestMethod -Path $solutionURL -Method POST -Payload ($body | ConvertTo-Json -EnumAsStrings -Depth 5)
+$results = Invoke-RestMethod -Uri $solutionURL -Method POST -Headers $authHeader -Body ($body | ConvertTo-Json -EnumsAsStrings -Depth 5)
 
 #Iterate through all the rule templates
 foreach ($result in $results.data) {
     #Make sure that the template's severity is one we want to include
+    Write-Host "Severity is... " $result.properties.template.resources.properties.severity
+    Write-Host "Severities to include..." $SeveritiesToInclude
+    Write-Host "condition is..." $SeveritiesToInclude.Contains($result.properties.template.resources.properties.severity)
     if ($SeveritiesToInclude.Contains($result.properties.template.resources.properties.severity)) {
+        Write-Host "Enabling solution rule template... " $result.properties.template.resources.properties.displayName
         #Get to the actual template data
         $template = $result.properties.template.resources.properties
         $kind = $result.properties.template.resources.kind
