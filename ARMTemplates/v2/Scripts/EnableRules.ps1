@@ -153,6 +153,8 @@ $body = @{
     "query"         = $query
 }
 
+Start-Sleep -Seconds 120
+
 $azureProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile
 $profileClient = New-Object -TypeName Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient -ArgumentList ($azureProfile)
 $token = $profileClient.AcquireAccessToken($context.Subscription.TenantId)
