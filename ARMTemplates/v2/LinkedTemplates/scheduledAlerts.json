@@ -12,7 +12,8 @@
             "type": "string",
             "metadata": {
                 "description": "Comma separated enabled connectors: AzureActivityLog,SecurityEvents,WindowsFirewall,DnsAnalytics. Reference: https://docs.microsoft.com/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
-            }
+            },
+            "defaultValue": ""
         },
         "severityLevels": {
             "type": "string"
