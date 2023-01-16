@@ -314,7 +314,7 @@
             "apiVersion": "2020-06-01",
             "resourceGroup": "[parameters('rgName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'enableSolutions')]"
+                "enableSolutions"
             ],
             "properties": {
                 "mode": "Incremental",
