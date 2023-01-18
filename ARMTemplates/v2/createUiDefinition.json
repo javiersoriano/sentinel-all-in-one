@@ -469,8 +469,8 @@
                     {
                         "name": "enableScheduledAlerts",
                         "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable Scheduled alert rules for selected connectors?",
-                        "toolTip": "Select to enable scheduled and NRT analytics rules for connectors selected in the previous tab",
+                        "label": "Enable Scheduled alert rules for selected data connectors and Content Hub solutions?",
+                        "toolTip": "Select to enable scheduled and NRT analytics rules for connectors and solutions selected in the previous tabs",
                         "constraints": {
                             "required": false,
                             "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
