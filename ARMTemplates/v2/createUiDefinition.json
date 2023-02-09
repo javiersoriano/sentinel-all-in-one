@@ -79,7 +79,7 @@
                 "label": "Select pricing tier for Log Analytics",
                 "placeholder": "",
                 "multiselect": false,
-                "defaultValue": "PerGB2018",
+                "defaultValue": [{"value": "PerGB2018"}],
                 "constraints": {
                     "allowedValues": [
                         {
@@ -148,7 +148,7 @@
                 "label": "Select pricing tier for Sentinel",
                 "placeholder": "",
                 "multiselect": false,
-                "defaultValue": "PerGB",
+                "defaultValue": [{"value": "PerGB"}],
                 "constraints": {
                     "allowedValues": [
                         {

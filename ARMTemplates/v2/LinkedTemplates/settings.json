@@ -59,6 +59,10 @@
                     {
                         "category": "DataConnectors",
                         "enabled": true
+                    },
+                    {
+                        "category": "Analytics",
+                        "enabled": true
                     }
                 ]
             }
