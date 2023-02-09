@@ -324,6 +324,189 @@
             }
         },
         {
+            "condition": "[contains(parameters('enableSolutions'), 'SecurityThreatEssentials')]",
+            "name": "SecurityThreatEssentials",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-securitythreatessentialsol-18305002-0aeb-4f68-8aa2-78862391ee11-azure-sentinel-solution-securitythreatessentialsol/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'SOAREssentials')]",
+            "name": "SOAREssentials",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-sentinelsoaressentials-35e3001b-f820-4810-a6cd-83ec0821259e-azure-sentinel-solution-sentinelsoaressentials/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'UEBAEssentials')]",
+            "name": "UEBAEssentials",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-uebaessentials-8233bc58-2791-4696-a634-fa1f607171ac-azure-sentinel-solution-uebaessentials/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'EndpointThreatProtectionEssentials')]",
+            "name": "EndpointThreatProtectionEssentials",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-endpointthreat-1bacb206-2cad-4320-86a4-2c9be20a5475-azure-sentinel-solution-endpointthreat/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'CloudIdentityThreatProtectionEssentials')]",
+            "name": "CloudIdentityThreatProtectionEssentials",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-cloudthreatdetection-bba18df1-70e5-4f1c-a05e-a3b19ca71466-azure-sentinel-solution-cloudthreatdetection/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'Log4j')]",
+            "name": "Log4j",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-apachelog4jvulnerability-e26a3f16-23ed-4ab1-a513-685eeb291241-azure-sentinel-solution-apachelog4jvulnerability/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Log4j Post Compromise Hunting"
+                    },
+                    "workbook2-name": {
+                        "value": "Log4j Impact Assessment"
+                    },
+                    "watchlist1-id": {
+                        "value": "Log4j"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableSolutions'), 'AzureActiveDirectory')]",
+            "name": "AzureActiveDirectory",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-azureactivedirectory-4ce15e62-2d69-4e80-ab66-9acb9ca86a07-azure-sentinel-solution-azureactivedirectory/Artifacts/mainTemplate.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspace": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workspace-location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "workbook1-name": {
+                        "value": "Azure AD Audit logs"
+                    },
+                    "workbook2-name": {
+                        "value": "Azure AD Sign-in logs"
+                    }
+                }
+            }
+        },
+        {
             "condition": "[contains(parameters('enableSolutions'), 'AzureActivity')]",
             "name": "AzureActivity",
             "type": "Microsoft.Resources/deployments",

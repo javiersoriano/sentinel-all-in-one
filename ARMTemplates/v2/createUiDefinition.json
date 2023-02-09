@@ -79,7 +79,7 @@
                 "label": "Select pricing tier for Log Analytics",
                 "placeholder": "",
                 "multiselect": false,
-                "defaultValue": "PAYG",
+                "defaultValue": "PerGB2018",
                 "constraints": {
                     "allowedValues": [
                         {
@@ -148,7 +148,7 @@
                 "label": "Select pricing tier for Sentinel",
                 "placeholder": "",
                 "multiselect": false,
-                "defaultValue": "PAYG",
+                "defaultValue": "PerGB",
                 "constraints": {
                     "allowedValues": [
                         {
@@ -239,9 +239,8 @@
                         "name": "identityProviders",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Select which Identity Providers will be synchronized with UEBA",
-                        "placeholder": "",
+                        "placeholder": "Choose identity provider",
                         "multiselect": true,
-                        "defaultValue": "aad",
                         "toolTip": "Select the identity providers that you would like to enable for UEBA",
                         "constraints": {
                             "allowedValues": [
@@ -295,64 +294,98 @@
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
                         "defaultDescription": "A value for selection",
-                        "defaultValue": "o365",
                         "toolTip": "Select the solutions that you would like to install",
                         "constraints": {
                             "allowedValues": [
                                 {
+                                    "label": "Azure Active Directory",
+                                    "description": "The Azure Active Directory solution for Microsoft Sentinel enables you to ingest Azure Active Directory Audit,Sign-in,Provisioning,Risk Events and Risky User/Service Principal logs using Diagnostic Settings into Microsoft Sentinel.",
+                                    "value": "AzureActiveDirectory"
+                                },
+                                {
+                                    "label": "Azure Activity",
+                                    "description": "The Azure Activity solution for Microsoft Sentinel enables you to ingest Azure Activity Administrative, Security, Service Health, Alert, Recommendation, Policy, Autoscale and Resource Health logs using Diagnostic Settings into Microsoft Sentinel.",
+                                    "value": "AzureActivity"
+                                },
+                                {
+                                    "label": "Cloud Identity Threat Protection Essentials",
+                                    "description": "The Cloud Identity Threat Protection Essentials solution looks for most common cloud focused identity attacks such as Suspicious Sign-ins, privilege grants, MFA disable etc.",
+                                    "value": "CloudIdentityThreatProtectionEssentials"
+                                },
+                                {
+                                    "label": "Endpoint Threat Protection Essentials",
+                                    "description": "The Endpoint Threat Protection Essentials solution provides content to monitor, detect and investigate threats related to windows machines.",
+                                    "value": "EndpointThreatProtectionEssentials"
+                                },
+                                {
+                                    "label": "Dynamics 365 CE",
+                                    "description": "The Microsoft Sentinel solution for Dynamics 365 CE apps provides threat monitoring, detection and incident response capabilities for Dynamics 365 CE apps.",
+                                    "value": "Dynamics365"
+                                },
+                                {
+                                    "label": "Apache Log4j Vulnerability Detection",
+                                    "description": "This solution provides content to monitor, detect and investigate signals related to exploitation of a remote code execution (RCE) vulnerability in Apache Log4j 2 thru Microsoft Sentinel.",
+                                    "value": "Log4j"
+                                },
+                                {
                                     "label": "Microsoft 365",
-                                    "description": "Ingest operational logs from Microsoft 365 to gain insights into user and admin activity across your collaboration platforms such as Teams, SharePoint and Exchange.",
+                                    "description": "The Microsoft 365 solution for Microsoft Sentinel enables you to ingest operational logs from Microsoft 365 to gain insights into user and admin activity across your collaboration platforms such as Teams, SharePoint and Exchange.",
                                     "value": "Microsoft365"
                                 },
                                 {
-                                    "label": "Microsoft Teams",
-                                    "description": "Teams security logs visibility and threat protection for communication and data sharing in the Microsoft 365 Cloud via Microsoft Teams.",
-                                    "value": "Teams"
-                                },
-                                {
                                     "label": "Microsoft Defender for Cloud",
-                                    "description": "Ingest Security alerts reported in Microsoft Defender for Cloud on assessing your hybrid cloud workload's security posture",
+                                    "description": "The Microsoft Defender for Cloud solution for Microsoft Sentinel allows you to ingest Security alerts reported in Microsoft Defender for Cloud on assessing your hybrid cloud workload's security posture.",
                                     "value": "MicrosoftDefenderForCloud"
                                 },
                                 {
                                     "label": "Microsoft Defender for Endpoint",
-                                    "description": "Ingest security alerts from the Defender for Endpoint platform, integrating them into your Sentinel Incidents queue",
+                                    "description": "Microsoft Defender for Endpoint is an enterprise endpoint security platform designed to help enterprise networks prevent, detect, investigate, and respond to advanced threats.",
                                     "value": "MicrosoftDefenderForEndpoint"
                                 },
                                 {
                                     "label": "Microsoft Defender for IoT",
-                                    "description": "Ingest Security alerts reported in Microsoft Defender for IoT on assessing your Internet of Things (IoT)/Operational Technology (OT) infrastructure",
+                                    "description": "The Microsoft Defender for IoT solution for Microsoft Sentinel allows you to ingest Security alerts reported in Microsoft Defender for IoT on assessing your Internet of Things (IoT)/Operational Technology (OT) infrastructure.",
                                     "value": "IOT"
                                 },
                                 {
-                                    "label": "Dynamics 365 CE",
-                                    "description": "Collect Dynamics 365 CE Apps logs, gain visibility of activities and analyze them to detect threats and malicious activities",
-                                    "value": "Dynamics365"
-                                },
-                                {
                                     "label": "Microsoft Insider Risk Management",
-                                    "description": "Investigate risk-based behavior across 25+ Microsoft products. This solution is a better-together story between Microsoft Sentinel and Microsoft Purview Insider Risk Management. The solution includes the Insider Risk Management Workbook, (5) Hunting Queries,(1) Data Connector, (5) Analytics Rules, (1) Playbook automation and the Microsoft Purview Insider Risk Management connector",
+                                    "description": "This solution enables insider risk management teams to investigate risk-based behavior across 25+ Microsoft products. This solution is a better-together story between Microsoft Sentinel and Microsoft Purview Insider Risk Management.",
                                     "value": "OfficeIRM"
                                 },
                                 {
-                                    "label": "Microsoft Project",
-                                    "description": "Stream your Microsoft Project audit logs into Microsoft Sentinel in order to track your project activities",
-                                    "value": "Office365Project"
-                                },
-                                {
                                     "label": "Microsoft PowerBI",
-                                    "description": "Track user activities in your PowerBI environment",
+                                    "description": "The Microsoft PowerBI solution enables you to track user activities in your PowerBI environment.",
                                     "value": "OfficePowerBI"
                                 },
                                 {
-                                    "label": "Azure Activity",
-                                    "description": "Ingest Azure Activity Administrative, Security, Service Health, Alert, Recommendation, Policy, Autoscale and Resource Health logs using Diagnostic Settings into Microsoft Sentinel",
-                                    "value": "AzureActivity"
+                                    "label": "Microsoft Project",
+                                    "description": "Stream your Microsoft Project audit logs into Microsoft Sentinel in order to track your project activities.",
+                                    "value": "Office365Project"
+                                },
+                                {
+                                    "label": "Microsoft Teams",
+                                    "description": "Microsoft Sentinel for Teams provides Teams security logs visibility and threat protection.",
+                                    "value": "Teams"
+                                },
+                                {
+                                    "label": "Security Threat Essentials",
+                                    "description": "This solution published by Microsoft is based on the continuous evaluation of threat campaigns and provides out-of-the-box security content that helps you to enhance your security posture.",
+                                    "value": "SecurityThreatEssentials"
+                                },
+                                {
+                                    "label": "SOAR Essentials",
+                                    "description": "The Sentinel SOAR Essentials solution for Microsoft Sentinel contains Playbooks that can help you get started with basic notification and orchestration scenarios for common use cases.",
+                                    "value": "SOAREssentials"
                                 },
                                 {
                                     "label": "Threat Intelligence",
                                     "description": "Ingest threat indicators into Microsoft Sentinel. Threat indicators can be IP addresses, domains, URLs and file hashes and can be used to correlate across log sources for known indicators of compromise and/or indicators of active attack",
                                     "value": "ThreatIntelligence"
+                                },
+                                {
+                                    "label": "UEBA Essentials",
+                                    "description": "The Sentinel UEBA content package will provide you with various queries based on UEBA tables, that allows you to hunt for tailored threat scenarios.",
+                                    "value": "UEBAEssentials"
                                 }
                             ],
                             "required": false
@@ -385,19 +418,14 @@
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
                         "defaultDescription": "A value for selection",
-                        "defaultValue": "o365",
+                        "defaultValue": [{"value": "Office365"}],
                         "toolTip": "Select the data connectors that you would like to enable",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Office 365",
-                                    "description": "Relevant license and Global Admin or Security Admin permission required",
-                                    "value": "Office365"
-                                },
-                                {
-                                    "label": "Microsoft 365 Defender",
-                                    "description": "Relevant license and Global Admin or Security Admin permission required",
-                                    "value": "Microsoft365Defender"
+                                    "label": "Azure Activity",
+                                    "description": "The value to select for option 1.",
+                                    "value": "AzureActivity"
                                 },
                                 {
                                     "label": "Dynamics 365",
@@ -405,9 +433,14 @@
                                     "value": "Dynamics365"
                                 },
                                 {
-                                    "label": "Microsoft  Project",
+                                    "label": "Microsoft 365 Defender",
                                     "description": "Relevant license and Global Admin or Security Admin permission required",
-                                    "value": "Office365Project"
+                                    "value": "Microsoft365Defender"
+                                },
+                                {
+                                    "label": "Microsoft Defender for Cloud",
+                                    "description": "Security Reader permission required",
+                                    "value": "MicrosoftDefenderForCloud"
                                 },
                                 {
                                     "label": "Microsoft Insider Risk Management",
@@ -420,14 +453,14 @@
                                     "value": "OfficePowerBI"
                                 },
                                 {
-                                    "label": "Azure Activity",
-                                    "description": "The value to select for option 1.",
-                                    "value": "AzureActivity"
+                                    "label": "Microsoft Project",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
+                                    "value": "Office365Project"
                                 },
                                 {
-                                    "label": "Microsoft Defender for Cloud",
-                                    "description": "Security Reader permission required",
-                                    "value": "MicrosoftDefenderForCloud"
+                                    "label": "Office 365",
+                                    "description": "Relevant license and Global Admin or Security Admin permission required",
+                                    "value": "Office365"
                                 },
                                 {
                                     "label": "Threat Intelligence Platforms",
@@ -483,7 +516,7 @@
                         "label": "Select the severity of the rules to enable",
                         "placeholder": "",
                         "multiselect": true,
-                        "defaultValue": "",
+                        "defaultValue": [{"value": "High"}, {"value": "Medium"}],
                         "toolTip": "Select the data connectors that you would like to enable",
                         "constraints": {
                             "allowedValues": [
