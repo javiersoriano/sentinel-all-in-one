@@ -261,7 +261,7 @@
                         "name": "enableDiagnostics",
                         "type": "Microsoft.Common.CheckBox",
                         "label": "Enable Sentinel health diagnostics?",
-                        "toolTip": "Select send Sentinel health information to SentinelHealth table",
+                        "toolTip": "This will enable diagnostics settings for Analytics rules, Data Connectors and Automation rules. Results will be in the SentinelHealth table.",
                         "constraints": {
                             "required": false,
                             "validationMessage": "Please select"
