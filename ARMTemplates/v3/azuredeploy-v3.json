@@ -397,7 +397,8 @@
             "apiVersion": "2017-04-01",
             "name": "[variables('aadDiagnosticsName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'enableSolutions')]"
+                "[resourceId('Microsoft.Resources/deployments', 'enableDataConnectors')]",
+                "[resourceId('Microsoft.Resources/deployments', 'enableScheduledAlerts')]"
             ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
