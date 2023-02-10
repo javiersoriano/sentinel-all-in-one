@@ -424,7 +424,7 @@
                             "allowedValues": [
                                 {
                                     "label": "Azure Activity",
-                                    "description": "The value to select for option 1.",
+                                    "description": "This will only bring logs from the subscription selected in Basic tab. Relevant permissions at the subscription level are required.",
                                     "value": "AzureActivity"
                                 },
                                 {
@@ -434,7 +434,7 @@
                                 },
                                 {
                                     "label": "Microsoft 365 Defender",
-                                    "description": "Relevant license and Global Admin or Security Admin permission required",
+                                    "description": "This will only enable incident and alert synchronization, no advanced hunting data will be enabled. Relevant license and Global Admin or Security Admin permission required",
                                     "value": "Microsoft365Defender"
                                 },
                                 {
