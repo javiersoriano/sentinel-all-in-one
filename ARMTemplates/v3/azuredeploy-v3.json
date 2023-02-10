@@ -320,7 +320,7 @@
                         "value": "[parameters('workspaceName')]"
                     },
                     "tenantId": {
-                        "value": "[subscription().tenantId]"
+                        "value": "[tenant().tenantId]"
                     },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
@@ -397,7 +397,7 @@
             "apiVersion": "2017-04-01",
             "name": "[variables('aadDiagnosticsName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'workspaceCreation')]"
+                "[resourceId('Microsoft.Resources/deployments', 'enableSolutions')]"
             ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
