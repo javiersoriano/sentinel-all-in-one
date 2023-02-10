@@ -442,6 +442,11 @@
                 "constraints": {
                     "allowedValues": [
                         {
+                            "label": "Azure Active Directory",
+                            "description": "Relevant license and Global Admin or Security Admin permission required.",
+                            "value": "AzureActiveDirectory"
+                        },
+                        {
                             "label": "Azure Activity",
                             "description": "This will only bring logs from the subscription selected in Basic tab. Relevant permissions at the subscription level are required.",
                             "value": "AzureActivity"

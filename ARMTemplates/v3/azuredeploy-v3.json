@@ -163,7 +163,7 @@
     },
     "functions": [],
     "variables": {
-        "aadDiagnosticsName": "[concat('Sentinel-',uniqueString(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))))]"
+        "aadDiagnosticsName": "[concat('Sentinel-',uniqueString(parameters('subscriptionId')))]"
     },
     "resources": [
         {
@@ -393,12 +393,12 @@
             }
         },
         {
+            "condition": "[contains(parameters('enableDataConnectors'), 'AzureActiveDirectory')]",
             "type": "microsoft.aadiam/diagnosticSettings",
             "apiVersion": "2017-04-01",
             "name": "[variables('aadDiagnosticsName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'enableDataConnectors')]",
-                "[resourceId('Microsoft.Resources/deployments', 'enableScheduledAlerts')]"
+                "[resourceId('Microsoft.Resources/deployments', 'enableDataConnectors')]"
             ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
