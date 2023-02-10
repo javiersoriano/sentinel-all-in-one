@@ -188,7 +188,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
-            "name": "nestedSub",
+            "name": "nestedRg",
             "location": "[parameters('location')]",
             "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
@@ -213,7 +213,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups',parameters('rgName'))]"
+                "nestedRg"
             ],
             "subscriptionId": "[parameters('subscriptionId')]",
             "resourceGroup": "[parameters('rgName')]",
@@ -293,8 +293,7 @@
             "subscriptionId": "[parameters('subscriptionId')]",
             "resourceGroup": "[parameters('rgName')]",
             "dependsOn": [
-                "workspaceCreation",
-                "[resourceId('Microsoft.Resources/resourceGroups',parameters('rgName'))]"
+                "workspaceCreation"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -391,8 +390,7 @@
             "subscriptionId": "[parameters('subscriptionId')]",
             "resourceGroup": "[parameters('rgName')]",
             "dependsOn": [
-                "enableSolutions",
-                "[resourceId('Microsoft.Resources/resourceGroups',parameters('rgName'))]"
+                "enableSolutions"
             ],
             "properties": {
                 "mode": "Incremental",
