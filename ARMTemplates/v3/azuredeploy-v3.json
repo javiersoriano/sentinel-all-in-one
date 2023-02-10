@@ -163,28 +163,9 @@
     },
     "functions": [],
     "variables": {
-        "aadDiagnosticsName": "[concat('AzSentinel-',uniqueString(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))))]"
+        "aadDiagnosticsName": "[concat('Sentinel-',uniqueString(resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))))]"
     },
     "resources": [
-        {
-            "type": "microsoft.aadiam/diagnosticSettings",
-            "apiVersion": "2017-04-01",
-            "name": "[variables('aadDiagnosticsName')]",
-            "properties": {
-                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
-                "logs": [
-                    {
-                        "category": "SignInLogs",
-                        "enabled": true
-                    },
-                    {
-                        "category": "AuditLogs",
-                        "enabled": true
-                    }
-                ],
-                 "metrics": []
-            }
-        },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
@@ -342,7 +323,7 @@
                         "value": "[subscription().tenantId]"
                     },
                     "subscriptionId": {
-                        "value": "[subscription().subscriptionId]"
+                        "value": "[parameters('subscriptionId')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
@@ -409,6 +390,28 @@
                         "value": "[replace(replace(replace(string(parameters('severityLevels')),'\"',''),'[',''),']','')]"
                     }
                 }
+            }
+        },
+        {
+            "type": "microsoft.aadiam/diagnosticSettings",
+            "apiVersion": "2017-04-01",
+            "name": "[variables('aadDiagnosticsName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'workspaceCreation')]"
+            ],
+            "properties": {
+                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
+                "logs": [
+                    {
+                        "category": "SignInLogs",
+                        "enabled": true
+                    },
+                    {
+                        "category": "AuditLogs",
+                        "enabled": true
+                    }
+                ],
+                 "metrics": []
             }
         }
     ],
