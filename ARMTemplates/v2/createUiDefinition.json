@@ -229,7 +229,7 @@
                     {
                         "name": "enableUeba",
                         "type": "Microsoft.Common.CheckBox",
-                        "label": "Enable User Entity Behavior Analytics (UEBA)?",
+                        "label": "Enable User Entity Behavior Analytics (UEBA)? This will only enable synchornization with identity providers. Data sources need to be enabled separately.",
                         "constraints": {
                             "required": false,
                             "validationMessage": "Please choose"
