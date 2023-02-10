@@ -396,12 +396,12 @@
             "condition": "[contains(parameters('enableDataConnectors'), 'AzureActiveDirectory')]",
             "type": "microsoft.aadiam/diagnosticSettings",
             "apiVersion": "2017-04-01",
-            "name": "Sentinel-AAD",
+            "name": "[variables('aadDiagnosticsName')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'enableDataConnectors')]"
+                "enableSolutions"
             ],
             "properties": {
-                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
+                "workspaceId": "[concat('/subscriptions/',parameters('subscriptionId'),'/resourcegroups/',parameters('rgName'),'/providers/microsoft.operationalinsights/workspaces/',parameters('workspaceName'))]",
                 "logs": [
                     {
                         "category": "SignInLogs",
