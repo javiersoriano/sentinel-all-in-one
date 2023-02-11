@@ -42,7 +42,7 @@
           "label": "Resource Group name",
           "placeholder": "",
           "defaultValue": "",
-          "toolTip": "Enter a resource group nameto be created.",
+          "toolTip": "Enter a resource group name",
           "constraints": {
               "required": true,
               "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
@@ -70,7 +70,7 @@
           "label": "Daily ingestion limit in GBs. Enter 0 for no limit.",
           "placeholder": "",
           "defaultValue": "0",
-          "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent",
+          "toolTip": "This limit doesn't apply to the following tables: SecurityAlert, SecurityBaseline, SecurityBaselineSummary, SecurityDetection, SecurityEvent, WindowsFirewall, MaliciousIPCommunication, LinuxAuditLog, SysmonEvent, ProtectionStatus, WindowsEvent. [Learn more](https://learn.microsoft.com/azure/azure-monitor/logs/daily-cap)",
           "constraints": {
               "required": true,
               "regex": "^[0-9]{1,4}$",
@@ -98,6 +98,7 @@
           "label": "Select pricing tier for Log Analytics",
           "placeholder": "",
           "multiselect": false,
+          "toolTip": "Visit [Azure Monitor Pricing page](https://azure.microsoft.com/pricing/details/monitor/) for more information.",
           "defaultValue": [{"value": "PerGB2018"}],
           "constraints": {
               "allowedValues": [
@@ -167,6 +168,7 @@
           "label": "Select pricing tier for Sentinel",
           "placeholder": "",
           "multiselect": false,
+          "toolTip": "Visit [Microsoft Sentinel Pricing page](https://azure.microsoft.com/pricing/details/microsoft-sentinel) for more information.",
           "defaultValue": [{"value": "PerGB"}],
           "constraints": {
               "allowedValues": [
@@ -248,7 +250,7 @@
             {
                 "name": "enableUeba",
                 "type": "Microsoft.Common.CheckBox",
-                "label": "Enable User Entity Behavior Analytics (UEBA)? This will only enable synchornization with identity providers. Data sources need to be enabled separately.",
+                "label": "Enable User Entity Behavior Analytics (UEBA)? This will only enable synchronization with identity providers. Data sources need to be enabled separately.",
                 "constraints": {
                     "required": false,
                     "validationMessage": "Please choose"
@@ -280,7 +282,7 @@
                 "name": "enableDiagnostics",
                 "type": "Microsoft.Common.CheckBox",
                 "label": "Enable Sentinel health diagnostics?",
-                "toolTip": "This will enable diagnostics settings for Analytics rules, Data Connectors and Automation rules. Results will be in the SentinelHealth table.",
+                "toolTip": "This will enable diagnostics settings for Analytics rules, Data Connectors and Automation rules. [Learn more](https://learn.microsoft.com/en-us/azure/sentinel/health-audit)",
                 "constraints": {
                     "required": false,
                     "validationMessage": "Please select"
@@ -448,7 +450,7 @@
                         },
                         {
                             "label": "Azure Activity",
-                            "description": "This will only bring logs from the subscription selected in Basic tab. Relevant permissions at the subscription level are required.",
+                            "description": "This will only bring logs from the subscription selected in Basics tab. Relevant permissions at the subscription level are required.",
                             "value": "AzureActivity"
                         },
                         {
@@ -526,11 +528,11 @@
             {
                 "name": "enableScheduledAlerts",
                 "type": "Microsoft.Common.CheckBox",
-                "label": "Enable Scheduled alert rules for selected data connectors and Content Hub solutions?",
-                "toolTip": "Select to enable scheduled and NRT analytics rules for connectors and solutions selected in the previous tabs",
+                "label": "Enable Scheduled alert rules for selected Content Hub solutions and Data Connectors?",
+                "toolTip": "Select to enable Scheduled and NRT analytics rules for the solutions and connectors selected in the previous tabs",
                 "constraints": {
                     "required": false,
-                    "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
+                    "validationMessage": "Enables Scheduled and NRT rules matching any of the selected solutions and connectors"
                 },
                 "visible": true
             },
