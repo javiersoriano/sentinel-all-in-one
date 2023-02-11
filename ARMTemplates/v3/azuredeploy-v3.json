@@ -34,7 +34,7 @@
         "capacityReservationLA": {
             "type": "int",
             "metadata": {
-                "description": "Commitment tier"
+                "description": "Commitment tier in GB/day"
             },
             "allowedValues": [
                 100,
@@ -62,7 +62,7 @@
         "capacityReservationSentinel": {
             "type": "int",
             "metadata": {
-                "description": "Commitment tier"
+                "description": "Commitment tier in GB/day"
             },
             "allowedValues": [
                 100,

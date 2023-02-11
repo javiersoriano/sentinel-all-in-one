@@ -18,6 +18,16 @@
       },
       "basics": [
         {
+          "name": "infoBox1",
+          "type": "Microsoft.Common.InfoBox",
+          "visible": true,
+          "options": {
+              "icon": "Info",
+              "text": "This is a tenant level deployment that requires your user to have specific permissions. If you see a red error message above, visit the following link to grant the required permission.",
+              "uri": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-cli#required-access"
+          }
+        },
+        {
           "name": "subscriptionCall",
           "type": "Microsoft.Solutions.ArmApiControl",
           "request": {
@@ -121,7 +131,7 @@
           "placeholder": "",
           "multiselect": false,
           "defaultValue": 100,
-          "toolTip": "Select the Commitment Tier",
+          "toolTip": "Select the Commitment Tier in GB/day",
           "constraints": {
               "allowedValues": [
                   {
@@ -190,7 +200,7 @@
           "placeholder": "",
           "multiselect": false,
           "defaultValue": 100,
-          "toolTip": "Select the Commitment Tier",
+          "toolTip": "Select the Commitment Tier in GB/day",
           "constraints": {
               "allowedValues": [
                   {
