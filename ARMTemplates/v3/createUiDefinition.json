@@ -509,7 +509,7 @@
                 "options": {
                     "icon": "Info",
                     "text": "Please select which analytics rules you would like to enable in your Microsoft Sentinel environment",
-                    "uri": "https://learn.microsoft.com/en-us/azure/sentinel/data-connectors-reference"
+                    "uri": "https://learn.microsoft.com/en-us/azure/sentinel/detect-threats-built-in"
                 }
             },
             {
@@ -521,7 +521,7 @@
                     "required": false,
                     "validationMessage": "Enables SSH and/or RDP anomalous login alerts"
                 },
-                "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'Syslog'),contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents')), true, false)]"
+                "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectors,'Syslog'),contains(steps('dataConnectors').enableDataConnectors,'SecurityEvents')), true, false)]"
             },
             {
                 "name": "enableScheduledAlerts",
