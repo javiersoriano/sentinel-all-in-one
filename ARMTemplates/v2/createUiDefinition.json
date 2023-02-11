@@ -11,7 +11,7 @@
                     "label": "Location",
                     "toolTip": "Location for all resources",
                     "resourceTypes": [
-                        "Microsoft.OperationalInsights"
+                        "Microsoft.OperationalInsights/workspaces"
                     ]
                 }
             }
