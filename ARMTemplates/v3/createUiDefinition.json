@@ -23,7 +23,8 @@
           "visible": true,
           "options": {
               "icon": "Info",
-              "text": "This template is deploying resources at the Azure AD tenant scope. If you see a red message above, grant the proper permission to your user as explained [here](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-cli#required-access)."
+              "text": "This template is deploying resources at the Azure AD tenant scope. If you see a red message above, click here to learn how to assign the proper permission.",
+              "uri": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-cli#required-access"
           }
         },
         {
@@ -259,8 +260,8 @@
             {
                 "name": "enableUeba",
                 "type": "Microsoft.Common.CheckBox",
-                "label": "Enable [User Entity Behavior Analytics (UEBA)](https://learn.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics)? Global Admin or Security Admin permission required.",
-                "toolTip": "This will only enable synchronization with identity providers. Data sources need to be enabled separately.",
+                "label": "Enable User Entity Behavior Analytics (UEBA)? Global Admin or Security Admin permission required.",
+                "toolTip": "This will only enable synchronization with identity providers. Data sources need to be enabled separately. [Learn more](https://learn.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics)",
                 "constraints": {
                     "required": false,
                     "validationMessage": "Please choose"
