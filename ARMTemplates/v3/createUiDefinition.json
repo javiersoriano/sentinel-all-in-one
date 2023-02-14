@@ -18,6 +18,15 @@
       },
       "basics": [
         {
+          "name": "infoBoxBasics",
+          "type": "Microsoft.Common.InfoBox",
+          "visible": true,
+          "options": {
+              "icon": "Info",
+              "text": "This template is deploying resources at the Azure AD tenant scope. If you see a red message above, grant the proper permission to your user as explained [here](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-to-tenant?tabs=azure-cli#required-access)."
+          }
+        },
+        {
           "name": "subscriptionCall",
           "type": "Microsoft.Solutions.ArmApiControl",
           "request": {
