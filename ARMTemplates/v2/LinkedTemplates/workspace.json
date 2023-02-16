@@ -136,6 +136,17 @@
             ]
         },
         {
+            "type": "Microsoft.SecurityInsights/incidents",
+            "name": "allinone-empty-incident",
+            "scope": "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
+            "apiVersion":"2022-12-01-preview",
+            "properties": {
+                "severity": "Informational",
+                "status": "Closed",
+                "title": "placeholder incident"
+            }
+        },
+        {
             "name": "[concat('SecurityInsights','(', parameters('workspaceName'),')')]",
             "type": "Microsoft.OperationsManagement/solutions",
             "apiVersion": "2015-11-01-preview",
