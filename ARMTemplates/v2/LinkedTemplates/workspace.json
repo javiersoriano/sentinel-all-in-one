@@ -146,7 +146,8 @@
             "properties": {
                 "severity": "Informational",
                 "status": "Closed",
-                "title": "placeholder incident"
+                "title": "placeholder incident",
+                "classification": "Undetermined"
             }
         },
         {
