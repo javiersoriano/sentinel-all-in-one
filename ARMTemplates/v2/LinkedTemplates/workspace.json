@@ -119,7 +119,7 @@
                     "immediatePurgeDataOn30Days": "[parameters('immediatePurgeDataOn30Days')]"
                 },
                 "sku": {
-                    "capacitiyReservationName": "[if(equals(parameters('pricingTierLA'),'CapacityReservation'), parameters('capacityReservationLA'), json('null'))]",
+                    "capacitiyReservationLevel": "[if(equals(parameters('pricingTierLA'),'CapacityReservation'), parameters('capacityReservationLA'), json('null'))]",
                     "name": "[parameters('pricingTierLA')]"
                 }
             }
@@ -145,7 +145,7 @@
             "properties": {
                 "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
                 "sku": {
-                    "capacitiyReservationName": "[if(equals(parameters('pricingTierSentinel'),'CapacityReservation'), parameters('capacityReservationSentinel'), json('null'))]",
+                    "capacitiyReservationLevel": "[if(equals(parameters('pricingTierSentinel'),'CapacityReservation'), parameters('capacityReservationSentinel'), json('null'))]",
                     "name": "[parameters('pricingTierSentinel')]"
                 }
             },
