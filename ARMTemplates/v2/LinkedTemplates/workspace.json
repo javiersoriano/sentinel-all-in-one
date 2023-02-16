@@ -125,8 +125,9 @@
             }
         },
         {
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/default')]",
-            "type": "Microsoft.OperationalInsights/workspaces/providers/onboardingStates",
+            "type": "Microsoft.SecurityInsights/onboardingStates",
+            "name": "default",
+            "scope": "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
             "apiVersion": "2022-12-01-preview",
             "properties": {
             },
@@ -140,7 +141,7 @@
             "apiVersion": "2015-11-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationalInsights/workspaces/providers/onboardingStates', parameters('workspaceName'), 'Microsoft.SecurityInsights/default')]"
+                "default"
             ],
             "properties": {
                 "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
