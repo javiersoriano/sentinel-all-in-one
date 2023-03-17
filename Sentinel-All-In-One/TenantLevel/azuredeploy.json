@@ -155,7 +155,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/master/sentinel-all-in-one/Sentinel-All-In-One/"
+            "defaultValue": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/Sentinel-All-In-One"
         },
         "subscriptionId": {
             "type": "string"
