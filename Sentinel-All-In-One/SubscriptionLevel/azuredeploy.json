@@ -386,7 +386,7 @@
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
               },
               "dependsOn":[
-                "[resourceId('Microsoft.Resources/deployments', 'workspaceCreation')]"
+                "workspaceCreation"
               ]
             }
     ],
