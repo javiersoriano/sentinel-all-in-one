@@ -366,29 +366,7 @@
                     }
                 }
             }
-        },
-         {
-              "type": "microsoft.aadiam/diagnosticSettings",
-              "apiVersion": "2017-04-01",
-              "scope": "/",
-              "name": "[format('{0}-aadDiagnosticSetttings', parameters('workspaceName'))]",
-              "properties": {
-                "logs": [
-                    {
-                        "category": "SignInLogs",
-                        "enabled": true
-                    },
-                    {
-                        "category": "AuditLogs",
-                        "enabled": true
-                    }
-                ],
-                "workspaceId": "[concat('/subscriptions/',subscription().id,'/resourcegroups/',parameters('rgName'),'/providers/microsoft.operationalinsights/workspaces/',parameters('workspaceName'))]"
-              },
-              "dependsOn":[
-                "workspaceCreation"
-              ]
-            }
+        }
     ],
     "outputs": {
         "workspaceName": {

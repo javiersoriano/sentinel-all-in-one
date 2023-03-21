@@ -225,6 +225,25 @@
                     }
                 }
             }
+        },
+        {
+            "type": "microsoft.aadiam/diagnosticSettings",
+            "apiVersion": "2017-04-01",
+            "scope": "/",
+            "name": "[format('{0}-aadDiagnosticSetttings', parameters('workspaceName'))]",
+            "properties": {
+            "logs": [
+                {
+                    "category": "SignInLogs",
+                    "enabled": true
+                },
+                {
+                    "category": "AuditLogs",
+                    "enabled": true
+                }
+            ],
+            "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+            }
         }
     ]
 }
