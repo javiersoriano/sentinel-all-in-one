@@ -50,6 +50,25 @@
     },
     "resources": [
         {
+            "type": "microsoft.aadiam/diagnosticSettings",
+            "apiVersion": "2017-04-01",
+            "scope": "/",
+            "name": "[format('{0}-aadDiagnosticSetttings', parameters('workspaceName'))]",
+            "properties": {
+            "logs": [
+                {
+                    "category": "SignInLogs",
+                    "enabled": true
+                },
+                {
+                    "category": "AuditLogs",
+                    "enabled": true
+                }
+            ],
+            "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+            }
+        },
+        {
             "condition": "[contains(parameters('dataConnectorsKind'), 'Office365')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2020-01-01",
@@ -224,25 +243,6 @@
                         "state": "enabled"
                     }
                 }
-            }
-        },
-        {
-            "type": "microsoft.aadiam/diagnosticSettings",
-            "apiVersion": "2017-04-01",
-            "scope": "/",
-            "name": "[format('{0}-aadDiagnosticSetttings', parameters('workspaceName'))]",
-            "properties": {
-            "logs": [
-                {
-                    "category": "SignInLogs",
-                    "enabled": true
-                },
-                {
-                    "category": "AuditLogs",
-                    "enabled": true
-                }
-            ],
-            "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
             }
         }
     ]
