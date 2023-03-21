@@ -383,10 +383,10 @@
                         "enabled": true
                     }
                 ],
-                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+                "workspaceId": "[concat('/subscriptions/',subscription().id,'/resourcegroups/',parameters('rgName'),'/providers/microsoft.operationalinsights/workspaces/',parameters('workspaceName'))]"
               },
               "dependsOn":[
-                "enableSolutions"
+                "workspaceCreation"
               ]
             }
     ],
