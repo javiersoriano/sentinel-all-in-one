@@ -272,6 +272,27 @@
                 }
             }
         },
+         {
+            "name": "AAD",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "resourceGroup": "[parameters('rgName')]",
+            "dependsOn": [
+                "workspaceCreation"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), 'SubscriptionLevel/LinkedTemplates/AAD.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    }
+                }
+            }
+        },
         {
             "condition": "[not(empty(parameters('enableDataConnectors')))]",
             "name": "enableDataConnectors",
