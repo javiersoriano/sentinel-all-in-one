@@ -308,30 +308,6 @@
             }
         },
         {
-            "condition": "[contains(parameters('enableSolutionsEssentials'), 'SecurityThreatEssentials')]",
-            "name": "SecurityThreatEssentials",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2021-04-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/azuresentinel.azure-sentinel-solution-securitythreatessentialsol-18305002-0aeb-4f68-8aa2-78862391ee11-azure-sentinel-solution-securitythreatessentialsol/Artifacts/mainTemplate.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "workspace": {
-                        "value": "[parameters('workspaceName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "workspace-location": {
-                        "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
             "condition": "[contains(parameters('enableSolutionsEssentials'), 'SOAREssentials')]",
             "name": "SOAREssentials",
             "type": "Microsoft.Resources/deployments",

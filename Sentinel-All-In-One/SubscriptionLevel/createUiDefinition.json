@@ -264,7 +264,7 @@
                     "name": "anomalies",
                     "type": "Microsoft.Common.OptionsGroup",
                     "label": "Enable ML anomalies?",
-                    "defaultValue": "true",
+                    "defaultValue": "Yes",
                     "toolTip": "Learn more about Microsoft Sentinel anomalies [here](https://learn.microsoft.com/en-us/azure/sentinel/soc-ml-anomalies)",
                     "constraints": {
                       "allowedValues": [
