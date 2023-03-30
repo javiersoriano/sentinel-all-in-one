@@ -25,6 +25,10 @@
             "type": "bool",
             "defaultValue": false
         },
+        "enableAnomalies": {
+            "type": "string",
+            "defaultValue": "Yes"
+        },
         "settingName": {
             "type": "string",
             "defaultValue": "HealthSettings"
@@ -42,6 +46,17 @@
             "scope": "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
             "properties": {
                 "entityProviders": "[parameters('identityProviders')]"
+            }
+        },
+        {
+            "condition": "[contains(parameters('enableAnomalies'),'Yes')]",
+            "type": "Microsoft.SecurityInsights/settings",
+            "apiVersion": "2022-12-01-preview",
+            "name": "Anomalies",
+            "kind": "Anomalies",
+            "scope": "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
+            "properties": {
+                "isEnabled": true
             }
         },
         {

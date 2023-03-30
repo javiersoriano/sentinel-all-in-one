@@ -112,10 +112,31 @@
             },
             "defaultValue": true
         },
-        "enableSolutions": {
+        "enableSolutions1P": {
             "type": "array",
             "metadata": {
-                "description": "The list of Content Hub solutions to deploy."
+                "description": "The list of Content Hub 1st party solutions to deploy."
+            },
+            "defaultValue": []
+        },
+        "enableSolutionsEssentials": {
+            "type": "array",
+            "metadata": {
+                "description": "The list of Content Hub Essentials solutions to deploy."
+            },
+            "defaultValue": []
+        },
+        "enableSolutionsTraining": {
+            "type": "array",
+            "metadata": {
+                "description": "The list of Content Hub Training solutions to deploy."
+            },
+            "defaultValue": []
+        },
+        "aadStreams": {
+            "type": "array",
+            "metadata": {
+                "description": "The list of data types to enable for Azure AD connector"
             },
             "defaultValue": []
         },
@@ -125,6 +146,13 @@
                 "description": "Whether or not UEBA should be enabled"
             },
             "defaultValue": true
+        },
+        "enableAnomalies":{
+            "type": "string",
+            "metadata": {
+                "description": "Whether or not ML Anomalies should be enabled"
+            },
+            "defaultValue": "Yes"
         },
         "identityProviders": {
             "type": "array",
@@ -234,6 +262,9 @@
                     "enableUeba": {
                         "value": "[parameters('enableUeba')]"
                     },
+                    "enableAnomalies": {
+                        "value": "[parameters('enableAnomalies')]"
+                    },
                     "identityProviders": {
                         "value": "[parameters('identityProviders')]"
                     },
@@ -244,7 +275,7 @@
             }
         },
         {
-            "condition": "[not(empty(parameters('enableSolutions')))]",
+            "condition": "[or(not(empty(parameters('enableSolutions1P'))),not(empty(parameters('enableSolutionsEssentials'))),not(empty(parameters('enableSolutionsTraining'))))]",
             "name": "enableSolutions",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
@@ -260,36 +291,20 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "enableSolutions": {
-                        "value": "[parameters('enableSolutions')]"
+                    "enableSolutions1P": {
+                        "value": "[parameters('enableSolutions1P')]"
+                    },
+                    "enableSolutionsEssentials": {
+                        "value": "[parameters('enableSolutionsEssentials')]"
+                    },
+                    "enableSolutionsTraining": {
+                        "value": "[parameters('enableSolutionsTraining')]"
                     },
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-         {
-            "condition": "[contains(parameters('enableDataConnectors'), 'Test')]",
-            "name": "AAD",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
-            "resourceGroup": "[parameters('rgName')]",
-            "dependsOn": [
-                "workspaceCreation"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'SubscriptionLevel/LinkedTemplates/AAD.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
                     }
                 }
             }
@@ -313,6 +328,9 @@
                 "parameters": {
                     "dataConnectorsKind": {
                         "value": "[parameters('enableDataConnectors')]"
+                    },
+                    "aadStreams": {
+                        "value": "[parameters('aadStreams')]"
                     },
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
@@ -346,7 +364,7 @@
                 },
                 "parameters": {
                     "dataConnectorsKind": {
-                        "value": "[parameters('enableSolutions')]"
+                        "value": "[parameters('enableDataConnectors')]"
                     },
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"

@@ -9,6 +9,13 @@
                 "description": "The kind of data connectors to enable"
             }
         },
+        "aadStreams": {
+            "type": "array",
+            "metadata": {
+                "description": "The list of data types to enable for Azure AD connector"
+            },
+            "defaultValue": []
+        },
         "workspaceName": {
             "type": "string",
             "metadata": {
@@ -50,6 +57,7 @@
     },
     "resources": [
          {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActiveDirectory')]",
             "type": "microsoft.aadiam/diagnosticSettings",
             "apiVersion": "2017-04-01",
             "scope": "/",
@@ -58,11 +66,51 @@
             "logs": [
                 {
                     "category": "SignInLogs",
-                    "enabled": true
+                    "enabled": "[contains(parameters('aadStreams'),'SignInLogs')]"
                 },
                 {
                     "category": "AuditLogs",
-                    "enabled": true
+                    "enabled": "[contains(parameters('aadStreams'),'AuditLogs')]"
+                },
+                {
+                    "category": "AADNonInteractiveUserSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'AADNonInteractiveUserSignInLogs')]"
+                },
+                {
+                    "category": "AADServicePrincipalSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'AADServicePrincipalSignInLogs')]"
+                },
+                {
+                    "category": "AADManagedIdentitySignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'AADManagedIdentitySignInLogs')]"
+                },
+                {
+                    "category": "AADProvisioningLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'AADProvisioningLogs')]"
+                },
+                {
+                    "category": "ADFSSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ADFSSignInLogs')]"
+                },
+                {
+                    "category": "AADUserRiskEvents",
+                    "enabled": "[contains(parameters('aadStreams'),'AADUserRiskEvents')]"
+                },
+                {
+                    "category": "AADRiskyUsers",
+                    "enabled": "[contains(parameters('aadStreams'),'AADRiskyUsers')]"
+                },
+                {
+                    "category": "NetworkAccessTraffic",
+                    "enabled": "[contains(parameters('aadStreams'),'NetworkAccessTraffic')]"
+                },
+                {
+                    "category": "AADRiskyServicePrincipals",
+                    "enabled": "[contains(parameters('aadStreams'),'AADRiskyServicePrincipals')]"
+                },
+                {
+                    "category": "AADServicePrincipalRiskEvents",
+                    "enabled": "[contains(parameters('aadStreams'),'AADServicePrincipalRiskEvents')]"
                 }
             ],
             "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"

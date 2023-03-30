@@ -261,6 +261,27 @@
                       "visible": "[if(steps('settings').enableUeba, true, false)]"
                   },
                   {
+                    "name": "anomalies",
+                    "type": "Microsoft.Common.OptionsGroup",
+                    "label": "Enable ML anomalies?",
+                    "defaultValue": "true",
+                    "toolTip": "Learn more about Microsoft Sentinel anomalies [here](https://learn.microsoft.com/en-us/azure/sentinel/soc-ml-anomalies)",
+                    "constraints": {
+                      "allowedValues": [
+                        {
+                          "label": "Yes",
+                          "value": "true"
+                        },
+                        {
+                          "label": "No",
+                          "value": "false"
+                        }
+                      ],
+                      "required": true
+                    },
+                    "visible": true
+                  },
+                  {
                       "name": "enableDiagnostics",
                       "type": "Microsoft.Common.CheckBox",
                       "label": "Enable Sentinel health diagnostics?",
@@ -288,16 +309,16 @@
                       }
                   },
                   {
-                      "name": "enableSolutions",
+                      "name": "enableSolutions1P",
                       "type": "Microsoft.Common.DropDown",
-                      "label": "Select Content Hub solutions to install",
+                      "label": "Select Microsoft Content Hub solutions to install",
                       "placeholder": "",
                       "multiselect": true,
                       "filter": true,
                       "filterPlaceholder": "Filter items ...",
                       "multiLine": true,
                       "defaultDescription": "A value for selection",
-                      "toolTip": "Select the solutions that you would like to install",
+                      "toolTip": "Select the Microsoft solutions that you would like to install",
                       "constraints": {
                           "allowedValues": [
                               {
@@ -311,24 +332,9 @@
                                   "value": "AzureActivity"
                               },
                               {
-                                  "label": "Cloud Identity Threat Protection Essentials",
-                                  "description": "The Cloud Identity Threat Protection Essentials solution looks for most common cloud focused identity attacks such as Suspicious Sign-ins, privilege grants, MFA disable etc.",
-                                  "value": "CloudIdentityThreatProtectionEssentials"
-                              },
-                              {
-                                  "label": "Endpoint Threat Protection Essentials",
-                                  "description": "The Endpoint Threat Protection Essentials solution provides content to monitor, detect and investigate threats related to windows machines.",
-                                  "value": "EndpointThreatProtectionEssentials"
-                              },
-                              {
                                   "label": "Dynamics 365 CE",
                                   "description": "The Microsoft Sentinel solution for Dynamics 365 CE apps provides threat monitoring, detection and incident response capabilities for Dynamics 365 CE apps.",
                                   "value": "Dynamics365"
-                              },
-                              {
-                                  "label": "Apache Log4j Vulnerability Detection",
-                                  "description": "This solution provides content to monitor, detect and investigate signals related to exploitation of a remote code execution (RCE) vulnerability in Apache Log4j 2 thru Microsoft Sentinel.",
-                                  "value": "Log4j"
                               },
                               {
                                   "label": "Microsoft 365",
@@ -371,25 +377,111 @@
                                   "value": "Teams"
                               },
                               {
-                                  "label": "Security Threat Essentials",
-                                  "description": "This solution published by Microsoft is based on the continuous evaluation of threat campaigns and provides out-of-the-box security content that helps you to enhance your security posture.",
-                                  "value": "SecurityThreatEssentials"
-                              },
-                              {
-                                  "label": "SOAR Essentials",
-                                  "description": "The Sentinel SOAR Essentials solution for Microsoft Sentinel contains Playbooks that can help you get started with basic notification and orchestration scenarios for common use cases.",
-                                  "value": "SOAREssentials"
-                              },
-                              {
                                   "label": "Threat Intelligence",
                                   "description": "Ingest threat indicators into Microsoft Sentinel. Threat indicators can be IP addresses, domains, URLs and file hashes and can be used to correlate across log sources for known indicators of compromise and/or indicators of active attack",
                                   "value": "ThreatIntelligence"
-                              },
-                              {
-                                  "label": "UEBA Essentials",
-                                  "description": "The Sentinel UEBA content package will provide you with various queries based on UEBA tables, that allows you to hunt for tailored threat scenarios.",
-                                  "value": "UEBAEssentials"
                               }
+                          ],
+                          "required": false
+                      },
+                      "visible": true
+                  },
+                  {
+                    "name": "enableSolutionsEssentials",
+                      "type": "Microsoft.Common.DropDown",
+                      "label": "Select Essentials Content Hub solutions to install",
+                      "placeholder": "",
+                      "multiselect": true,
+                      "filter": true,
+                      "filterPlaceholder": "Filter items ...",
+                      "multiLine": true,
+                      "defaultDescription": "A value for selection",
+                      "toolTip": "Select essentials solutions that you would like to install",
+                      "constraints": {
+                          "allowedValues": [
+                            {
+                                "label": "Attacker Tools Threat Protection Essentials",
+                                "description": "The Attacker Tools Threat Protection Essentials solution contains security content that is relevant for detection of tools commonly used by attackers in various campaigns",
+                                "value": "AttackerToolsThreatProtectionEssentials"
+                            },
+                            {
+                                "label": "Cloud Identity Threat Protection Essentials",
+                                "description": "The Cloud Identity Threat Protection Essentials solution looks for most common cloud focused identity attacks such as Suspicious Sign-ins, privilege grants, MFA disable etc.",
+                                "value": "CloudIdentityThreatProtectionEssentials"
+                            },
+                            {
+                                "label": "Cloud Service Threat Protection Essentials",
+                                "description": "The Cloud Service Threat Protection Essentials contains security content that is relevant for detection of attacks against various cloud services like key vault, storage, compute etc.",
+                                "value": "CloudServiceThreatProtectionEssentials"
+                            },
+                            {
+                                "label": "Endpoint Threat Protection Essentials",
+                                "description": "The Endpoint Threat Protection Essentials solution provides content to monitor, detect and investigate threats related to windows machines.",
+                                "value": "EndpointThreatProtectionEssentials"
+                            },
+                            {
+                                "label": "Network Session Essentials",
+                                "description": "The Network Session Essentials solution leverages the Advanced Security Information Model (ASIM) to correlate insights across 15+ networking data sources and deliver more value for SOC use cases with less content.",
+                                "value": "NetworkSessionEssentials"
+                            }, 
+                            {
+                                "label": "Network Threat Protection Essentials",
+                                "description": "The Network Threat Protection Essentials solution contains queries that identifies suspicious network behavior based on various data sources ingested in Sentinel.",
+                                "value": "NetworkThreatProtectionEssentials"
+                            },
+                            {
+                                "label": "Security Threat Essentials",
+                                "description": "This solution published by Microsoft is based on the continuous evaluation of threat campaigns and provides out-of-the-box security content that helps you to enhance your security posture.",
+                                "value": "SecurityThreatEssentials"
+                            },
+                            {
+                                "label": "SOAR Essentials",
+                                "description": "The Sentinel SOAR Essentials solution for Microsoft Sentinel contains Playbooks that can help you get started with basic notification and orchestration scenarios for common use cases.",
+                                "value": "SOAREssentials"
+                            },
+                            {
+                                "label": "SOC Handbook",
+                                "description": "The SOC Handbook solution for Microsoft Sentinel provides a collection of resources that enable and empower SOC Analysts to get better visibility and understanding of point-in-time security posture of organizational resources.",
+                                "value": "SOCHandbook"
+                            },
+                            {
+                                "label": "SOC Process Framework",
+                                "description": "The SOC Process Framework Solution is built in order to easily integrate with Microsoft Sentinel and build a standard SOC Process and Procedure Framework within your Organization.",
+                                "value": "SOCProcessFramework"
+                            },
+                            {
+                                "label": "UEBA Essentials",
+                                "description": "The Sentinel UEBA content package will provide you with various queries based on UEBA tables, that allows you to hunt for tailored threat scenarios.",
+                                "value": "UEBAEssentials"
+                            }
+                          ],
+                          "required": false
+                      },
+                      "visible": true
+                  },
+                  {
+                    "name": "enableSolutionsTraining",
+                      "type": "Microsoft.Common.DropDown",
+                      "label": "Select Training and Tutorials Content Hub solutions to install",
+                      "placeholder": "",
+                      "multiselect": true,
+                      "filter": true,
+                      "filterPlaceholder": "Filter items ...",
+                      "multiLine": true,
+                      "defaultDescription": "A value for selection",
+                      "toolTip": "Select the training and tutorials solutions that you would like to install",
+                      "constraints": {
+                          "allowedValues": [
+                            {
+                                "label": "KQL Training",
+                                "description": "The KQL Training solution for Microsoft Sentinel contains resources that can help up – skill on understanding the fundamentals and using KQL in advanced scenarios like authoring effective and optimized queries used in Sentinel Analytics, Hunting Queries, Workbooks, etc.",
+                                "value": "KQLTraining"
+                            },
+                            {
+                                "label": "Training Lab",
+                                "description": "Microsoft Sentinel Training Lab helps you get ramped up with Microsoft Sentinel providing hands-on practical experience for product features, capabilities, and scenarios.",
+                                "value": "TrainingLab"
+                            }
                           ],
                           "required": false
                       },
@@ -425,60 +517,129 @@
                       "toolTip": "Select the data connectors that you would like to enable",
                       "constraints": {
                           "allowedValues": [
-                              {
+                            {
+                                "label": "Azure Active Directory",
+                                "description": "Relevant license and Global Admin or Security Admin permission required.",
+                                "value": "AzureActiveDirectory"
+                            },  
+                            {
                                 "label": "Azure Active Directory Identity Protection",
                                 "description": "Relevant license and Global Admin or Security Admin permission required.",
                                 "value": "AzureActiveDirectoryIDP"
-                              },
-                              {
-                                  "label": "Azure Activity",
-                                  "description": "This will only bring logs from the subscription selected in Basics tab. Relevant permissions at the subscription level are required.",
-                                  "value": "AzureActivity"
-                              },
-                              {
-                                  "label": "Dynamics 365",
-                                  "description": "Relevant license and Global Admin or Security Admin permission required",
-                                  "value": "Dynamics365"
-                              },
-                              {
-                                  "label": "Microsoft 365 Defender",
-                                  "description": "This will only enable incident and alert synchronization, no advanced hunting data will be enabled. Relevant license and Global Admin or Security Admin permission required",
-                                  "value": "Microsoft365Defender"
-                              },
-                              {
-                                  "label": "Microsoft Defender for Cloud",
-                                  "description": "Security Reader permission required",
-                                  "value": "MicrosoftDefenderForCloud"
-                              },
-                              {
-                                  "label": "Microsoft Insider Risk Management",
-                                  "description": "Relevant license and Global Admin or Security Admin permission required",
-                                  "value": "OfficeIRM"
-                              },
-                              {
-                                  "label": "Microsoft PowerBI",
-                                  "description": "Relevant license and Global Admin or Security Admin permission required",
-                                  "value": "OfficePowerBI"
-                              },
-                              {
-                                  "label": "Microsoft Project",
-                                  "description": "Relevant license and Global Admin or Security Admin permission required",
-                                  "value": "Office365Project"
-                              },
-                              {
-                                  "label": "Office 365",
-                                  "description": "Relevant license and Global Admin or Security Admin permission required",
-                                  "value": "Office365"
-                              },
-                              {
-                                  "label": "Threat Intelligence Platforms",
-                                  "description": "Global Admin or Security Admin permission required",
-                                  "value": "ThreatIntelligence"
-                              }
+                            },
+                            {
+                                "label": "Azure Activity",
+                                "description": "This will only bring logs from the subscription selected in Basics tab. Relevant permissions at the subscription level are required.",
+                                "value": "AzureActivity"
+                            },
+                            {
+                                "label": "Dynamics 365",
+                                "description": "Relevant license and Global Admin or Security Admin permission required",
+                                "value": "Dynamics365"
+                            },
+                            {
+                                "label": "Microsoft 365 Defender",
+                                "description": "This will only enable incident and alert synchronization, no advanced hunting data will be enabled. Relevant license and Global Admin or Security Admin permission required",
+                                "value": "Microsoft365Defender"
+                            },
+                            {
+                                "label": "Microsoft Defender for Cloud",
+                                "description": "Security Reader permission required",
+                                "value": "MicrosoftDefenderForCloud"
+                            },
+                            {
+                                "label": "Microsoft Insider Risk Management",
+                                "description": "Relevant license and Global Admin or Security Admin permission required",
+                                "value": "OfficeIRM"
+                            },
+                            {
+                                "label": "Microsoft PowerBI",
+                                "description": "Relevant license and Global Admin or Security Admin permission required",
+                                "value": "OfficePowerBI"
+                            },
+                            {
+                                "label": "Microsoft Project",
+                                "description": "Relevant license and Global Admin or Security Admin permission required",
+                                "value": "Office365Project"
+                            },
+                            {
+                                "label": "Office 365",
+                                "description": "Relevant license and Global Admin or Security Admin permission required",
+                                "value": "Office365"
+                            },
+                            {
+                                "label": "Threat Intelligence Platforms",
+                                "description": "Global Admin or Security Admin permission required",
+                                "value": "ThreatIntelligence"
+                            }
                           ],
                           "required": false
                       },
                       "visible": true
+                  },
+                  {
+                    "name": "aadStreams",
+                      "type": "Microsoft.Common.DropDown",
+                      "label": "Select Azure Active Directory log types to enable",
+                      "placeholder": "",
+                      "multiselect": true,
+                      "defaultValue": [{"value": "SigninLogs"}, {"value": "AuditLogs"}],
+                      "toolTip": "Select Azure Active Directory log types you would like to stream to the workspace",
+                      "constraints": {
+                          "allowedValues": [
+                              {
+                                  "label": "Signin Logs",
+                                  "description": "Azure AD P1 or P2 license required",
+                                  "value": "SigninLogs"
+                              },
+                              {
+                                  "label": "Audit Logs",
+                                  "value": "AuditLogs"
+                              },
+                              {
+                                  "label": "Non-Interactive User Sign-In Log (Preview)",
+                                  "value": "AADNonInteractiveUserSignInLogs"
+                              },
+                              {
+                                  "label": "Service Principal Sign-In Logs (Preview)",
+                                  "value": "AADServicePrincipalSignInLogs"
+                              },
+                              {
+                                  "label": "Managed Identity Sign-In Logs (Preview)",
+                                  "value": "AADManagedIdentitySignInLogs"
+                              },
+                              {
+                                  "label": "Provisioning Logs (Preview)",
+                                  "value": "AADProvisioningLogs"
+                              },
+                              {
+                                  "label": "ADFS Sign-In Logs (Preview)",
+                                  "value": "ADFSSignInLogs"
+                              },
+                              {
+                                  "label": "User Risk Events (Preview)",
+                                  "value": "AADUserRiskEvents"
+                              },
+                              {
+                                  "label": "Risky Users (Preview)",
+                                  "value": "AADRiskyUsers"
+                              },
+                              {
+                                  "label": "Network Access Traffic Logs (Preview)",
+                                  "value": "NetworkAccessTraffic"
+                              },
+                              {
+                                  "label": "Risky Service Principals (Preview)",
+                                  "value": "AADRiskyServicePrincipals"
+                              },
+                              {
+                                  "label": "Service Principal Risk Events (Preview)",
+                                  "value": "AADServicePrincipalRiskEvents"
+                              }
+                          ],
+                          "required": false
+                      },
+                      "visible": "[if(contains(steps('dataConnectors').enableDataConnectors, 'AzureActiveDirectory'))]"
                   }
               ]
           },
@@ -562,9 +723,14 @@
             "capacityReservationSentinel": "[basics('capacityReservationSentinel')]",
             "enableUeba": "[steps('settings').enableUeba]",
             "identityProviders": "[steps('settings').identityProviders]",
+            "anomalies": "[steps('settings').anomalies]",
             "enableDiagnostics": "[steps('settings').enableDiagnostics]",
-            "enableSolutions": "[steps('solutions').enableSolutions]",
+            "enableAnomalies": "[steps('settings').anomalies]",
+            "enableSolutions1P": "[steps('solutions').enableSolutions1P]",
+            "enableSolutionsEssentials": "[steps('solutions').enableSolutionsEssentials]",
+            "enableSolutionsTraining": "[steps('solutions').enableSolutionsTraining]",
             "enableDataConnectors": "[steps('dataConnectors').enableDataConnectors]",
+            "aadStreams": "[steps('dataConnectors').aadStreams]",
             "location": "[location()]",
             "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
             "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]",
