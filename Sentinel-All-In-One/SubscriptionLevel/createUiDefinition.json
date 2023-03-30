@@ -639,7 +639,7 @@
                           ],
                           "required": false
                       },
-                      "visible": "[if(contains(steps('dataConnectors').enableDataConnectors, 'AzureActiveDirectory'))]"
+                      "visible": "[if(contains(steps('dataConnectors').enableDataConnectors, 'AzureActiveDirectory',true,false))]"
                   }
               ]
           },
