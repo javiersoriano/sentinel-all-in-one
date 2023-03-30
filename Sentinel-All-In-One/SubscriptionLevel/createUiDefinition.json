@@ -638,7 +638,7 @@
                           ],
                           "required": false
                       },
-                      "visible": "[if(contains(steps('dataConnectors').enableDataConnectors, 'AzureActiveDirectory',true,false))]"
+                      "visible": "[if(contains(steps('dataConnectors').enableDataConnectors, 'AzureActiveDirectory'),true,false)]"
                   }
               ]
           },
