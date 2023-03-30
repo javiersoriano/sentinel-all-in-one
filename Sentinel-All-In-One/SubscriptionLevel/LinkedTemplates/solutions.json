@@ -775,10 +775,10 @@
                     "workspace-location": {
                         "value": "[parameters('location')]"
                     },
-                    "workbook-name1": {
+                    "workbook1-name": {
                         "value": "Advanced KQL for Microsoft Sentinel"
                     },
-                    "workbook-name2": {
+                    "workbook2-name": {
                         "value": "Intro to KQL"
                     }
                 }
