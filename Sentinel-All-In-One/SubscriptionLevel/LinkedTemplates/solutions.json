@@ -805,7 +805,7 @@
                     "workspace-location": {
                         "value": "[parameters('location')]"
                     },
-                    "workbook-name1": {
+                    "workbook1-name": {
                         "value": ""
                     },
                     "playbook1-PlaybookName": {
