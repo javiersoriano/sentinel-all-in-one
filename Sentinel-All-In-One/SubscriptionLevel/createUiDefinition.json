@@ -596,19 +596,19 @@
                               },
                               {
                                   "label": "Non-Interactive User Sign-In Log (Preview)",
-                                  "value": "AADNonInteractiveUserSignInLogs"
+                                  "value": "NonInteractiveUserSignInLogs"
                               },
                               {
                                   "label": "Service Principal Sign-In Logs (Preview)",
-                                  "value": "AADServicePrincipalSignInLogs"
+                                  "value": "ServicePrincipalSignInLogs"
                               },
                               {
                                   "label": "Managed Identity Sign-In Logs (Preview)",
-                                  "value": "AADManagedIdentitySignInLogs"
+                                  "value": "ManagedIdentitySignInLogs"
                               },
                               {
                                   "label": "Provisioning Logs (Preview)",
-                                  "value": "AADProvisioningLogs"
+                                  "value": "ProvisioningLogs"
                               },
                               {
                                   "label": "ADFS Sign-In Logs (Preview)",
@@ -616,23 +616,23 @@
                               },
                               {
                                   "label": "User Risk Events (Preview)",
-                                  "value": "AADUserRiskEvents"
+                                  "value": "UserRiskEvents"
                               },
                               {
                                   "label": "Risky Users (Preview)",
-                                  "value": "AADRiskyUsers"
+                                  "value": "RiskyUsers"
                               },
                               {
                                   "label": "Network Access Traffic Logs (Preview)",
-                                  "value": "NetworkAccessTraffic"
+                                  "value": "NetworkAccessTrafficLogs"
                               },
                               {
                                   "label": "Risky Service Principals (Preview)",
-                                  "value": "AADRiskyServicePrincipals"
+                                  "value": "RiskyServicePrincipals"
                               },
                               {
                                   "label": "Service Principal Risk Events (Preview)",
-                                  "value": "AADServicePrincipalRiskEvents"
+                                  "value": "ServicePrincipalRiskEvents"
                               }
                           ],
                           "required": false

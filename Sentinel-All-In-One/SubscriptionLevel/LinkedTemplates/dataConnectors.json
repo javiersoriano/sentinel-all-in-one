@@ -73,44 +73,44 @@
                     "enabled": "[contains(parameters('aadStreams'),'AuditLogs')]"
                 },
                 {
-                    "category": "AADNonInteractiveUserSignInLogs",
-                    "enabled": "[contains(parameters('aadStreams'),'AADNonInteractiveUserSignInLogs')]"
+                    "category": "NonInteractiveUserSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'NonInteractiveUserSignInLogs')]"
                 },
                 {
-                    "category": "AADServicePrincipalSignInLogs",
-                    "enabled": "[contains(parameters('aadStreams'),'AADServicePrincipalSignInLogs')]"
+                    "category": "ServicePrincipalSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ServicePrincipalSignInLogs')]"
                 },
                 {
-                    "category": "AADManagedIdentitySignInLogs",
-                    "enabled": "[contains(parameters('aadStreams'),'AADManagedIdentitySignInLogs')]"
+                    "category": "ManagedIdentitySignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ManagedIdentitySignInLogs')]"
                 },
                 {
-                    "category": "AADProvisioningLogs",
-                    "enabled": "[contains(parameters('aadStreams'),'AADProvisioningLogs')]"
+                    "category": "ProvisioningLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ProvisioningLogs')]"
                 },
                 {
                     "category": "ADFSSignInLogs",
                     "enabled": "[contains(parameters('aadStreams'),'ADFSSignInLogs')]"
                 },
                 {
-                    "category": "AADUserRiskEvents",
-                    "enabled": "[contains(parameters('aadStreams'),'AADUserRiskEvents')]"
+                    "category": "UserRiskEvents",
+                    "enabled": "[contains(parameters('aadStreams'),'UserRiskEvents')]"
                 },
                 {
-                    "category": "AADRiskyUsers",
-                    "enabled": "[contains(parameters('aadStreams'),'AADRiskyUsers')]"
+                    "category": "RiskyUsers",
+                    "enabled": "[contains(parameters('aadStreams'),'RiskyUsers')]"
                 },
                 {
-                    "category": "NetworkAccessTraffic",
-                    "enabled": "[contains(parameters('aadStreams'),'NetworkAccessTraffic')]"
+                    "category": "NetworkAccessTrafficLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'NetworkAccessTrafficLogs')]"
                 },
                 {
-                    "category": "AADRiskyServicePrincipals",
-                    "enabled": "[contains(parameters('aadStreams'),'AADRiskyServicePrincipals')]"
+                    "category": "RiskyServicePrincipals",
+                    "enabled": "[contains(parameters('aadStreams'),'RiskyServicePrincipals')]"
                 },
                 {
-                    "category": "AADServicePrincipalRiskEvents",
-                    "enabled": "[contains(parameters('aadStreams'),'AADServicePrincipalRiskEvents')]"
+                    "category": "ServicePrincipalRiskEvents",
+                    "enabled": "[contains(parameters('aadStreams'),'ServicePrincipalRiskEvents')]"
                 }
             ],
             "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
