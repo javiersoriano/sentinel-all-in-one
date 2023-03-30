@@ -513,7 +513,6 @@
                       "filterPlaceholder": "Filter items ...",
                       "multiLine": true,
                       "defaultDescription": "A value for selection",
-                      "defaultValue": [{"value": "Office365"}],
                       "toolTip": "Select the data connectors that you would like to enable",
                       "constraints": {
                           "allowedValues": [
@@ -573,7 +572,7 @@
                                 "value": "ThreatIntelligence"
                             }
                           ],
-                          "required": false
+                          "required": true
                       },
                       "visible": true
                   },

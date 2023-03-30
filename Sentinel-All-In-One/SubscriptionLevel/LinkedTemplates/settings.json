@@ -27,7 +27,7 @@
         },
         "enableAnomalies": {
             "type": "string",
-            "defaultValue": "Yes"
+            "defaultValue": "true"
         },
         "settingName": {
             "type": "string",
@@ -49,7 +49,7 @@
             }
         },
         {
-            "condition": "[contains(parameters('enableAnomalies'),'Yes')]",
+            "condition": "[contains(parameters('enableAnomalies'),'true')]",
             "type": "Microsoft.SecurityInsights/settings",
             "apiVersion": "2022-12-01-preview",
             "name": "Anomalies",
