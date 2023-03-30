@@ -588,7 +588,6 @@
                           "allowedValues": [
                               {
                                   "label": "Signin Logs",
-                                  "description": "Azure AD P1 or P2 license required",
                                   "value": "SigninLogs"
                               },
                               {
