@@ -261,27 +261,6 @@
                       "visible": "[if(steps('settings').enableUeba, true, false)]"
                   },
                   {
-                    "name": "anomalies",
-                    "type": "Microsoft.Common.OptionsGroup",
-                    "label": "Enable ML anomalies?",
-                    "defaultValue": "Yes",
-                    "toolTip": "Learn more about Microsoft Sentinel anomalies [here](https://learn.microsoft.com/en-us/azure/sentinel/soc-ml-anomalies)",
-                    "constraints": {
-                      "allowedValues": [
-                        {
-                          "label": "Yes",
-                          "value": "true"
-                        },
-                        {
-                          "label": "No",
-                          "value": "false"
-                        }
-                      ],
-                      "required": true
-                    },
-                    "visible": true
-                  },
-                  {
                       "name": "enableDiagnostics",
                       "type": "Microsoft.Common.CheckBox",
                       "label": "Enable Sentinel health diagnostics?",
@@ -582,13 +561,13 @@
                       "label": "Select Azure Active Directory log types to enable",
                       "placeholder": "",
                       "multiselect": true,
-                      "defaultValue": [{"value": "SigninLogs"}, {"value": "AuditLogs"}],
+                      "defaultValue": [{"value": "SignInLogs"}, {"value": "AuditLogs"}],
                       "toolTip": "Select Azure Active Directory log types you would like to stream to the workspace",
                       "constraints": {
                           "allowedValues": [
                               {
                                   "label": "Signin Logs",
-                                  "value": "SigninLogs"
+                                  "value": "SignInLogs"
                               },
                               {
                                   "label": "Audit Logs",
@@ -637,7 +616,7 @@
                           ],
                           "required": false
                       },
-                      "visible": "[if(contains(steps('dataConnectors').enableDataConnectors, 'AzureActiveDirectory'),true,false)]"
+                      "visible": "[if(contains(steps('dataConnectors').enableDataConnectors,'AzureActiveDirectory'),true,false)]"
                   }
               ]
           },
@@ -721,7 +700,6 @@
             "capacityReservationSentinel": "[basics('capacityReservationSentinel')]",
             "enableUeba": "[steps('settings').enableUeba]",
             "identityProviders": "[steps('settings').identityProviders]",
-            "anomalies": "[steps('settings').anomalies]",
             "enableDiagnostics": "[steps('settings').enableDiagnostics]",
             "enableAnomalies": "[steps('settings').anomalies]",
             "enableSolutions1P": "[steps('solutions').enableSolutions1P]",

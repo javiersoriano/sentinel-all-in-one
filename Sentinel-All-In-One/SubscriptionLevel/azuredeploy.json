@@ -147,13 +147,6 @@
             },
             "defaultValue": true
         },
-        "enableAnomalies":{
-            "type": "string",
-            "metadata": {
-                "description": "Whether or not ML Anomalies should be enabled"
-            },
-            "defaultValue": "Yes"
-        },
         "identityProviders": {
             "type": "array",
             "metadata": {
@@ -261,9 +254,6 @@
                     },
                     "enableUeba": {
                         "value": "[parameters('enableUeba')]"
-                    },
-                    "enableAnomalies": {
-                        "value": "[parameters('enableAnomalies')]"
                     },
                     "identityProviders": {
                         "value": "[parameters('identityProviders')]"
