@@ -701,7 +701,6 @@
             "enableUeba": "[steps('settings').enableUeba]",
             "identityProviders": "[steps('settings').identityProviders]",
             "enableDiagnostics": "[steps('settings').enableDiagnostics]",
-            "enableAnomalies": "[steps('settings').anomalies]",
             "enableSolutions1P": "[steps('solutions').enableSolutions1P]",
             "enableSolutionsEssentials": "[steps('solutions').enableSolutionsEssentials]",
             "enableSolutionsTraining": "[steps('solutions').enableSolutionsTraining]",
