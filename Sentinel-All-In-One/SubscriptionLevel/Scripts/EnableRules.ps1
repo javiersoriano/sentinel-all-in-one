@@ -68,7 +68,7 @@ if ($Connectors) {
                             $alertBody | Add-Member -NotePropertyName properties -NotePropertyValue $properties
 
                             try {
-                                Invoke-AzRestMethod -Path $alertUriGuid -Method PUT -Payload ($alertBody | ConvertTo-Json -Depth 3)
+                                Invoke-AzRestMethod -Path $alertUriGuid -Method PUT -Payload ($alertBody | ConvertTo-Json -Depth 5)
                             }
                             catch {
                                 Write-Host "Can't enable rule template with connectors: " $item.properties.requiredDataConnectors
