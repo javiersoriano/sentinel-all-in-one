@@ -41,7 +41,7 @@ if ($Connectors) {
                         if ($connector.connectorId -in $Connectors) {
                             #$return += $item.properties
                             $guid = New-Guid
-                            $alertUriGuid = $alertUri + $guid + '?api-version=2022-12-01-preview'
+                            $alertUriGuid = $alertUri + $guid + '?api-version=2023-02-01'
 
                             $properties = @{
                                 displayName           = $item.properties.displayName
