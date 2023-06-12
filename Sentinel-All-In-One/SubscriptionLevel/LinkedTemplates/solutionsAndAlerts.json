@@ -39,6 +39,9 @@
         "severityLevels": {
             "type": "string"
         },
+        "location": {
+            "type": "string"
+        },
         "roleGuid": {
             "type": "string",
             "defaultValue": "[newGuid()]"
@@ -103,7 +106,7 @@
             "properties": {
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
-                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Solutions ', variables('solutions'), ' -SeveritiesToInclude ', parameters('severityLevels'), ' -Region ', resourceGroup().location)]",
+                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Solutions ', variables('solutions'), ' -SeveritiesToInclude ', parameters('severityLevels'), ' -Region ', parameters('location'))]",
                 "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/Sentinel-All-In-One/SubscriptionLevel/Scripts/Create-NewSolutionAndRulesFromList.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
