@@ -8,12 +8,33 @@
                 "description": "Name for the Log Analytics workspace"
             }
         },
-        "dataConnectorsList": {
+        "enableSolutions1P": {
             "type": "string",
             "metadata": {
-                "description": "Comma separated enabled connectors: AzureActivityLog,SecurityEvents,WindowsFirewall,DnsAnalytics. Reference: https://docs.microsoft.com/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
+                "description": "Comma separated 1st party enabled solutions"
             },
             "defaultValue": ""
+        },
+        "enableSolutionsEssentials": {
+            "type": "string",
+            "metadata": {
+                "description": "Comma separated essentials enabled solutions"
+            },
+            "defaultValue": ""
+        },
+        "enableSolutionsTraining": {
+            "type": "string",
+            "metadata": {
+                "description": "Comma separated training enabled solutions"
+            },
+            "defaultValue": ""
+        },
+        "enableAlerts": {
+            "type": "bool",
+            "metadata": {
+                "description": "whether to enable scheduled analytic rules or not"
+            },
+            "defaultValue": false
         },
         "severityLevels": {
             "type": "string"
@@ -25,7 +46,8 @@
     },
     "functions": [],
     "variables": {
-        "identityName": "[concat('userIdentity',uniqueString(resourceGroup().id))]"
+        "identityName": "[concat('userIdentity',uniqueString(resourceGroup().id))]",
+        "solutions": "[concat(parameters('enableSolutions1P'),',',parameters('enableSolutionsEssentials'),',',parameters('enableSolutionsTraining'))]"
     },
     "resources": [
         {
@@ -81,8 +103,8 @@
             "properties": {
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
-                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Connectors ', parameters('dataConnectorsList'), ' -SeveritiesToInclude ', parameters('severityLevels'))]",
-                "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/Sentinel-All-In-One/SubscriptionLevel/Scripts/EnableRules.ps1",
+                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Solutions ', variables('solutions'), ' -SeveritiesToInclude ', parameters('severityLevels'), ' -Region ', resourceGroup().location)]",
+                "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/Sentinel-All-In-One/SubscriptionLevel/Scripts/Create-NewSolutionAndRulesFromList.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
                 "cleanupPreference": "OnExpiration",

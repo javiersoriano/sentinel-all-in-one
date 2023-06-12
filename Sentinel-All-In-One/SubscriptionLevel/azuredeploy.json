@@ -277,7 +277,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'SubscriptionLevel/LinkedTemplates/solutions.json')]",
+                    "uri": "[uri(parameters('_artifactsLocation'), 'SubscriptionLevel/LinkedTemplates/solutionsAndAlerts.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -338,39 +338,8 @@
             }
         },
         {
-            "condition": "[parameters('enableMLAlerts')]",
-            "name": "enableAlerts",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
-            "resourceGroup": "[parameters('rgName')]",
-            "dependsOn": [
-                "enableSolutions"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'SubscriptionLevel/LinkedTemplates/alertRules.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "dataConnectorsKind": {
-                        "value": "[parameters('enableDataConnectors')]"
-                    },
-                    "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "enableMLAlerts":{
-                        "value": "[parameters('enableMLAlerts')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[parameters('enableScheduledAlerts')]",
-            "name": "enableScheduledAlerts",
+            "condition": "[or(not(empty(parameters('enableSolutions1P'))),not(empty(parameters('enableSolutionsEssentials'))),not(empty(parameters('enableSolutionsTraining'))))]",
+            "name": "enableSolutionsAndAlerts",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "resourceGroup": "[parameters('rgName')]",
@@ -381,18 +350,27 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), 'SubscriptionLevel/LinkedTemplates/scheduledAlerts.json')]",
+                    "uri": "[uri(parameters('_artifactsLocation'), 'SubscriptionLevel/LinkedTemplates/solutionsAndAlerts.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "enableSolutions1P": {
+                        "value": "[replace(replace(replace(string(parameters('enableSolutions1P')),'\"',''),'[',''),']','')]"
+                    },
+                    "enableSolutionsEssentials": {
+                        "value": "[replace(replace(replace(string(parameters('enableSolutionsEssentials')),'\"',''),'[',''),']','')]"
+                    },
+                    "enableSolutionsTraining": {
+                        "value": "[replace(replace(replace(string(parameters('enableSolutionsTraining')),'\"',''),'[',''),']','')]"
+                    },
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
-                    "dataConnectorsList":{
-                        "value": "[replace(replace(replace(string(parameters('enableDataConnectors')),'\"',''),'[',''),']','')]"
-                    },
                     "severityLevels": {
                         "value": "[replace(replace(replace(string(parameters('severityLevels')),'\"',''),'[',''),']','')]"
+                    },
+                    "enableAlerts": {
+                        "value": "[parameters('enableScheduledAlerts')]"
                     }
                 }
             }
