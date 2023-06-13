@@ -50,7 +50,7 @@
     "functions": [],
     "variables": {
         "identityName": "[concat('userIdentity',uniqueString(resourceGroup().id))]",
-        "solutions": "[concat(parameters('enableSolutions1P'),',',parameters('enableSolutionsEssentials'),',',parameters('enableSolutionsTraining'))]"
+        "solutions": "[concat(parameters('enableSolutions1P'),if(not(empty(parameters('enableSolutionsEssentials'))),concat(',',parameters('enableSolutionsEssentials')),''),if(not(empty(parameters('enableSolutionsEssentials'))),concat(',',parameters('enableSolutionsTraining')),''))]"
     },
     "resources": [
         {
