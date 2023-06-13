@@ -332,7 +332,7 @@
                         "value": "[parameters('workspaceName')]"
                     },
                     "severityLevels": {
-                        "value": "[replace(replace(replace(string(parameters('severityLevels')),'\"',''),'[',''),']','')]"
+                        "value": "[join(parameters('severityLevels'),',')]"
                     },
                     "enableAlerts": {
                         "value": "[parameters('enableScheduledAlerts')]"
