@@ -320,19 +320,19 @@
                 },
                 "parameters": {
                     "enableSolutions1P": {
-                        "value": "[join(parameters('enableSolutions1P'),',')]"
+                        "value": "[replace(replace(string(parameters('enableSolutions1P')),'[',''),']','')]"
                     },
                     "enableSolutionsEssentials": {
-                        "value": "[join(parameters('enableSolutionsEssentials'),',')]"
+                        "value": "[replace(replace(string(parameters('enableSolutionsEssentials')),'[',''),']','')]"
                     },
                     "enableSolutionsTraining": {
-                        "value": "[join(parameters('enableSolutionsTraining'),',')]"
+                        "value": "[replace(replace(string(parameters('enableSolutionsTraining')),'[',''),']','')]"
                     },
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
                     },
                     "severityLevels": {
-                        "value": "[join(parameters('severityLevels'),',')]"
+                        "value": "[replace(replace(string(parameters('severityLevels')),'[',''),']','')]"
                     },
                     "enableAlerts": {
                         "value": "[parameters('enableScheduledAlerts')]"
