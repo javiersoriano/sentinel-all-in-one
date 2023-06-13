@@ -320,13 +320,13 @@
                 },
                 "parameters": {
                     "enableSolutions1P": {
-                        "value": "[replace(replace(replace(string(parameters('enableSolutions1P')),'\"',''),'[',''),']','')]"
+                        "value": "[join(parameters('enableSolutions1P'),',')]"
                     },
                     "enableSolutionsEssentials": {
-                        "value": "[replace(replace(replace(string(parameters('enableSolutionsEssentials')),'\"',''),'[',''),']','')]"
+                        "value": "[join(parameters('enableSolutionsEssentials'),',')]"
                     },
                     "enableSolutionsTraining": {
-                        "value": "[replace(replace(replace(string(parameters('enableSolutionsTraining')),'\"',''),'[',''),']','')]"
+                        "value": "[join(parameters('enableSolutionsTraining'),',')]"
                     },
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
