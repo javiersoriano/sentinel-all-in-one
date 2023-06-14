@@ -50,7 +50,7 @@
     "functions": [],
     "variables": {
         "identityName": "[concat('userIdentity',uniqueString(resourceGroup().id))]",
-        "solutions": "[concat(parameters('enableSolutions1P'),if(not(empty(parameters('enableSolutionsEssentials'))),concat(',',parameters('enableSolutionsEssentials')),''),if(not(empty(parameters('enableSolutionsEssentials'))),concat(',',parameters('enableSolutionsTraining')),''))]"
+        "solutions": "[replace(concat(parameters('enableSolutions1P'),if(not(empty(parameters('enableSolutionsEssentials'))),concat(',',parameters('enableSolutionsEssentials')),''),if(not(empty(parameters('enableSolutionsEssentials'))),concat(',',parameters('enableSolutionsTraining')),'')),'\"','\\\"')]"
     },
     "resources": [
         {
@@ -106,7 +106,7 @@
             "properties": {
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "3.0",
-                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Solutions ', parameters('enableSolutions1P'), ' -SeveritiesToInclude ', parameters('severityLevels'), ' -Region ', parameters('location'))]",
+                "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Solutions ', variables('solutions'), ' -SeveritiesToInclude ', string(parameters('severityLevels')), ' -Region ', parameters('location'))]",
                 "primaryScriptUri": "https://raw.githubusercontent.com/javiersoriano/sentinel-all-in-one/master/Sentinel-All-In-One/SubscriptionLevel/Scripts/Create-NewSolutionAndRulesFromList.ps1",
                 "supportingScriptUris": [],
                 "timeout": "PT30M",
