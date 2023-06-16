@@ -47,7 +47,7 @@ $alertUri = "$baseUri/providers/Microsoft.SecurityInsights/alertRules/"
 #####
 
 if (($SeveritiesToInclude -eq "None") -or ($null -eq $SeveritiesToInclude)) {
-    Break
+    Exit
 }
 
 $solutionURL = "https://management.azure.com/providers/Microsoft.ResourceGraph/resources?api-version=2021-03-01"
