@@ -180,7 +180,7 @@
                         "value": "[parameters('workspaceName')]"
                     },
                     "pricingTier": {
-                        "value": "[parameters('pricingTierLA')]"
+                        "value": "[parameters('pricingTier')]"
                     },
                     "dailyQuota": {
                         "value": "[parameters('dailyQuota')]"
