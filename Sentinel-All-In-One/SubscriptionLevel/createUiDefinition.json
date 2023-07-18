@@ -74,9 +74,9 @@
                 "visible": true
             },
             {
-                "name": "pricingTierLA",
+                "name": "pricingTier",
                 "type": "Microsoft.Common.DropDown",
-                "label": "Select pricing tier for Log Analytics",
+                "label": "Select pricing tier for Sentinel and Log Analytics",
                 "placeholder": "",
                 "multiselect": false,
                 "toolTip": "Visit [Azure Monitor Pricing page](https://azure.microsoft.com/pricing/details/monitor/) for more information.",
@@ -97,9 +97,9 @@
                 "visible": true
             },
             {
-                "name": "capacityReservationLA",
+                "name": "capacityReservation",
                 "type": "Microsoft.Common.DropDown",
-                "label": "Select Commitment Tier for Log Analytics",
+                "label": "Select Commitment Tier for Sentinel and Log Analytics",
                 "placeholder": "",
                 "multiselect": false,
                 "defaultValue": 100,
@@ -141,77 +141,7 @@
                     ],
                     "required": true
                 },
-                "visible": "[if(equals(basics('pricingTierLA'),'CapacityReservation'), true, false)]"
-            },
-            {
-                "name": "pricingTierSentinel",
-                "type": "Microsoft.Common.DropDown",
-                "label": "Select pricing tier for Sentinel",
-                "placeholder": "",
-                "multiselect": false,
-                "toolTip": "Visit [Microsoft Sentinel Pricing page](https://azure.microsoft.com/pricing/details/microsoft-sentinel) for more information.",
-                "defaultValue": [{"value": "PerGB"}],
-                "constraints": {
-                    "allowedValues": [
-                        {
-                            "label": "Pay-as-you-go",
-                            "value": "PerGB"
-                        },
-                        {
-                            "label": "Commitment Tier",
-                            "value": "CapacityReservation"
-                        }
-                    ],
-                    "required": true
-                },
-                "visible": true
-            },
-            {
-                "name": "capacityReservationSentinel",
-                "type": "Microsoft.Common.DropDown",
-                "label": "Select Commitment Tier for Sentinel",
-                "placeholder": "",
-                "multiselect": false,
-                "defaultValue": 100,
-                "toolTip": "Select the Commitment Tier in GB/day",
-                "constraints": {
-                    "allowedValues": [
-                        {
-                            "label": "100 GB",
-                            "value": 100
-                        },
-                        {
-                            "label": "200 GB",
-                            "value": 200
-                        },
-                        {
-                            "label": "300 GB",
-                            "value": 300
-                        },
-                        {
-                            "label": "400 GB",
-                            "value": 400
-                        },
-                        {
-                            "label": "500 GB",
-                            "value": 500
-                        },
-                        {
-                            "label": "1000 GB",
-                            "value": 1000
-                        },
-                        {
-                            "label": "2000 GB",
-                            "value": 2000
-                        },
-                        {
-                            "label": "5000 GB",
-                            "value": 5000
-                        }
-                    ],
-                    "required": true
-                },
-                "visible": "[if(equals(basics('pricingTierSentinel'),'CapacityReservation'), true, false)]"
+                "visible": "[if(equals(basics('pricingTier'),'CapacityReservation'), true, false)]"
             }
           ],
           "steps": [
@@ -694,10 +624,8 @@
             "workspaceName": "[basics('workspaceName')]",
             "dailyQuota": "[basics('dailyQuota')]",
             "dataRetention": "[basics('dataRetention')]",
-            "pricingTierLA": "[basics('pricingTierLA')]",
-            "capacityReservationLA": "[basics('capacityReservationLA')]",
-            "pricingTierSentinel": "[basics('pricingTierSentinel')]",
-            "capacityReservationSentinel": "[basics('capacityReservationSentinel')]",
+            "pricingTier": "[basics('pricingTierLA')]",
+            "capacityReservation": "[basics('capacityReservationLA')]",
             "enableUeba": "[steps('settings').enableUeba]",
             "identityProviders": "[steps('settings').identityProviders]",
             "enableDiagnostics": "[steps('settings').enableDiagnostics]",
