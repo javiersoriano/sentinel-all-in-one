@@ -44,6 +44,7 @@ foreach ($deploySolution in $Solutions) {
     else {
         $solutionURL = $baseUri + "/providers/Microsoft.SecurityInsights/contentProductPackages/$($singleSolution.name)?api-version=2023-04-01-preview"
         $solution = (Invoke-RestMethod -Method "Get" -Uri $solutionURL -Headers $authHeader )
+        Write-Host "Solution name: " $solution.name
         $packagedContent = $solution.properties.packagedContent
         #Some of the post deployment instruction contains invalid characters and since this is not displayed anywhere
         #get rid of them.
@@ -61,13 +62,22 @@ foreach ($deploySolution in $Solutions) {
                 "mode"       = "Incremental"
             }
         }
-        $deploymentName = ("allinone-" + $solution.name).substring(0, 63)
+        $deploymentName = ("AIO-" + $solution.name)
+        if ($deploymentName.Length -ge 64){
+            $deploymentName = $deploymentName.Substring(0,64)
+        }
         $installURL = "https://management.azure.com/subscriptions/$($SubscriptionId)/resourcegroups/$($ResourceGroup)/providers/Microsoft.Resources/deployments/" + $deploymentName + "?api-version=2021-04-01"
         #$templateUri = $singleSolution.plans.artifacts | Where-Object -Property "name" -EQ "DefaultTemplate"
         Write-Host "Deploying solution:  $deploySolution"
-        #New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroup -TemplateUri $templateUri.uri -TemplateParameterObject $templateParameter
-        Invoke-RestMethod -Uri $installURL -Method Put -Headers $authHeader -Body ($installBody | ConvertTo-Json -EnumsAsStrings -Depth 50 -EscapeHandling EscapeNonAscii)
+        
+        try{
+            Invoke-RestMethod -Uri $installURL -Method Put -Headers $authHeader -Body ($installBody | ConvertTo-Json -EnumsAsStrings -Depth 50 -EscapeHandling EscapeNonAscii)
         Write-Host "Deployed solution:  $deploySolution"
+        }
+        catch {
+            $errorReturn = $_
+            Write-Error $errorReturn
+        }
     }
 
 }

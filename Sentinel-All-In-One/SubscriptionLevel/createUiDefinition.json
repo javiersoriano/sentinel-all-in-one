@@ -324,11 +324,6 @@
                                 "value": "Cloud Service Threat Protection Essentials"
                             },
                             {
-                                "label": "DNS Essentials",
-                                "description": "This is a domain solution and does not include any data connectors. The content in this solution requires one of the product solutions below, as well as any other connector or data source normalized to the ASIM.",
-                                "value": "DNS Essentials"
-                            },
-                            {
                                 "label": "Endpoint Threat Protection Essentials",
                                 "description": "The Endpoint Threat Protection Essentials solution provides content to monitor, detect and investigate threats related to windows machines.",
                                 "value": "Endpoint Threat Protection Essentials"
@@ -344,19 +339,9 @@
                                 "value": "Network Threat Protection Essentials"
                             },
                             {
-                                "label": "Security Threat Essentials",
-                                "description": "This solution published by Microsoft is based on the continuous evaluation of threat campaigns and provides out-of-the-box security content that helps you to enhance your security posture.",
-                                "value": "Security Threat Essentials"
-                            },
-                            {
-                                "label": "SOAR Essentials",
-                                "description": "The Sentinel SOAR Essentials solution for Microsoft Sentinel contains Playbooks that can help you get started with basic notification and orchestration scenarios for common use cases.",
-                                "value": "Sentinel SOAR Essentials"
-                            },
-                            {
                                 "label": "SOC Handbook",
                                 "description": "The SOC Handbook solution for Microsoft Sentinel provides a collection of resources that enable and empower SOC Analysts to get better visibility and understanding of point-in-time security posture of organizational resources.",
-                                "value": "SOC Handbook solution for Microsoft Sentinel"
+                                "value": "SOC Handbook"
                             },
                             {
                                 "label": "SOC Process Framework",
