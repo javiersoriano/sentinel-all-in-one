@@ -62,7 +62,7 @@ foreach ($deploySolution in $Solutions) {
                 "mode"       = "Incremental"
             }
         }
-        $deploymentName = ("AIO-" + $solution.name)
+        $deploymentName = ("allinone-" + $solution.name)
         if ($deploymentName.Length -ge 64){
             $deploymentName = $deploymentName.Substring(0,64)
         }
