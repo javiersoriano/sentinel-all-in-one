@@ -238,12 +238,12 @@
                               {
                                   "label": "Azure Activity",
                                   "description": "The Azure Activity solution for Microsoft Sentinel enables you to ingest Azure Activity Administrative, Security, Service Health, Alert, Recommendation, Policy, Autoscale and Resource Health logs using Diagnostic Settings into Microsoft Sentinel.",
-                                  "value": "Azure Activity solution"
+                                  "value": "Azure Activity"
                               },
                               {
                                   "label": "Dynamics 365 CE",
                                   "description": "The Microsoft Sentinel solution for Dynamics 365 CE apps provides threat monitoring, detection and incident response capabilities for Dynamics 365 CE apps.",
-                                  "value": "Dynamics 365 CE"
+                                  "value": "Dynamics 365 CE Apps"
                               },
                               {
                                   "label": "Microsoft 365",
@@ -283,7 +283,7 @@
                               {
                                   "label": "Microsoft Teams",
                                   "description": "Microsoft Sentinel for Teams provides Teams security logs visibility and threat protection.",
-                                  "value": "Microsoft Sentinel"
+                                  "value": "Teams"
                               },
                               {
                                   "label": "Threat Intelligence",
@@ -324,6 +324,11 @@
                                 "value": "Cloud Service Threat Protection Essentials"
                             },
                             {
+                                "label": "DNS Essentials",
+                                "description": "This is a domain solution and does not include any data connectors. The content in this solution requires one of the product solutions below, as well as any other connector or data source normalized to the ASIM.",
+                                "value": "DNS Essentials"
+                            },
+                            {
                                 "label": "Endpoint Threat Protection Essentials",
                                 "description": "The Endpoint Threat Protection Essentials solution provides content to monitor, detect and investigate threats related to windows machines.",
                                 "value": "Endpoint Threat Protection Essentials"
@@ -331,7 +336,7 @@
                             {
                                 "label": "Network Session Essentials",
                                 "description": "The Network Session Essentials solution leverages the Advanced Security Information Model (ASIM) to correlate insights across 15+ networking data sources and deliver more value for SOC use cases with less content.",
-                                "value": "Network Session Essentials (Preview)"
+                                "value": "Network Session Essentials"
                             }, 
                             {
                                 "label": "Network Threat Protection Essentials",
@@ -389,7 +394,7 @@
                             {
                                 "label": "Training Lab",
                                 "description": "Microsoft Sentinel Training Lab helps you get ramped up with Microsoft Sentinel providing hands-on practical experience for product features, capabilities, and scenarios.",
-                                "value": "Microsoft Sentinel Training Lab Solution"
+                                "value": "Microsoft Sentinel Training Lab"
                             }
                           ],
                           "required": false
